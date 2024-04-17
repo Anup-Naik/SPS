@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Information Form</title>
+  </head>
+  <body>
+    <h1>Student Information Form</h1>
+    <form action="/student" method="POST">
+      <label for="fullname">Full Name:</label>
+      <input type="text" id="fullname" name="fullname" required /><br />
+
+      <label for="usn">USN:</label>
+      <input type="text" id="usn" name="usn" required /><br />
+
+      <label for="yearOfAdmission">Year of Admission:</label>
+      <input
+        type="text"
+        id="yearOfAdmission"
+        name="yearOfAdmission"
+        required
+      /><br />
+
+      <label for="modeOfAdmission">Mode of Admission:</label>
+      <select id="modeOfAdmission" name="modeOfAdmission" required>
+        <option value="CET(Aided)">CET (Aided)</option>
+        <option value="CET(UnAided)">CET (UnAided)</option>
+        <option value="Management">Management</option>
+        <option value="COMEDK">COMEDK</option>
+        <!-- Add more options as needed --></select
+      ><br />
+
+      <label for="cetRank">CET/COMEDK Rank:</label>
+      <input type="number" id="cetRank" name="cetRank" /><br />
+
+      <label for="contactNum">Contact Number:</label>
+      <input type="text" id="contactNum" name="contactNum" /><br />
+
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" name="dob" /><br />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" /><br />
+
+      <label for="aadhar">Aadhar Number:</label>
+      <input type="text" id="aadhar" name="aadhar" /><br />
+
+      <label for="bloodGroup">Blood Group:</label>
+      <input type="text" id="bloodGroup" name="bloodGroup" /><br />
+
+      <label for="facultyAdvisorName">Faculty Advisor Name:</label>
+      <input
+        type="text"
+        id="facultyAdvisorName"
+        name="facultyAdvisorName"
+      /><br />
+
+      <label for="sem">Semester:</label>
+      <input type="text" id="sem" name="sem" /><br />
+
+      <label for="fatherName">Father's Name:</label>
+      <input type="text" id="fatherName" name="fatherName" /><br />
+
+      <label for="fatherOccupation">Father's Occupation:</label>
+      <input type="text" id="fatherOccupation" name="fatherOccupation" /><br />
+
+      <label for="fatherQualification">Father's Qualification:</label>
+      <input
+        type="text"
+        id="fatherQualification"
+        name="fatherQualification"
+      /><br />
+
+      <label for="fatherContactNum">Father's Contact Number:</label>
+      <input type="text" id="fatherContactNum" name="fatherContactNum" /><br />
+
+      <label for="fatherEmail">Father's Email:</label>
+      <input type="email" id="fatherEmail" name="fatherEmail" /><br />
+
+      <label for="motherName">Mother's Name:</label>
+      <input type="text" id="motherName" name="motherName" /><br />
+
+      <label for="motherOccupation">Mother's Occupation:</label>
+      <input type="text" id="motherOccupation" name="motherOccupation" /><br />
+
+      <label for="motherQualification">Mother's Qualification:</label>
+      <input
+        type="text"
+        id="motherQualification"
+        name="motherQualification"
+      /><br />
+
+      <label for="motherContactNum">Mother's Contact Number:</label>
+      <input type="text" id="motherContactNum" name="motherContactNum" /><br />
+
+      <label for="motherEmail">Mother's Email:</label>
+      <input type="email" id="motherEmail" name="motherEmail" /><br />
+
+      <label for="address">Address:</label>
+      <textarea id="address" name="address"></textarea><br />
+
+      <h2>Class X Information</h2>
+      <label for="classXYearOfPassing">Year of Passing:</label>
+      <input
+        type="number"
+        id="classXYearOfPassing"
+        name="classXYearOfPassing"
+      /><br />
+
+      <label for="classXBoard">Board:</label>
+      <input type="text" id="classXBoard" name="classXBoard" /><br />
+
+      <label for="classXInstitute">Institute:</label>
+      <input type="text" id="classXInstitute" name="classXInstitute" /><br />
+
+      <label for="classXScore">Score:</label>
+      <input type="text" id="classXScore" name="classXScore" /><br />
+
+      <h2>Class XII Information</h2>
+      <label for="classXIIPassingYear">Year of Passing:</label>
+      <input
+        type="number"
+        id="classXIIPassingYear"
+        name="classXIIPassingYear"
+      /><br />
+
+      <label for="classXIIBoard">Board:</label>
+      <input type="text" id="classXIIBoard" name="classXIIBoard" /><br />
+
+      <label for="classXIIInstitute">Institute:</label>
+      <input
+        type="text"
+        id="classXIIInstitute"
+        name="classXIIInstitute"
+      /><br />
+
+      <label for="classXIIScore">Score:</label>
+      <input type="text" id="classXIIScore" name="classXIIScore" /><br />
+
+      <h2>Credit Information</h2>
+      <!-- Repeat this section based on the number of creditInfo objects in the schema -->
+      <label for="noOfSemesters">Number of Semesters Completed:</label>
+      <input type="number" id="noOfSemesters" name="noOfSemesters" /><br />
+
+      <div id="creditInfoRows"></div>
+
+      <!-- Repeat the above section for each creditInfo object -->
+
+      <h2>Supplementary Exams Information</h2>
+      <!-- Repeat this section based on the number of supplementary objects in the schema -->
+      <label for="noOfSupplementary">Number of Supplementary Semesters:</label>
+      <input type="number" id="noOfSupplementary" name="noOfSupplementary" />
+
+      <div id="supplementaryInputsContainer"></div>
+
+      <!-- Repeat the above section for each supplementary object -->
+
+      <h2>Backlogs Information</h2>
+      <!-- Repeat this section based on the number of backlogs objects in the schema -->
+      <label for="noOfBacklogs">Number of Backlogs:</label>
+      <input type="number" id="noOfBacklogs" name="noOfBacklogs" /><br />
+
+      <div id="backlogsRows"></div>
+      <!-- Repeat the above section for each backlog object -->
+
+      <h2>Current Semester Registered Subjects</h2>
+      <!-- Repeat this section based on the number of currentSemRegSub objects in the schema -->
+      <label for="noOfCurrentSubjects"
+        >Number of Current Semester Registered Subjects:</label
+      >
+      <input
+        type="number"
+        id="noOfCurrentSubjects"
+        name="noOfCurrentSubjects"
+      /><br />
+
+      <div id="currentSubjectsRows"></div>
+
+      <!-- Repeat the above section for each currentSemRegSub object -->
+
+      <label for="currentCGPA">Current CGPA:</label>
+      <input
+        type="number"
+        step="0.01"
+        id="currentCGPA"
+        name="currentCGPA"
+      /><br />
+
+      <h2>Activity Points</h2>
+      <label for="communityPts">Community Points Earned:</label>
+      <input type="number" id="communityPts" name="communityPts" /><br />
+
+      <label for="alliedPts">Allied Points Earned:</label>
+      <input type="number" id="alliedPts" name="alliedPts" /><br />
+
+      <label for="totalPts">Total Points Earned:</label>
+      <input type="number" id="totalPts" name="totalPts" /><br />
+
+      <input type="submit" value="Submit" />
+    </form>
+
+    <script src="/Javascript/dynamicContent.js"></script>
+  </body>
+</html>
