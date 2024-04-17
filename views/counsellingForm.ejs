@@ -7,7 +7,7 @@
   </head>
   <body>
     <h1>Student Information Form</h1>
-    <form action="/student" method="POST">
+    <form action="/student" method="POST" enctype="multipart/form-data">
       <label for="fullname">Full Name:</label>
       <input type="text" id="fullname" name="fullname" required /><br />
 
@@ -103,40 +103,40 @@
       <h2>Class X Information</h2>
       <label for="classXYearOfPassing">Year of Passing:</label>
       <input
-        type="number"
+        type="text"
         id="classXYearOfPassing"
-        name="classXYearOfPassing"
+        name="classX[yearOfPassing]"
       /><br />
 
       <label for="classXBoard">Board:</label>
-      <input type="text" id="classXBoard" name="classXBoard" /><br />
+      <input type="text" id="classXBoard" name="classX[board]" /><br />
 
       <label for="classXInstitute">Institute:</label>
-      <input type="text" id="classXInstitute" name="classXInstitute" /><br />
+      <input type="text" id="classXInstitute" name="classX[institute]" /><br />
 
       <label for="classXScore">Score:</label>
-      <input type="text" id="classXScore" name="classXScore" /><br />
+      <input type="text" id="classXScore" name="classX[score]" /><br />
 
       <h2>Class XII Information</h2>
       <label for="classXIIPassingYear">Year of Passing:</label>
       <input
-        type="number"
+        type="text"
         id="classXIIPassingYear"
-        name="classXIIPassingYear"
+        name="classXII[yearOfPassing]"
       /><br />
 
       <label for="classXIIBoard">Board:</label>
-      <input type="text" id="classXIIBoard" name="classXIIBoard" /><br />
+      <input type="text" id="classXIIBoard" name="classXII[board]" /><br />
 
       <label for="classXIIInstitute">Institute:</label>
       <input
         type="text"
         id="classXIIInstitute"
-        name="classXIIInstitute"
+        name="classXII[institute]"
       /><br />
 
       <label for="classXIIScore">Score:</label>
-      <input type="text" id="classXIIScore" name="classXIIScore" /><br />
+      <input type="text" id="classXIIScore" name="classXII[score]" /><br />
 
       <h2>Credit Information</h2>
       <!-- Repeat this section based on the number of creditInfo objects in the schema -->
@@ -189,13 +189,17 @@
 
       <h2>Activity Points</h2>
       <label for="communityPts">Community Points Earned:</label>
-      <input type="number" id="communityPts" name="communityPts" /><br />
+      <input
+        type="number"
+        id="communityPts"
+        name="activityPts[communityPts]"
+      /><br />
 
       <label for="alliedPts">Allied Points Earned:</label>
-      <input type="number" id="alliedPts" name="alliedPts" /><br />
+      <input type="number" id="alliedPts" name="activityPts[alliedPts]" /><br />
 
       <label for="totalPts">Total Points Earned:</label>
-      <input type="number" id="totalPts" name="totalPts" /><br />
+      <input type="number" id="totalPts" name="activityPts[totalPts]" /><br />
 
       <input type="submit" value="Submit" />
     </form>

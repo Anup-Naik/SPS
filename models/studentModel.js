@@ -25,13 +25,13 @@ const studentSchema = new mongoose.Schema({
   motherEmail: String,
   address: String,
   classX: {
-    yearOfPassing: Number,
-    Board: String,
-    Institute: String,
+    yearOfPassing: String,
+    board: String,
+    institute: String,
     score: String,
   },
   classXII: {
-    yearOfPassing: Number,
+    yearOfPassing: String,
     board: String,
     institute: String,
     score: String,
@@ -53,21 +53,21 @@ const studentSchema = new mongoose.Schema({
       file: { name: String, url: String },
     },
   ],
-  backlogs: [
+  backlogsInfo: [
     {
       subjectCode: String,
       subjectTitle: String,
       credits: Number,
       cleared: Boolean,
-      file: { name: String, url: String },
+      semCleared: Number,
     },
   ],
 
-  currentSemRegSub: [
-    { subjectCode: String, subjectTitle: String, credits: Number },
+  currentSemInfo: [
+    { subjectCode: String, subjectTitle: String, subjectCredits: Number },
   ],
   currentCGPA: Number,
-  activityPts: { community: Number, allied: Number, total: Number },
+  activityPts: { communityPts: Number, alliedPts: Number, totalPts: Number },
   remarks: String,
 });
 

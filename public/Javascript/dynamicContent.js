@@ -15,6 +15,11 @@ function renderCreditInfoRows(count) {
     const row = document.createElement("div");
     row.innerHTML = `
                     <h2>Credit Information for Semester ${i}</h2>
+                    <label for="creditsSem${i}">Sem:</label>
+                    <input type="number" value="${i}" id="creditsSem${i}" name="creditInfo[${
+      i - 1
+    }][sem]"><br />
+
                     <label for="creditsRegistered${i}">Credits Registered:</label>
                     <input type="number" id="creditsRegistered${i}" name="creditInfo[${
       i - 1
@@ -100,22 +105,27 @@ function renderBacklogsRows(count) {
                   <label for="backlogSubjectCode${i}">Subject Code:</label>
                   <input type="text" id="backlogSubjectCode${i}" name="backlogsInfo[${
       i - 1
-    }][backlogSubjectCode]"><br />
+    }][subjectCode]"><br />
 
                   <label for="backlogSubjectTitle${i}">Subject Title:</label>
                   <input type="text" id="backlogSubjectTitle${i}" name="backlogsInfo[${
       i - 1
-    }][backlogSubjectTitle]"><br />
+    }][subjectTitle]"><br />
 
                   <label for="backlogCredits${i}">Credits:</label>
                   <input type="number" id="backlogCredits${i}" name="backlogsInfo[${
       i - 1
-    }][backlogCredits]"><br />
+    }][credits]"><br />
 
                   <label for="backlogCleared${i}">Cleared:</label>
                   <input type="checkbox" value="true" id="backlogCleared${i}" name="backlogsInfo[${
       i - 1
-    }][backlogCleared]"><br />
+    }][cleared]"><br />
+
+    <label for="backlogSem${i}">Backlog Cleared Sem:</label>
+                  <input type="text" id="backlogSem${i}" name="backlogsInfo[${
+      i - 1
+    }][semCleared]"><br />
               `;
     backlogsRowsContainer.appendChild(row);
   }
@@ -126,9 +136,10 @@ const currentSubjectsRowsContainer = document.getElementById(
   "currentSubjectsRows"
 );
 
+const MAX_CURRENT_SUBJECTS = 13;
 noOfCurrentSubjectsInput.addEventListener("input", () => {
   const count = parseInt(noOfCurrentSubjectsInput.value, 10);
-  renderCurrentSubjectsRows(count);
+  renderCurrentSubjectsRows(Math.min(count, MAX_CURRENT_SUBJECTS));
 });
 
 function renderCurrentSubjectsRows(count) {
@@ -141,17 +152,17 @@ function renderCurrentSubjectsRows(count) {
                   <label for="currentSubjectCode${i}">Subject Code:</label>
                   <input type="text" id="currentSubjectCode${i}" name="currentSemInfo[${
       i - 1
-    }][currentSubjectCode]"><br />
+    }][subjectCode]"><br />
 
                   <label for="currentSubjectTitle${i}">Subject Title:</label>
                   <input type="text" id="currentSubjectTitle${i}" name="currentSemInfo[${
       i - 1
-    }][currentSubjectTitle]"><br />
+    }][subjectTitle]"><br />
 
                   <label for="currentSubjectCredits${i}">Credits:</label>
                   <input type="number" id="currentSubjectCredits${i}" name="currentSemInfo[${
       i - 1
-    }][currentSubjectCredits]"><br />
+    }][subjectCredits]"><br />
               `;
     currentSubjectsRowsContainer.appendChild(row);
   }
