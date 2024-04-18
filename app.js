@@ -15,15 +15,29 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "Uploads/");
+    cb(null, "uploads");
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, file.fieldname + "-" + uniqueSuffix);
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e5);
+    cb(null, file.originalname + "-" + uniqueSuffix);
   },
 });
 
-const upload = multer({ storage: storage });
+const limits = { fileSize: 1024 * 1024, files: 16 };
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === "application/pdf") {
+    cb(null, true);
+  } else {
+    cb(new Error("File type not allowed"));
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  limits: limits,
+  fileFilter: fileFilter,
+});
 
 main()
   .then(() => console.log("Connected to database"))
@@ -43,10 +57,15 @@ app.get("/student", (req, res) => {
   res.render("counsellingForm");
 });
 
-app.post("/student", upload.array([]), async (req, res) => {
+const myMulter = upload.fields([
+  { name: "regSemFiles", maxCount: 8 },
+  { name: "suppSemFiles", maxCount: 8 },
+]);
+
+app.post("/student", myMulter, async (req, res) => {
   const student = new Student(req.body);
   await student.save();
-  res.send(req.body);
+  res.send(req.files);
 });
 
 app.get("/student/:id", async (req, res) => {

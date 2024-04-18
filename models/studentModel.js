@@ -39,7 +39,6 @@ const studentSchema = new mongoose.Schema({
       creditsRegistered: Number,
       creditsEarned: Number,
       sgpa: Number,
-      file: { name: String, url: String },
     },
   ],
   supplementary: [
@@ -47,7 +46,6 @@ const studentSchema = new mongoose.Schema({
       creditsRegistered: Number,
       creditsEarned: Number,
       sgpa: Number,
-      file: { name: String, url: String },
     },
   ],
   backlogsInfo: [
@@ -56,7 +54,7 @@ const studentSchema = new mongoose.Schema({
       subjectTitle: String,
       credits: Number,
       cleared: Boolean,
-      semCleared: Number,
+      semCleared: String,
     },
   ],
 
@@ -65,7 +63,7 @@ const studentSchema = new mongoose.Schema({
   ],
   currentCGPA: Number,
   activityPts: { communityPts: Number, alliedPts: Number, totalPts: Number },
-  remarks: String,
+  files: [{ name: String, url: String }],
 });
 
 module.exports = mongoose.model("Student", studentSchema);
