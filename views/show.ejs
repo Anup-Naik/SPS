@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="studDetail">
+      <h2>Student Details</h2>
+      <table>
+        <tr>
+          <th>FullName:</th>
+          <td><%=student.fullname %></td>
+        </tr>
+        <tr>
+          <th>USN:</th>
+          <td><%=student.usn %></td>
+        </tr>
+        <tr>
+          <th>Year of Admission:</th>
+          <td><%=student.yearOfAdmission %></td>
+        </tr>
+        <tr>
+          <th>Mode of Admission:</th>
+          <td><%=student.modeOfAdmission %></td>
+        </tr>
+        <tr>
+          <th>CET/COMEDK Rank:</th>
+          <td><%=student.cetRank %></td>
+        </tr>
+        <tr>
+          <th>Contact Number:</th>
+          <td><%= student.contactNum %></td>
+        </tr>
+        <tr>
+          <th>Date of Birth:</th>
+          <td><%= student.dob %></td>
+        </tr>
+        <tr>
+          <th>Email:</th>
+          <td><%= student.email %></td>
+        </tr>
+        <tr>
+          <th>Aadhar :</th>
+          <td><%= student.aadhar %></td>
+        </tr>
+        <tr>
+          <th>Blood Group:</th>
+          <td><%= student.bloodGroup %></td>
+        </tr>
+        <tr>
+          <th>Sem:</th>
+          <td><%= student.sem %></td>
+        </tr>
+        <tr>
+          <th>Faculty Advisor:</th>
+          <td><%= student.facultyAdvisorName %></td>
+        </tr>
+      </table>
+    </div>
+    <div class="parentDetail">
+      <h2>Parent/Guardian Details</h2>
+      <table>
+        <tr>
+          <th>Name:</th>
+          <td><%=student.parentOrGuardianName %></td>
+        </tr>
+        <tr>
+          <th>Relationship to Student:</th>
+          <td><%=student.parentOrGuardianRelation %></td>
+        </tr>
+        <tr>
+          <th>Occupation:</th>
+          <td><%=student.parentOrGuardianOccupation %></td>
+        </tr>
+        <tr>
+          <th>Qualification:</th>
+          <td><%=student.parentOrGuardianQualification %></td>
+        </tr>
+        <tr>
+          <th>Contact Number:</th>
+          <td><%=student.parentOrGuardianContactNum %></td>
+        </tr>
+        <tr>
+          <th>Alt Contact Number:</th>
+          <td><%= student.parentOrGuardianContactNum1 %></td>
+        </tr>
+        <tr>
+          <th>Email:</th>
+          <td><%= student.parentOrGuardianEmail %></td>
+        </tr>
+        <tr>
+          <th>Address:</th>
+          <td><%= student.address %></td>
+        </tr>
+      </table>
+    </div>
+    <div class="academicDetails">
+      <h2>Academic Details</h2>
+      <div>
+        <h3>Class X</h3>
+        <table>
+          <tr>
+            <th>Year of Passing:</th>
+            <td><%= student.classX.yearOfPassing %></td>
+          </tr>
+          <tr>
+            <th>Board:</th>
+            <td><%= student.classX.board %></td>
+          </tr>
+          <tr>
+            <th>Institute:</th>
+            <td><%= student.classX.institute %></td>
+          </tr>
+          <tr>
+            <th>Score:</th>
+            <td><%= student.classX.score %></td>
+          </tr>
+        </table>
+      </div>
+      <div>
+        <h3>Class XII</h3>
+        <table>
+          <tr>
+            <th>Year of Passing:</th>
+            <td><%= student.classXII.yearOfPassing %></td>
+          </tr>
+          <tr>
+            <th>Board:</th>
+            <td><%= student.classXII.board %></td>
+          </tr>
+          <tr>
+            <th>Institute:</th>
+            <td><%= student.classXII.institute %></td>
+          </tr>
+          <tr>
+            <th>Score:</th>
+            <td><%= student.classXII.score %></td>
+          </tr>
+        </table>
+      </div>
+      <div>
+        <h3>Credits Information</h3>
+        <table>
+          <tr>
+            <th>Sem</th>
+            <th>Credits Registered</th>
+            <th>Credits Earned</th>
+            <th>SGPA</th>
+          </tr>
+          <% for (var i=0;i<student.creditInfo.length;i++ ){%>
+            <tr>
+              <td><%= student.creditInfo[i].sem %></td>
+              <td><%= student.creditInfo[i].creditsRegistered %></td>
+              <td><%= student.creditInfo[i].creditsEarned %></td>
+              <td><%= student.creditInfo[i].sgpa %></td>
+            </tr>
+          <% } %>
+        </table>
+      </div>
+      <div>
+        <h3>Supplementary Information</h3>
+        <table>
+          <tr>
+            <th>Supp. Sem</th>
+            <th>Credits Registered</th>
+            <th>Credits Earned</th>
+            <th>SGPA</th>
+          </tr>
+          <% for (var i=0;i<student.supplementary.length;i++ ){%>
+            <tr>
+              <td><%= [i+1] %></td>
+              <td><%= student.supplementary[i].creditsRegistered %></td>
+              <td><%= student.supplementary[i].creditsEarned %></td>
+              <td><%= student.supplementary[i].sgpa %></td>
+            </tr>
+          <% } %>
+        </table>
+      </div>
+      <div>
+        <h3>Backlogs Information</h3>
+        <table>
+          <tr>
+            <th>Subject Code</th>
+            <th>Subject Title</th>
+            <th>Credits</th>
+            <th>Cleared</th>
+            <th>Sem in Which Cleared</th>
+          </tr>
+          <% for (var i=0;i<student.backlogsInfo.length;i++ ){%>
+            <tr>
+              <td><%= student.backlogsInfo[i].subjectCode %></td>
+              <td><%= student.backlogsInfo[i].subjectTitle %></td>
+              <td><%= student.backlogsInfo[i].credits %></td>
+              <td><%= student.backlogsInfo[i].cleared %></td>
+              <td><%= student.backlogsInfo[i].semCleared %></td>
+            </tr>
+          <% } %>
+        </table>
+      </div>
+      <div>
+        <h3>Current Semester Information</h3>
+        <table>
+          <tr>
+            <th>Subject Code</th>
+            <th>Subject Title</th>
+            <th>Credits</th>
+          </tr>
+          <% for (var i=0;i<student.currentSemInfo.length;i++ ){%>
+            <tr>
+              <td><%= student.currentSemInfo[i].subjectCode %></td>
+              <td><%= student.currentSemInfo[i].subjectTitle %></td>
+              <td><%= student.currentSemInfo[i].subjectCredits %></td>
+            </tr>
+          <% } %>
+          <tr>
+            <th>Current CGPA</th>
+            <td colspan="2"><%= student.currentCGPA %></td>
+          </tr>
+        </table>
+      </div>
+      <div>
+        <h3>Activity Points Information</h3>
+        <table>
+          <tr>
+            <th>Community Points</th>
+            <td><%= student.activityPts.communityPts %></td>
+          </tr>
+          <tr>
+            <th>Allied Points</th>
+            <td><%= student.activityPts.alliedPts %></td>
+          </tr>
+          <tr>
+            <th>Total Points</th>
+            <td><%= student.activityPts.totalPts %></td>
+          </tr>
+      
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

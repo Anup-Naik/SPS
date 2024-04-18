@@ -1,29 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student Information Form</title>
-  </head>
-  <body>
-    <h1>Student Information Form</h1>
-    <form action="/student" method="POST" enctype="multipart/form-data">
-      <label for="fullname">Full Name:</label>
-      <input type="text" id="fullname" name="fullname" required /><br />
-
-      <label for="usn">USN:</label>
-      <input type="text" id="usn" name="usn" required /><br />
-
-      <label for="yearOfAdmission">Year of Admission:</label>
+<%- include('partials/header'); -%>
+<div class="container-fluid">
+  <h1>Student Information Form</h1>
+  <form
+    class="row g-3 needs-validation"
+    action="/student"
+    method="POST"
+    enctype="multipart/form-data"
+    novalidate
+  >
+    <div class="studDetails">
+      <label class="form-label" for="fullname">Full Name:</label>
       <input
+        class="form-control"
+        type="text"
+        id="fullname"
+        name="fullname"
+        required
+      /><br />
+
+      <label class="form-label" for="usn">USN:</label>
+      <input
+        class="form-control"
+        type="text"
+        id="usn"
+        name="usn"
+        required
+      /><br />
+
+      <label class="form-label" for="yearOfAdmission">Year of Admission:</label>
+      <input
+        class="form-control"
         type="text"
         id="yearOfAdmission"
         name="yearOfAdmission"
         required
       /><br />
 
-      <label for="modeOfAdmission">Mode of Admission:</label>
-      <select id="modeOfAdmission" name="modeOfAdmission" required>
+      <label class="form-label" for="modeOfAdmission">Mode of Admission:</label>
+      <select
+        class="form-select"
+        id="modeOfAdmission"
+        name="modeOfAdmission"
+        required
+      >
         <option value="CET(Aided)">CET (Aided)</option>
         <option value="CET(UnAided)">CET (UnAided)</option>
         <option value="Management">Management</option>
@@ -31,179 +50,347 @@
         <!-- Add more options as needed --></select
       ><br />
 
-      <label for="cetRank">CET/COMEDK Rank:</label>
-      <input type="number" id="cetRank" name="cetRank" /><br />
-
-      <label for="contactNum">Contact Number:</label>
-      <input type="text" id="contactNum" name="contactNum" /><br />
-
-      <label for="dob">Date of Birth:</label>
-      <input type="date" id="dob" name="dob" /><br />
-
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" /><br />
-
-      <label for="aadhar">Aadhar Number:</label>
-      <input type="text" id="aadhar" name="aadhar" /><br />
-
-      <label for="bloodGroup">Blood Group:</label>
-      <input type="text" id="bloodGroup" name="bloodGroup" /><br />
-
-      <label for="facultyAdvisorName">Faculty Advisor Name:</label>
+      <label class="form-label" for="cetRank">CET/COMEDK Rank:</label>
       <input
+        class="form-control"
+        type="number"
+        id="cetRank"
+        name="cetRank"
+        required
+      /><br />
+
+      <label class="form-label" for="contactNum">Contact Number:</label>
+      <input
+        class="form-control"
+        type="text"
+        id="contactNum"
+        name="contactNum"
+        required
+      /><br />
+
+      <label class="form-label" for="dob">Date of Birth:</label>
+      <input
+        class="form-control"
+        type="date"
+        id="dob"
+        name="dob"
+        required
+      /><br />
+
+      <label class="form-label" for="email">Email:</label>
+      <input
+        class="form-control"
+        type="email"
+        id="email"
+        name="email"
+        required
+      /><br />
+
+      <label class="form-label" for="aadhar">Aadhar Number:</label>
+      <input
+        class="form-control"
+        type="text"
+        id="aadhar"
+        name="aadhar"
+        required
+      /><br />
+
+      <label class="form-label" for="bloodGroup">Blood Group:</label>
+      <input
+        class="form-control"
+        type="text"
+        id="bloodGroup"
+        name="bloodGroup"
+        required
+      /><br />
+
+      <label class="form-label" for="facultyAdvisorName"
+        >Faculty Advisor Name:</label
+      >
+      <input
+        class="form-control"
         type="text"
         id="facultyAdvisorName"
         name="facultyAdvisorName"
+        required
       /><br />
 
-      <label for="sem">Semester:</label>
-      <input type="text" id="sem" name="sem" /><br />
-
-      <label for="fatherName">Father's Name:</label>
-      <input type="text" id="fatherName" name="fatherName" /><br />
-
-      <label for="fatherOccupation">Father's Occupation:</label>
-      <input type="text" id="fatherOccupation" name="fatherOccupation" /><br />
-
-      <label for="fatherQualification">Father's Qualification:</label>
+      <label class="form-label" for="sem">Semester:</label>
       <input
+        class="form-control"
         type="text"
-        id="fatherQualification"
-        name="fatherQualification"
+        id="sem"
+        name="sem"
+        required
       /><br />
+    </div>
 
-      <label for="fatherContactNum">Father's Contact Number:</label>
-      <input type="text" id="fatherContactNum" name="fatherContactNum" /><br />
-
-      <label for="fatherEmail">Father's Email:</label>
-      <input type="email" id="fatherEmail" name="fatherEmail" /><br />
-
-      <label for="motherName">Mother's Name:</label>
-      <input type="text" id="motherName" name="motherName" /><br />
-
-      <label for="motherOccupation">Mother's Occupation:</label>
-      <input type="text" id="motherOccupation" name="motherOccupation" /><br />
-
-      <label for="motherQualification">Mother's Qualification:</label>
+    <div class="parentDetails">
+      <h2>Parent/Guardian Details</h2>
+      <label class="form-label" for="parentOrGuardianName">Name:</label>
       <input
+        class="form-control"
         type="text"
-        id="motherQualification"
-        name="motherQualification"
+        id="parentOrGuardianName"
+        name="parentOrGuardianName"
+        required
       /><br />
 
-      <label for="motherContactNum">Mother's Contact Number:</label>
-      <input type="text" id="motherContactNum" name="motherContactNum" /><br />
-
-      <label for="motherEmail">Mother's Email:</label>
-      <input type="email" id="motherEmail" name="motherEmail" /><br />
-
-      <label for="address">Address:</label>
-      <textarea id="address" name="address"></textarea><br />
-
-      <h2>Class X Information</h2>
-      <label for="classXYearOfPassing">Year of Passing:</label>
-      <input
-        type="text"
-        id="classXYearOfPassing"
-        name="classX[yearOfPassing]"
-      /><br />
-
-      <label for="classXBoard">Board:</label>
-      <input type="text" id="classXBoard" name="classX[board]" /><br />
-
-      <label for="classXInstitute">Institute:</label>
-      <input type="text" id="classXInstitute" name="classX[institute]" /><br />
-
-      <label for="classXScore">Score:</label>
-      <input type="text" id="classXScore" name="classX[score]" /><br />
-
-      <h2>Class XII Information</h2>
-      <label for="classXIIPassingYear">Year of Passing:</label>
-      <input
-        type="text"
-        id="classXIIPassingYear"
-        name="classXII[yearOfPassing]"
-      /><br />
-
-      <label for="classXIIBoard">Board:</label>
-      <input type="text" id="classXIIBoard" name="classXII[board]" /><br />
-
-      <label for="classXIIInstitute">Institute:</label>
-      <input
-        type="text"
-        id="classXIIInstitute"
-        name="classXII[institute]"
-      /><br />
-
-      <label for="classXIIScore">Score:</label>
-      <input type="text" id="classXIIScore" name="classXII[score]" /><br />
-
-      <h2>Credit Information</h2>
-      <!-- Repeat this section based on the number of creditInfo objects in the schema -->
-      <label for="noOfSemesters">Number of Semesters Completed:</label>
-      <input type="number" id="noOfSemesters" name="noOfSemesters" /><br />
-
-      <div id="creditInfoRows"></div>
-
-      <!-- Repeat the above section for each creditInfo object -->
-
-      <h2>Supplementary Exams Information</h2>
-      <!-- Repeat this section based on the number of supplementary objects in the schema -->
-      <label for="noOfSupplementary">Number of Supplementary Semesters:</label>
-      <input type="number" id="noOfSupplementary" name="noOfSupplementary" />
-
-      <div id="supplementaryInputsContainer"></div>
-
-      <!-- Repeat the above section for each supplementary object -->
-
-      <h2>Backlogs Information</h2>
-      <!-- Repeat this section based on the number of backlogs objects in the schema -->
-      <label for="noOfBacklogs">Number of Backlogs:</label>
-      <input type="number" id="noOfBacklogs" name="noOfBacklogs" /><br />
-
-      <div id="backlogsRows"></div>
-      <!-- Repeat the above section for each backlog object -->
-
-      <h2>Current Semester Registered Subjects</h2>
-      <!-- Repeat this section based on the number of currentSemRegSub objects in the schema -->
-      <label for="noOfCurrentSubjects"
-        >Number of Current Semester Registered Subjects:</label
+      <label class="form-label" for="parentOrGuardianRelation"
+        >Relationship to Student:</label
       >
       <input
-        type="number"
-        id="noOfCurrentSubjects"
-        name="noOfCurrentSubjects"
+        class="form-control"
+        type="text"
+        id="parentOrGuardianRelation"
+        name="parentOrGuardianRelation"
+        required
       /><br />
 
-      <div id="currentSubjectsRows"></div>
-
-      <!-- Repeat the above section for each currentSemRegSub object -->
-
-      <label for="currentCGPA">Current CGPA:</label>
+      <label class="form-label" for="parentOrGuardianOccupation"
+        >Occupation:</label
+      >
       <input
-        type="number"
-        step="0.01"
-        id="currentCGPA"
-        name="currentCGPA"
+        class="form-control"
+        type="text"
+        id="parentOrGuardianOccupation"
+        name="parentOrGuardianOccupation"
+        required
       /><br />
 
-      <h2>Activity Points</h2>
-      <label for="communityPts">Community Points Earned:</label>
+      <label class="form-label" for="parentOrGuardianQualification"
+        >Qualification:</label
+      >
       <input
-        type="number"
-        id="communityPts"
-        name="activityPts[communityPts]"
+        class="form-control"
+        type="text"
+        id="parentOrGuardianQualification"
+        name="parentOrGuardianQualification"
+        required
       /><br />
 
-      <label for="alliedPts">Allied Points Earned:</label>
-      <input type="number" id="alliedPts" name="activityPts[alliedPts]" /><br />
+      <label class="form-label" for="parentOrGuardianContactNum"
+        >Contact Number:</label
+      >
+      <input
+        class="form-control"
+        type="text"
+        id="parentOrGuardianContactNum"
+        name="parentOrGuardianContactNum"
+        required
+      /><br />
 
-      <label for="totalPts">Total Points Earned:</label>
-      <input type="number" id="totalPts" name="activityPts[totalPts]" /><br />
+      <label class="form-label" for="parentOrGuardianContactNum1"
+        >Alt Contact Number:</label
+      >
+      <input
+        class="form-control"
+        type="text"
+        id="parentOrGuardianContactNum1"
+        name="parentOrGuardianContactNum1"
+        required
+      /><br />
 
-      <input type="submit" value="Submit" />
-    </form>
+      <label class="form-label" for="parentOrGuardianEmail">Email:</label>
+      <input
+        class="form-control"
+        type="email"
+        id="parentOrGuardianEmail"
+        name="parentOrGuardianEmail"
+        required
+      /><br />
 
-    <script src="/Javascript/dynamicContent.js"></script>
-  </body>
-</html>
+      <label class="form-label" for="address">Address:</label>
+      <textarea
+        class="form-control"
+        id="address"
+        name="address"
+        required
+      ></textarea
+      ><br />
+    </div>
+
+    <h2>Class X Information</h2>
+    <label class="form-label" for="classXYearOfPassing">Year of Passing:</label>
+    <input
+      class="form-control"
+      type="text"
+      id="classXYearOfPassing"
+      name="classX[yearOfPassing]"
+      required
+    /><br />
+
+    <label class="form-label" for="classXBoard">Board:</label>
+    <input
+      class="form-control"
+      type="text"
+      id="classXBoard"
+      name="classX[board]"
+      required
+    /><br />
+
+    <label class="form-label" for="classXInstitute">Institute:</label>
+    <input
+      class="form-control"
+      type="text"
+      id="classXInstitute"
+      name="classX[institute]"
+      required
+    /><br />
+
+    <label class="form-label" for="classXScore">Score:</label>
+    <input
+      class="form-control"
+      type="text"
+      id="classXScore"
+      name="classX[score]"
+      required
+    /><br />
+
+    <h2>Class XII Information</h2>
+    <label class="form-label" for="classXIIPassingYear">Year of Passing:</label>
+    <input
+      class="form-control"
+      type="text"
+      id="classXIIPassingYear"
+      name="classXII[yearOfPassing]"
+      required
+    /><br />
+
+    <label class="form-label" for="classXIIBoard">Board:</label>
+    <input
+      class="form-control"
+      type="text"
+      id="classXIIBoard"
+      name="classXII[board]"
+      required
+    /><br />
+
+    <label class="form-label" for="classXIIInstitute">Institute:</label>
+    <input
+      class="form-control"
+      type="text"
+      id="classXIIInstitute"
+      name="classXII[institute]"
+      required
+    /><br />
+
+    <label class="form-label" for="classXIIScore">Score:</label>
+    <input
+      class="form-control"
+      type="text"
+      id="classXIIScore"
+      name="classXII[score]"
+      required
+    /><br />
+
+    <h2>Credit Information</h2>
+    <!-- Repeat this section based on the number of creditInfo objects in the schema -->
+    <label class="form-label" for="noOfSemesters"
+      >Number of Semesters Completed:</label
+    >
+    <input
+      class="form-control"
+      type="number"
+      id="noOfSemesters"
+      name="noOfSemesters"
+      required
+    /><br />
+
+    <div id="creditInfoRows"></div>
+
+    <!-- Repeat the above section for each creditInfo object -->
+
+    <h2>Supplementary Exams Information</h2>
+    <!-- Repeat this section based on the number of supplementary objects in the schema -->
+    <label class="form-label" for="noOfSupplementary"
+      >Number of Supplementary Semesters:</label
+    >
+    <input
+      class="form-control"
+      type="number"
+      id="noOfSupplementary"
+      name="noOfSupplementary"
+      required
+    />
+
+    <div id="supplementaryInputsContainer"></div>
+
+    <!-- Repeat the above section for each supplementary object -->
+
+    <h2>Backlogs Information</h2>
+    <!-- Repeat this section based on the number of backlogs objects in the schema -->
+    <label class="form-label" for="noOfBacklogs">Number of Backlogs:</label>
+    <input
+      class="form-control"
+      type="number"
+      id="noOfBacklogs"
+      name="noOfBacklogs"
+      required
+    /><br />
+
+    <div id="backlogsRows"></div>
+    <!-- Repeat the above section for each backlog object -->
+
+    <h2>Current Semester Registered Subjects</h2>
+    <!-- Repeat this section based on the number of currentSemRegSub objects in the schema -->
+    <label class="form-label" for="noOfCurrentSubjects"
+      >Number of Current Semester Registered Subjects:</label
+    >
+    <input
+      class="form-control"
+      type="number"
+      id="noOfCurrentSubjects"
+      name="noOfCurrentSubjects"
+      required
+    /><br />
+
+    <div id="currentSubjectsRows"></div>
+
+    <!-- Repeat the above section for each currentSemRegSub object -->
+
+    <label class="form-label" for="currentCGPA">Current CGPA:</label>
+    <input
+      class="form-control"
+      type="number"
+      step="0.01"
+      id="currentCGPA"
+      name="currentCGPA"
+      required
+    /><br />
+
+    <h2>Activity Points</h2>
+    <label class="form-label" for="communityPts"
+      >Community Points Earned:</label
+    >
+    <input
+      class="form-control"
+      type="number"
+      id="communityPts"
+      name="activityPts[communityPts]"
+      required
+    /><br />
+
+    <label class="form-label" for="alliedPts">Allied Points Earned:</label>
+    <input
+      class="form-control"
+      type="number"
+      id="alliedPts"
+      name="activityPts[alliedPts]"
+      required
+    /><br />
+
+    <label class="form-label" for="totalPts">Total Points Earned:</label>
+    <input
+      class="form-control"
+      type="number"
+      id="totalPts"
+      name="activityPts[totalPts]"
+      required
+    /><br />
+
+    <input class="btn btn-primary" type="submit" value="Submit" />
+    <input class="btn btn-secondary" type="reset" value="reset" />
+  </form>
+</div>
+<%- include('partials/footer'); -%>

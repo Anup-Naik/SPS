@@ -15,28 +15,28 @@ function renderCreditInfoRows(count) {
     const row = document.createElement("div");
     row.innerHTML = `
                     <h2>Credit Information for Semester ${i}</h2>
-                    <label for="creditsSem${i}">Sem:</label>
-                    <input type="number" value="${i}" id="creditsSem${i}" name="creditInfo[${
+                    <label class="form-label" for="creditsSem${i}">Sem:</label>
+                    <input class="form-control" type="number" value="${i}" id="creditsSem${i}" name="creditInfo[${
       i - 1
     }][sem]"><br />
 
-                    <label for="creditsRegistered${i}">Credits Registered:</label>
-                    <input type="number" id="creditsRegistered${i}" name="creditInfo[${
+                    <label class="form-label" for="creditsRegistered${i}">Credits Registered:</label>
+                    <input class="form-control" type="number" id="creditsRegistered${i}" name="creditInfo[${
       i - 1
     }][creditsRegistered]"><br />
 
-                    <label for="creditsEarned${i}">Credits Earned:</label>
-                    <input type="number" id="creditsEarned${i}" name="creditInfo[${
+                    <label class="form-label" for="creditsEarned${i}">Credits Earned:</label>
+                    <input class="form-control" type="number" id="creditsEarned${i}" name="creditInfo[${
       i - 1
     }][creditsEarned]"><br />
 
-                    <label for="sgpa${i}">SGPA:</label>
-                    <input type="number" step="0.01" id="sgpa${i}" name="creditInfo[${
+                    <label class="form-label" for="sgpa${i}">SGPA:</label>
+                    <input class="form-control" type="number" step="0.01" id="sgpa${i}" name="creditInfo[${
       i - 1
     }][sgpa]"><br />
 
-                    <label for="file${i}">File:</label>
-                    <input type="file" id="file${i}" name="creditInfo[${
+                    <label class="form-label" for="file${i}">File:</label>
+                    <input class="form-control" type="file" id="file${i}" name="creditInfo[${
       i - 1
     }][file]"><br />
                 `;
@@ -63,23 +63,23 @@ function renderSupplementaryInputs(count) {
     const div = document.createElement("div");
     div.innerHTML = `
                     <h2>Supplementary Exams Information for Semester ${i}</h2>
-                    <label for="suppCreditsRegistered${i}">Credits Registered:</label>
-                    <input type="number" id="suppCreditsRegistered${i}" name="supplementary[${
+                    <label class="form-label" for="suppCreditsRegistered${i}">Credits Registered:</label>
+                    <input class="form-control" type="number" id="suppCreditsRegistered${i}" name="supplementary[${
       i - 1
     }][creditsRegistered]"><br />
 
-                    <label for="suppCreditsEarned${i}">Credits Earned:</label>
-                    <input type="number" id="suppCreditsEarned${i}" name="supplementary[${
+                    <label class="form-label" for="suppCreditsEarned${i}">Credits Earned:</label>
+                    <input class="form-control" type="number" id="suppCreditsEarned${i}" name="supplementary[${
       i - 1
     }][creditsEarned]"><br />
 
-                    <label for="suppSGPA${i}">SGPA:</label>
-                    <input type="number" step="0.01" id="suppSGPA${i}" name="supplementary[${
+                    <label class="form-label" for="suppSGPA${i}">SGPA:</label>
+                    <input class="form-control" type="number" step="0.01" id="suppSGPA${i}" name="supplementary[${
       i - 1
     }][sgpa]"><br />
 
-                    <label for="suppFile${i}">File:</label>
-                    <input type="file" id="suppFile${i}" name="supplementary[${
+                    <label class="form-label" for="suppFile${i}">File:</label>
+                    <input class="form-control" type="file" id="suppFile${i}" name="supplementary[${
       i - 1
     }][file]"><br />
                 `;
@@ -102,28 +102,28 @@ function renderBacklogsRows(count) {
     const row = document.createElement("div");
     row.innerHTML = `
                   <h2>Backlog ${i} Information</h2>
-                  <label for="backlogSubjectCode${i}">Subject Code:</label>
-                  <input type="text" id="backlogSubjectCode${i}" name="backlogsInfo[${
+                  <label class="form-label" for="backlogSubjectCode${i}">Subject Code:</label>
+                  <input class="form-control" type="text" id="backlogSubjectCode${i}" name="backlogsInfo[${
       i - 1
     }][subjectCode]"><br />
 
-                  <label for="backlogSubjectTitle${i}">Subject Title:</label>
-                  <input type="text" id="backlogSubjectTitle${i}" name="backlogsInfo[${
+                  <label class="form-label" for="backlogSubjectTitle${i}">Subject Title:</label>
+                  <input class="form-control" type="text" id="backlogSubjectTitle${i}" name="backlogsInfo[${
       i - 1
     }][subjectTitle]"><br />
 
-                  <label for="backlogCredits${i}">Credits:</label>
-                  <input type="number" id="backlogCredits${i}" name="backlogsInfo[${
+                  <label class="form-label" for="backlogCredits${i}">Credits:</label>
+                  <input class="form-control" type="number" id="backlogCredits${i}" name="backlogsInfo[${
       i - 1
     }][credits]"><br />
 
-                  <label for="backlogCleared${i}">Cleared:</label>
-                  <input type="checkbox" value="true" id="backlogCleared${i}" name="backlogsInfo[${
+                  <label class="form-check-label" for="backlogCleared${i}">Cleared:</label>
+                  <input class="form-check-input" type="checkbox" value="true" id="backlogCleared${i}" name="backlogsInfo[${
       i - 1
     }][cleared]"><br />
 
-    <label for="backlogSem${i}">Backlog Cleared Sem:</label>
-                  <input type="text" id="backlogSem${i}" name="backlogsInfo[${
+    <label class="form-label" for="backlogSem${i}">Backlog Cleared Sem:</label>
+                  <input class="form-control" type="text" id="backlogSem${i}" name="backlogsInfo[${
       i - 1
     }][semCleared]"><br />
               `;
@@ -149,21 +149,46 @@ function renderCurrentSubjectsRows(count) {
     const row = document.createElement("div");
     row.innerHTML = `
                   <h2>Current Semester Subject ${i} Information</h2>
-                  <label for="currentSubjectCode${i}">Subject Code:</label>
-                  <input type="text" id="currentSubjectCode${i}" name="currentSemInfo[${
+                  <label class="form-label" for="currentSubjectCode${i}">Subject Code:</label>
+                  <input class="form-control" type="text" id="currentSubjectCode${i}" name="currentSemInfo[${
       i - 1
     }][subjectCode]"><br />
 
-                  <label for="currentSubjectTitle${i}">Subject Title:</label>
-                  <input type="text" id="currentSubjectTitle${i}" name="currentSemInfo[${
+                  <label class="form-label" for="currentSubjectTitle${i}">Subject Title:</label>
+                  <input class="form-control" type="text" id="currentSubjectTitle${i}" name="currentSemInfo[${
       i - 1
     }][subjectTitle]"><br />
 
-                  <label for="currentSubjectCredits${i}">Credits:</label>
-                  <input type="number" id="currentSubjectCredits${i}" name="currentSemInfo[${
+                  <label class="form-label" for="currentSubjectCredits${i}">Credits:</label>
+                  <input class="form-control" type="number" id="currentSubjectCredits${i}" name="currentSemInfo[${
       i - 1
     }][subjectCredits]"><br />
               `;
     currentSubjectsRowsContainer.appendChild(row);
   }
 }
+
+/* Validation */
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(() => {
+  "use strict";
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll(".needs-validation");
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach((form) => {
+    form.addEventListener(
+      "submit",
+      (event) => {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+
+        form.classList.add("was-validated");
+      },
+      false
+    );
+  });
+})();

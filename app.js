@@ -46,9 +46,13 @@ app.get("/student", (req, res) => {
 app.post("/student", upload.array([]), async (req, res) => {
   const student = new Student(req.body);
   await student.save();
-  console.log(req.body); // Form fields
-  console.log(req.file); // Uploaded file details
   res.send(req.body);
+});
+
+app.get("/student/:id", async (req, res) => {
+  const { id } = req.params;
+  const student = await Student.findById({ _id: id });
+  res.render("show", { student });
 });
 
 const port = process.env.PORT || 3000;
