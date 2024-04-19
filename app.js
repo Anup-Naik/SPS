@@ -2,8 +2,18 @@ const express = require("express");
 const mongoose = require("mongoose");
 const ejs = require("ejs");
 const path = require("path");
-const Student = require("./models/studentModel");
-const multer = require("multer");
+
+const {
+  councelForm,
+  saveCouncelForm,
+  showStudent,
+  renderEditStudent,
+  updateStudent,
+} = require("./controllers/studentCont");
+const catchAsync = require("./utils/catchAsync");
+const ExpressError = require("./utils/ExpressError");
+const { myMulter } = require("./utils/multerUtil");
+const methodOverride = require("method-override");
 
 const app = express();
 
@@ -12,32 +22,7 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads");
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e5);
-    cb(null, file.originalname + "-" + uniqueSuffix);
-  },
-});
-
-const limits = { fileSize: 1024 * 1024, files: 16 };
-
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype === "application/pdf") {
-    cb(null, true);
-  } else {
-    cb(new Error("File type not allowed"));
-  }
-};
-
-const upload = multer({
-  storage: storage,
-  limits: limits,
-  fileFilter: fileFilter,
-});
+app.use(methodOverride("_method"));
 
 main()
   .then(() => console.log("Connected to database"))
@@ -53,25 +38,24 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.get("/student", (req, res) => {
-  res.render("counsellingForm");
+app.get("/student", catchAsync(councelForm));
+
+app.post("/student", myMulter, catchAsync(saveCouncelForm));
+
+app.get("/student/:id", catchAsync(showStudent));
+
+app.get("/student/:id/edit", catchAsync(renderEditStudent));
+
+app.put("/student/:id", myMulter, catchAsync(updateStudent));
+
+app.all("*", (req, res, next) => {
+  next(new ExpressError("Page Not Found", 404));
 });
 
-const myMulter = upload.fields([
-  { name: "regSemFiles", maxCount: 8 },
-  { name: "suppSemFiles", maxCount: 8 },
-]);
-
-app.post("/student", myMulter, async (req, res) => {
-  const student = new Student(req.body);
-  await student.save();
-  res.send(req.files);
-});
-
-app.get("/student/:id", async (req, res) => {
-  const { id } = req.params;
-  const student = await Student.findById({ _id: id });
-  res.render("show", { student });
+app.use((err, req, res, next) => {
+  const { statusCode = 500 } = err;
+  if (!err.message) err.message = "Oh No, Something Went Wrong!";
+  res.status(statusCode).render("error", { err });
 });
 
 const port = process.env.PORT || 3000;

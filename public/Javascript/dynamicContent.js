@@ -144,7 +144,7 @@ const currentSubjectsRowsContainer = document.getElementById(
   "currentSubjectsRows"
 );
 
-const MAX_CURRENT_SUBJECTS = 13;
+const MAX_CURRENT_SUBJECTS = 12;
 noOfCurrentSubjectsInput.addEventListener("input", () => {
   const count = parseInt(noOfCurrentSubjectsInput.value, 10);
   renderCurrentSubjectsRows(Math.min(count, MAX_CURRENT_SUBJECTS));

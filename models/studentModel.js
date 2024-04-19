@@ -63,7 +63,8 @@ const studentSchema = new mongoose.Schema({
   ],
   currentCGPA: Number,
   activityPts: { communityPts: Number, alliedPts: Number, totalPts: Number },
-  files: [{ name: String, url: String }],
+  regFiles: [{ filename: String, path: String }],
+  suppFiles: [{ filename: String, path: String }],
 });
 
 module.exports = mongoose.model("Student", studentSchema);
