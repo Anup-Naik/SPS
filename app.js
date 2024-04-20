@@ -2,7 +2,20 @@ const express = require("express");
 const mongoose = require("mongoose");
 const ejs = require("ejs");
 const path = require("path");
-
+const Admin = require("./models/adminModel");
+const {
+  showCreateFacultyForm,
+  createFaculty,
+  showEditFacultyForm,
+  updateFaculty,
+  deleteFaculty,
+  adminDashboard,
+  showCreateStudentForm,
+  createStudent,
+  updateStudentByAdmin,
+  showEditStudentForm,
+  deleteStudent,
+} = require("./controllers/adminCont");
 const {
   councelForm,
   saveCouncelForm,
@@ -34,10 +47,35 @@ async function main() {
   // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   res.render("index");
 });
 
+//Admin Facuty Routes
+app.get("/admin", catchAsync(adminDashboard));
+
+app.get("/admin/faculty", catchAsync(showCreateFacultyForm));
+
+app.post("/admin/faculty", catchAsync(createFaculty));
+
+app.get("/admin/faculty/:id/edit", catchAsync(showEditFacultyForm));
+
+app.put("/admin/faculty/:id", catchAsync(updateFaculty));
+
+app.delete("/admin/faculty/:id", catchAsync(deleteFaculty));
+
+//Admin Student Routes
+app.get("/admin/student", catchAsync(showCreateStudentForm));
+
+app.post("/admin/student", catchAsync(createStudent));
+
+app.get("/admin/student/:id/edit", catchAsync(showEditStudentForm));
+
+app.put("/admin/student/:id", catchAsync(updateStudentByAdmin));
+
+app.delete("/admin/student/:id", catchAsync(deleteStudent));
+
+// Student Module Routes
 app.get("/student", catchAsync(councelForm));
 
 app.post("/student", myMulter, catchAsync(saveCouncelForm));
@@ -48,10 +86,12 @@ app.get("/student/:id/edit", catchAsync(renderEditStudent));
 
 app.put("/student/:id", myMulter, catchAsync(updateStudent));
 
+// All Routes Except Above
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page Not Found", 404));
 });
 
+//Error Handling Middleware
 app.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
   if (!err.message) err.message = "Oh No, Something Went Wrong!";

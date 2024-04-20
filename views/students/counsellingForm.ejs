@@ -1,4 +1,5 @@
 <%- include('../partials/header'); -%>
+<%- include('../partials/navbar'); -%>
   <div class="container">
     <h1>Student Information Form</h1>
     <form class="row g-3 needs-validation" action="/student" method="POST" enctype="multipart/form-data" novalidate>
@@ -16,7 +17,7 @@
 
         <div class="col-sm-6 col-md-4 col-lg-3">
           <label class="form-label" for="yearOfAdmission">Year of Admission:</label>
-          <input class="form-control" type="text" id="yearOfAdmission" name="yearOfAdmission" required />
+          <input class="form-control" type="number" id="yearOfAdmission" name="yearOfAdmission" required />
         </div>
 
         <div class="col-sm-6 col-md-4 col-lg-3">
@@ -37,7 +38,7 @@
 
         <div class="col-sm-6 col-md-4 col-lg-3">
           <label class="form-label" for="contactNum">Contact Number:</label>
-          <input class="form-control" type="text" id="contactNum" name="contactNum" required />
+          <input class="form-control" type="number" id="contactNum" name="contactNum" required />
         </div>
 
         <div class="col-sm-6 col-md-4 col-lg-3">
@@ -52,7 +53,7 @@
 
         <div class="col-sm-6 col-md-4 col-lg-3">
           <label class="form-label" for="aadhar">Aadhar Number:</label>
-          <input class="form-control" type="text" id="aadhar" name="aadhar" required />
+          <input class="form-control" type="number" id="aadhar" name="aadhar" required />
         </div>
 
         <div class="col-sm-6 col-md-4 col-lg-3">
@@ -67,7 +68,7 @@
 
         <div class="col-sm-6 col-md-4 col-lg-3">
           <label class="form-label" for="sem">Semester:</label>
-          <input class="form-control" type="text" id="sem" name="sem" required />
+          <input class="form-control" type="number" id="sem" name="sem" required />
         </div>
       </div>
 
@@ -99,13 +100,13 @@
 
         <div class="col-sm-6 col-md-4 col-lg-3">
           <label class="form-label" for="parentOrGuardianContactNum">Contact Number:</label>
-          <input class="form-control" type="text" id="parentOrGuardianContactNum" name="parentOrGuardianContactNum"
+          <input class="form-control" type="number" id="parentOrGuardianContactNum" name="parentOrGuardianContactNum"
             required />
         </div>
 
         <div class="col-sm-6 col-md-4 col-lg-3">
           <label class="form-label" for="parentOrGuardianContactNum1">Alt Contact Number:</label>
-          <input class="form-control" type="text" id="parentOrGuardianContactNum1" name="parentOrGuardianContactNum1"
+          <input class="form-control" type="number" id="parentOrGuardianContactNum1" name="parentOrGuardianContactNum1"
             required />
         </div>
 
@@ -124,7 +125,7 @@
         <h2>Class X Information</h2>
         <div class="col-sm-6 col-md-4 col-lg-3">
           <label class="form-label" for="classXYearOfPassing">Year of Passing:</label>
-          <input class="form-control" type="text" id="classXYearOfPassing" name="classX[yearOfPassing]" required />
+          <input class="form-control" type="number" id="classXYearOfPassing" name="classX[yearOfPassing]" required />
         </div>
 
         <div class="col-sm-6 col-md-4 col-lg-3">
@@ -145,7 +146,7 @@
         <h2>Class XII Information</h2>
         <div class="col-sm-6 col-md-4 col-lg-3">
           <label class="form-label" for="classXIIPassingYear">Year of Passing:</label>
-          <input class="form-control" type="text" id="classXIIPassingYear" name="classXII[yearOfPassing]" required />
+          <input class="form-control" type="number" id="classXIIPassingYear" name="classXII[yearOfPassing]" required />
         </div>
 
         <div class="col-sm-6 col-md-4 col-lg-3">

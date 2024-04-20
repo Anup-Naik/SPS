@@ -1,10 +1,15 @@
 const mongoose = require("mongoose");
 
 const facultySchema = new mongoose.Schema({
+  username: { type: String, unique: [true, "User already exists"] },
+  password: String,
+  role: { type: String, enum: ["faculty"], default: "faculty" },
   name: String,
+  contact: Number,
+  email: String,
   mentees: [
     {
-      studentId: { type: mongoose.Schema.Types.ObjectId, ref: "Student" },
+      mentee: { type: mongoose.Schema.Types.ObjectId, ref: "Student" },
       remarks: String,
     },
   ],

@@ -1,0 +1,70 @@
+<%- include('../partials/header'); -%> <%- include('../partials/adminNav'); -%>
+<div class="container">
+  <h1 class="mt-4 mb-4">Edit Faculty</h1>
+
+  <!-- Edit Faculty Form -->
+  <form
+    action="/admin/faculty/<%= faculty._id %>?_method=PUT"
+    method="POST"
+    class="mb-4"
+  >
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        class="form-control"
+        value="<%= faculty.username %>"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        value="<%= faculty.password %>"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        value="<%= faculty.name %>"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="contact">Contact:</label>
+      <input
+        type="number"
+        id="contact"
+        name="contact"
+        value="<%= faculty.contact %>"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        value="<%= faculty.email %>"
+        class="form-control"
+        required
+      />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Edit Faculty</button>
+    <button type="reset" class="btn btn-secondary mt-3">Reset</button>
+  </form>
+</div>
+<%- include('../partials/footer'); -%>

@@ -1,0 +1,26 @@
+<%- include('../partials/header'); -%> <%- include('../partials/adminNav'); -%>
+        <div class="container">
+            <h1 class="mt-4 mb-4">Edit Student</h1>
+            <form action="/admin/student/<%= student._id %>?_method=PUT" method="POST">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" value="<%= student.username %>" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" value="<%= student.password %>" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label for="facultyAdvisor">Faculty Advisor:</label>
+                    <select id="facultyAdvisor" name="facultyAdvisor" class="form-control" required>
+                        <% facultyMembers.forEach(faculty=> { %>
+                            <option value="<%= faculty._id %>" <%=(student.facultyAdvisor.toString()===faculty._id.toString())?"selected":"" %>><%= faculty.name %>
+                            </option>
+                            <% }) %>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Update Student</button>
+                <button type="reset" class="btn btn-primary mt-3">Reset</button>
+            </form>
+        </div>
+        <%- include('../partials/footer'); -%>

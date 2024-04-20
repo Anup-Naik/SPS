@@ -1,370 +1,377 @@
 <%- include('../partials/header'); -%>
-  <div class="container">
-    <h1>Student Information Form</h1>
-    <form class="row g-3 needs-validation" action="/student/<%= student._id %>?_method=PUT" method="POST" enctype="multipart/form-data"
-      novalidate>
-      <div class="row g-3 mb-3 studentDetails">
-        <h2>Student Details</h2>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="fullname">Full Name:</label>
-          <input class="form-control" type="text" id="fullname" name="fullname" value="<%= student.fullname %>"
-            required />
+  <%- include('../partials/navbar'); -%>
+    <div class="container">
+      <h1>Student Information Form</h1>
+      <form class="row g-3 needs-validation" action="/student/<%= student._id %>?_method=PUT" method="POST"
+        enctype="multipart/form-data" novalidate>
+        <div class="row g-3 mb-3 studentDetails">
+          <h2>Student Details</h2>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="fullname">Full Name:</label>
+            <input class="form-control" type="text" id="fullname" name="fullname" value="<%= student.fullname %>"
+              required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="usn">USN:</label>
+            <input class="form-control" type="text" id="usn" name="usn" value="<%= student.usn %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="yearOfAdmission">Year of Admission:</label>
+            <input class="form-control" type="number" id="yearOfAdmission" name="yearOfAdmission"
+              value="<%= student.yearOfAdmission %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="modeOfAdmission">Mode of Admission:</label>
+            <select class="form-select" id="modeOfAdmission" name="modeOfAdmission" required>
+              <option value="CET(Aided)" <%=student.modeOfAdmission==="CET(Aided)" ? "selected" :"" %> >CET (Aided)
+              </option>
+              <option value="CET(UnAided)" <%=student.modeOfAdmission==="CET(UnAided)" ? "selected" :"" %> >CET
+                (UnAided)</option>
+              <option value="Management" <%=student.modeOfAdmission==="Management" ? "selected" :"" %> >Management
+              </option>
+              <option value="COMEDK" <%=student.modeOfAdmission==="COMEDK" ? "selected" :"" %> >COMEDK</option>
+              <!-- Add more options as needed -->
+            </select>
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="cetRank">CET/COMEDK Rank:</label>
+            <input class="form-control" type="number" id="cetRank" name="cetRank" value="<%= student.cetRank %>"
+              required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="contactNum">Contact Number:</label>
+            <input class="form-control" type="number" id="contactNum" name="contactNum"
+              value="<%= student.contactNum %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="dob">Date of Birth:</label>
+            <input class="form-control" type="date" id="dob" name="dob" value="<%= student.dob %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="email">Email:</label>
+            <input class="form-control" type="email" id="email" name="email" value="<%= student.email %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="aadhar">Aadhar Number:</label>
+            <input class="form-control" type="number" id="aadhar" name="aadhar" value="<%= student.aadhar %>"
+              required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="bloodGroup">Blood Group:</label>
+            <input class="form-control" type="text" id="bloodGroup" name="bloodGroup" value="<%= student.bloodGroup %>"
+              required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="facultyAdvisorName">Faculty Advisor Name:</label>
+            <input class="form-control" type="text" id="facultyAdvisorName" name="facultyAdvisorName"
+              value="<%= student.facultyAdvisorName %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="sem">Semester:</label>
+            <input class="form-control" type="number" id="sem" name="sem" value="<%= student.sem %>" required />
+          </div>
         </div>
 
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="usn">USN:</label>
-          <input class="form-control" type="text" id="usn" name="usn" value="<%= student.usn %>" required />
+        <div class="row g-3 mb-3 parentDetails">
+          <h2>Parent/Guardian Details</h2>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="parentOrGuardianName">Name:</label>
+            <input class="form-control" type="text" id="parentOrGuardianName" name="parentOrGuardianName"
+              value="<%= student.parentOrGuardianName %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="parentOrGuardianRelation">Relationship to Student:</label>
+            <input class="form-control" type="text" id="parentOrGuardianRelation" name="parentOrGuardianRelation"
+              value="<%= student.parentOrGuardianRelation %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="parentOrGuardianOccupation">Occupation:</label>
+            <input class="form-control" type="text" id="parentOrGuardianOccupation" name="parentOrGuardianOccupation"
+              value="<%= student.parentOrGuardianOccupation %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="parentOrGuardianQualification">Qualification:</label>
+            <input class="form-control" type="text" id="parentOrGuardianQualification"
+              name="parentOrGuardianQualification" value="<%= student.parentOrGuardianQualification %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="parentOrGuardianContactNum">Contact Number:</label>
+            <input class="form-control" type="number" id="parentOrGuardianContactNum" name="parentOrGuardianContactNum"
+              value="<%= student.parentOrGuardianContactNum %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="parentOrGuardianContactNum1">Alt Contact Number:</label>
+            <input class="form-control" type="number" id="parentOrGuardianContactNum1"
+              name="parentOrGuardianContactNum1" value="<%= student.parentOrGuardianContactNum1 %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="parentOrGuardianEmail">Email:</label>
+            <input class="form-control" type="email" id="parentOrGuardianEmail" name="parentOrGuardianEmail"
+              value="<%= student.parentOrGuardianEmail %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="address">Address:</label>
+            <textarea class="form-control" id="address" name="address" required><%= student.address %></textarea>
+          </div>
         </div>
 
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="yearOfAdmission">Year of Admission:</label>
-          <input class="form-control" type="text" id="yearOfAdmission" name="yearOfAdmission"
-            value="<%= student.yearOfAdmission %>" required />
+        <div class="row g-3 academicDetails">
+          <h2>Class X Information</h2>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="classXYearOfPassing">Year of Passing:</label>
+            <input class="form-control" type="number" id="classXYearOfPassing" name="classX[yearOfPassing]"
+              value="<%= student.classX.yearOfPassing %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="classXBoard">Board:</label>
+            <input class="form-control" type="text" id="classXBoard" name="classX[board]"
+              value="<%= student.classX.board %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="classXInstitute">Institute:</label>
+            <input class="form-control" type="text" id="classXInstitute" name="classX[institute]"
+              value="<%= student.classX.institute %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="classXScore">Score:</label>
+            <input class="form-control" type="text" id="classXScore" name="classX[score]"
+              value="<%= student.classX.score %>" required />
+          </div>
+
+          <h2>Class XII Information</h2>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="classXIIPassingYear">Year of Passing:</label>
+            <input class="form-control" type="number" id="classXIIPassingYear" name="classXII[yearOfPassing]"
+              value="<%= student.classXII.yearOfPassing %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="classXIIBoard">Board:</label>
+            <input class="form-control" type="text" id="classXIIBoard" name="classXII[board]"
+              value="<%= student.classXII.board %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="classXIIInstitute">Institute:</label>
+            <input class="form-control" type="text" id="classXIIInstitute" name="classXII[institute]"
+              value="<%= student.classXII.institute %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="classXIIScore">Score:</label>
+            <input class="form-control" type="text" id="classXIIScore" name="classXII[score]"
+              value="<%= student.classXII.score %>" required />
+          </div>
+
+          <h2>Credit Information</h2>
+
+          <div class="col-sm-4">
+            <label class="form-label" for="noOfSemesters">Number of Semesters Completed:</label>
+            <input class="form-control" type="number" id="noOfSemesters" name="noOfSemesters"
+              value="<%= student.creditInfo.length %>" required />
+          </div>
+
+          <div class="row g-3" id="creditInfoRows">
+            <% for (var i=1; i <=student.creditInfo.length ; i++) { %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <h2>Credit Information for Semester <%= i %>
+                </h2>
+
+                <label class="form-label" for="creditsSem<%= i %>">Sem:</label>
+                <input class="form-control" type="number" value="<%= i %>" id="creditsSem<%= i %>"
+                  name="creditInfo[<%= i - 1 %>][sem]" required>
+
+                <label class="form-label" for="creditsRegistered<%= i %>">Credits Registered:</label>
+                <input class="form-control" type="number" id="creditsRegistered<%= i %>"
+                  name="creditInfo[<%= i - 1 %>][creditsRegistered]"
+                  value="<%= student.creditInfo[i - 1].creditsRegistered %>" required>
+
+                <label class="form-label" for="creditsEarned<%= i %>">Credits Earned:</label>
+                <input class="form-control" type="number" id="creditsEarned<%= i %>"
+                  name="creditInfo[<%= i - 1 %>][creditsEarned]" value="<%= student.creditInfo[i - 1].creditsEarned %>"
+                  required>
+
+                <label class="form-label" for="sgpa<%= i %>">SGPA:</label>
+                <input class="form-control" type="number" step="0.01" id="sgpa<%= i %>"
+                  name="creditInfo[<%= i - 1 %>][sgpa]" value="<%= student.creditInfo[i - 1].sgpa %>" required>
+              </div>
+              <% } %>
+          </div>
+
+          <!-- Repeat the above section for each creditInfo object -->
+
+          <h2>Supplementary Semester Information</h2>
+          <div class="col-sm-4">
+            <label class="form-label" for="noOfSupplementary">Number of Supplementary Semesters:</label>
+            <input class="form-control" type="number" id="noOfSupplementary" name="noOfSupplementary"
+              value="<%= student.supplementary.length %>" required />
+          </div>
+
+          <div class="row g-3" id="supplementaryInputsContainer">
+            <% for (let i=1; i <=student.supplementary.length ; i++) { %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <h2>Supplementary Sem <%= i %> Information</h2>
+
+                <label class="form-label" for="suppCreditsRegistered<%= i %>">Credits Registered:</label>
+                <input class="form-control" type="number" id="suppCreditsRegistered<%= i %>"
+                  name="supplementary[<%= i - 1 %>][creditsRegistered]"
+                  value="<%= student.supplementary[i - 1].creditsRegistered %>" required>
+
+                <label class="form-label" for="suppCreditsEarned<%= i %>">Credits Earned:</label>
+                <input class="form-control" type="number" id="suppCreditsEarned<%= i %>"
+                  name="supplementary[<%= i - 1 %>][creditsEarned]"
+                  value="<%= student.supplementary[i - 1].creditsEarned %>" required>
+
+                <label class="form-label" for="suppSGPA<%= i %>">SGPA:</label>
+                <input class="form-control" type="number" step="0.01" id="suppSGPA<%= i %>"
+                  name="supplementary[<%= i - 1 %>][sgpa]" value="<%= student.supplementary[i - 1].sgpa %>" required>
+              </div>
+              <% } %>
+          </div>
+
+          <!-- Repeat the above section for each supplementary object -->
+
+          <h2>Backlogs Information</h2>
+          <div class="col-sm-4">
+            <label class="form-label" for="noOfBacklogs">Number of Backlogs:</label>
+            <input class="form-control" type="number" id="noOfBacklogs" name="noOfBacklogs"
+              value="<%= student.backlogsInfo.length %>" required />
+          </div>
+
+          <div class="row g-3" id="backlogsRows">
+            <% for (let i=1; i <=student.backlogsInfo.length ; i++) { %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <h2>Backlog <%= i %> Information</h2>
+
+                <label class="form-label" for="backlogSubjectCode<%= i %>">Subject Code:</label>
+                <input class="form-control" type="text" id="backlogSubjectCode<%= i %>"
+                  name="backlogsInfo[<%= i - 1 %>][subjectCode]" value="<%= student.backlogsInfo[i - 1].subjectCode %>"
+                  required>
+
+                <label class="form-label" for="backlogSubjectTitle<%= i %>">Subject Title:</label>
+                <input class="form-control" type="text" id="backlogSubjectTitle<%= i %>"
+                  name="backlogsInfo[<%= i - 1 %>][subjectTitle]"
+                  value="<%= student.backlogsInfo[i - 1].subjectTitle %>" required>
+
+                <label class="form-label" for="backlogCredits<%= i %>">Credits:</label>
+                <input class="form-control" type="number" id="backlogCredits<%= i %>"
+                  name="backlogsInfo[<%= i - 1 %>][credits]" value="<%= student.backlogsInfo[i - 1].credits %>"
+                  required>
+
+                <label class="form-check-label" for="backlogCleared<%= i %>">Cleared:</label>
+                <input class="form-check-input" type="checkbox" value="true" id="backlogCleared<%= i %>"
+                  name="backlogsInfo[<%= i - 1 %>][cleared]" <%=student.backlogsInfo[i - 1].cleared ? "checked" : "" %>
+                >
+
+                <label class="form-label" for="backlogSem<%= i %>">In Which Sem Cleared:</label>
+                <input class="form-control" type="text" id="backlogSem<%= i %>"
+                  name="backlogsInfo[<%= i - 1 %>][semCleared]" value="<%= student.backlogsInfo[i - 1].semCleared %>"
+                  required>
+              </div>
+              <% } %>
+          </div>
+          <!-- Repeat the above section for each backlog object -->
+
+          <h2>Current Semester Information</h2>
+          <div class="col-sm-4">
+            <label class="form-label" for="noOfCurrentSubjects">Number of Registered Subjects:</label>
+            <input class="form-control" type="number" id="noOfCurrentSubjects" name="noOfCurrentSubjects"
+              value="<%= student.currentSemInfo.length %>" required />
+          </div>
+
+          <div class="row g-3" id="currentSubjectsRows">
+            <% for (let i=1; i <=student.currentSemInfo.length; i++) { %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <h2>Current Semester Subject <%= i %> Information</h2>
+
+                <label class="form-label" for="currentSubjectCode<%= i %>">Subject Code:</label>
+                <input class="form-control" type="text" id="currentSubjectCode<%= i %>"
+                  name="currentSemInfo[<%= i - 1 %>][subjectCode]"
+                  value="<%= student.currentSemInfo[i - 1].subjectCode %>" required>
+
+                <label class="form-label" for="currentSubjectTitle<%= i %>">Subject Title:</label>
+                <input class="form-control" type="text" id="currentSubjectTitle<%= i %>"
+                  name="currentSemInfo[<%= i - 1 %>][subjectTitle]"
+                  value="<%= student.currentSemInfo[i - 1].subjectTitle %>" required>
+
+                <label class="form-label" for="currentSubjectCredits<%= i %>">Credits:</label>
+                <input class="form-control" type="number" id="currentSubjectCredits<%= i %>"
+                  name="currentSemInfo[<%= i - 1 %>][subjectCredits]"
+                  value="<%= student.currentSemInfo[i - 1].subjectCredits %>" required>
+              </div>
+              <% } %>
+          </div>
+
+          <!-- Repeat the above section for each currentSemRegSub object -->
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label" for="currentCGPA">Current CGPA:</label>
+            <input class="form-control" type="number" step="0.01" id="currentCGPA" name="currentCGPA"
+              value="<%= student.currentCGPA %>" required />
+          </div>
+
+          <h2>Activity Points</h2>
+          <div class="col-sm-6 col-md-4">
+            <label class="form-label" for="communityPts">Community Points Earned:</label>
+            <input class="form-control" type="number" id="communityPts" name="activityPts[communityPts]"
+              value="<%= student.activityPts.communityPts %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4">
+            <label class="form-label" for="alliedPts">Allied Points Earned:</label>
+            <input class="form-control" type="number" id="alliedPts" name="activityPts[alliedPts]"
+              value="<%= student.activityPts.alliedPts %>" required />
+          </div>
+
+          <div class="col-sm-6 col-md-4">
+            <label class="form-label" for="totalPts">Total Points Required:</label>
+            <input class="form-control" type="number" id="totalPts" name="activityPts[totalPts]"
+              value="<%= student.activityPts.totalPts %>" required />
+          </div>
         </div>
 
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="modeOfAdmission">Mode of Admission:</label>
-          <select class="form-select" id="modeOfAdmission" name="modeOfAdmission" required>
-            <option value="CET(Aided)">CET (Aided)</option>
-            <option value="CET(UnAided)">CET (UnAided)</option>
-            <option value="Management">Management</option>
-            <option value="COMEDK">COMEDK</option>
-            <!-- Add more options as needed -->
-          </select>
+        <div class="row g-3 docs">
+          <h2>Attachments</h2>
+          <div class="col-sm-6 regSemFiles">
+            <label class="form-label" for="regSemFiles">Regular Sem Report Cards:</label>
+            <input class="form-control" type="file" id="regSemFiles" name="regSemFiles" multiple />
+          </div>
+
+          <div class="col-sm-6 suppSemFiles">
+            <label class="form-label" for="suppSemFiles">Supplymentary Sem Report Cards:</label>
+            <input class="form-control" type="file" id="suppSemFiles" name="suppSemFiles" multiple />
+          </div>
+          <p class="text-muted">Each file should be less than 1mb and upload only the report cards you didn't before, in
+            pdf format</p>
         </div>
 
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="cetRank">CET/COMEDK Rank:</label>
-          <input class="form-control" type="number" id="cetRank" name="cetRank" value="<%= student.cetRank %>"
-            required />
+        <div class="d-flex justify-content-center">
+          <input class="btn btn-primary mx-2 p-2" type="submit" value="Update" />
+          <input class="btn btn-secondary mx-2 p-2" type="reset" value="Reset" />
         </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="contactNum">Contact Number:</label>
-          <input class="form-control" type="text" id="contactNum" name="contactNum" value="<%= student.contactNum %>"
-            required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="dob">Date of Birth:</label>
-          <input class="form-control" type="date" id="dob" name="dob" value="<%= student.dob %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="email">Email:</label>
-          <input class="form-control" type="email" id="email" name="email" value="<%= student.email %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="aadhar">Aadhar Number:</label>
-          <input class="form-control" type="text" id="aadhar" name="aadhar" value="<%= student.aadhar %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="bloodGroup">Blood Group:</label>
-          <input class="form-control" type="text" id="bloodGroup" name="bloodGroup" value="<%= student.bloodGroup %>"
-            required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="facultyAdvisorName">Faculty Advisor Name:</label>
-          <input class="form-control" type="text" id="facultyAdvisorName" name="facultyAdvisorName"
-            value="<%= student.facultyAdvisorName %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="sem">Semester:</label>
-          <input class="form-control" type="text" id="sem" name="sem" value="<%= student.sem %>" required />
-        </div>
-      </div>
-
-      <div class="row g-3 mb-3 parentDetails">
-        <h2>Parent/Guardian Details</h2>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="parentOrGuardianName">Name:</label>
-          <input class="form-control" type="text" id="parentOrGuardianName" name="parentOrGuardianName"
-            value="<%= student.parentOrGuardianName %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="parentOrGuardianRelation">Relationship to Student:</label>
-          <input class="form-control" type="text" id="parentOrGuardianRelation" name="parentOrGuardianRelation"
-            value="<%= student.parentOrGuardianRelation %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="parentOrGuardianOccupation">Occupation:</label>
-          <input class="form-control" type="text" id="parentOrGuardianOccupation" name="parentOrGuardianOccupation"
-            value="<%= student.parentOrGuardianOccupation %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="parentOrGuardianQualification">Qualification:</label>
-          <input class="form-control" type="text" id="parentOrGuardianQualification"
-            name="parentOrGuardianQualification" value="<%= student.parentOrGuardianQualification %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="parentOrGuardianContactNum">Contact Number:</label>
-          <input class="form-control" type="text" id="parentOrGuardianContactNum" name="parentOrGuardianContactNum"
-            value="<%= student.parentOrGuardianContactNum %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="parentOrGuardianContactNum1">Alt Contact Number:</label>
-          <input class="form-control" type="text" id="parentOrGuardianContactNum1" name="parentOrGuardianContactNum1"
-            value="<%= student.parentOrGuardianContactNum1 %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="parentOrGuardianEmail">Email:</label>
-          <input class="form-control" type="email" id="parentOrGuardianEmail" name="parentOrGuardianEmail"
-            value="<%= student.parentOrGuardianEmail %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="address">Address:</label>
-          <textarea class="form-control" id="address" name="address" required><%= student.address %></textarea>
-        </div>
-      </div>
-
-      <div class="row g-3 academicDetails">
-        <h2>Class X Information</h2>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="classXYearOfPassing">Year of Passing:</label>
-          <input class="form-control" type="text" id="classXYearOfPassing" name="classX[yearOfPassing]"
-            value="<%= student.classX.yearOfPassing %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="classXBoard">Board:</label>
-          <input class="form-control" type="text" id="classXBoard" name="classX[board]"
-            value="<%= student.classX.board %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="classXInstitute">Institute:</label>
-          <input class="form-control" type="text" id="classXInstitute" name="classX[institute]"
-            value="<%= student.classX.institute %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="classXScore">Score:</label>
-          <input class="form-control" type="text" id="classXScore" name="classX[score]"
-            value="<%= student.classX.score %>" required />
-        </div>
-
-        <h2>Class XII Information</h2>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="classXIIPassingYear">Year of Passing:</label>
-          <input class="form-control" type="text" id="classXIIPassingYear" name="classXII[yearOfPassing]"
-            value="<%= student.classXII.yearOfPassing %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="classXIIBoard">Board:</label>
-          <input class="form-control" type="text" id="classXIIBoard" name="classXII[board]"
-            value="<%= student.classXII.board %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="classXIIInstitute">Institute:</label>
-          <input class="form-control" type="text" id="classXIIInstitute" name="classXII[institute]"
-            value="<%= student.classXII.institute %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="classXIIScore">Score:</label>
-          <input class="form-control" type="text" id="classXIIScore" name="classXII[score]"
-            value="<%= student.classXII.score %>" required />
-        </div>
-
-        <h2>Credit Information</h2>
-
-        <div class="col-sm-4">
-          <label class="form-label" for="noOfSemesters">Number of Semesters Completed:</label>
-          <input class="form-control" type="number" id="noOfSemesters" name="noOfSemesters"
-            value="<%= student.creditInfo.length %>" required />
-        </div>
-
-        <div class="row g-3" id="creditInfoRows">
-          <% for (var i=1; i <=student.creditInfo.length ; i++) { %>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <h2>Credit Information for Semester <%= i %>
-              </h2>
-
-              <label class="form-label" for="creditsSem<%= i %>">Sem:</label>
-              <input class="form-control" type="number" value="<%= i %>" id="creditsSem<%= i %>"
-                name="creditInfo[<%= i - 1 %>][sem]" required>
-
-              <label class="form-label" for="creditsRegistered<%= i %>">Credits Registered:</label>
-              <input class="form-control" type="number" id="creditsRegistered<%= i %>"
-                name="creditInfo[<%= i - 1 %>][creditsRegistered]"
-                value="<%= student.creditInfo[i - 1].creditsRegistered %>" required>
-
-              <label class="form-label" for="creditsEarned<%= i %>">Credits Earned:</label>
-              <input class="form-control" type="number" id="creditsEarned<%= i %>"
-                name="creditInfo[<%= i - 1 %>][creditsEarned]" value="<%= student.creditInfo[i - 1].creditsEarned %>"
-                required>
-
-              <label class="form-label" for="sgpa<%= i %>">SGPA:</label>
-              <input class="form-control" type="number" step="0.01" id="sgpa<%= i %>"
-                name="creditInfo[<%= i - 1 %>][sgpa]" value="<%= student.creditInfo[i - 1].sgpa %>" required>
-            </div>
-            <% } %>
-        </div>
-
-        <!-- Repeat the above section for each creditInfo object -->
-
-        <h2>Supplementary Semester Information</h2>
-        <div class="col-sm-4">
-          <label class="form-label" for="noOfSupplementary">Number of Supplementary Semesters:</label>
-          <input class="form-control" type="number" id="noOfSupplementary" name="noOfSupplementary"
-            value="<%= student.supplementary.length %>" required />
-        </div>
-
-        <div class="row g-3" id="supplementaryInputsContainer">
-          <% for (let i=1; i <=student.supplementary.length ; i++) { %>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <h2>Supplementary Sem <%= i %> Information</h2>
-
-              <label class="form-label" for="suppCreditsRegistered<%= i %>">Credits Registered:</label>
-              <input class="form-control" type="number" id="suppCreditsRegistered<%= i %>"
-                name="supplementary[<%= i - 1 %>][creditsRegistered]"
-                value="<%= student.supplementary[i - 1].creditsRegistered %>" required>
-
-              <label class="form-label" for="suppCreditsEarned<%= i %>">Credits Earned:</label>
-              <input class="form-control" type="number" id="suppCreditsEarned<%= i %>"
-                name="supplementary[<%= i - 1 %>][creditsEarned]"
-                value="<%= student.supplementary[i - 1].creditsEarned %>" required>
-
-              <label class="form-label" for="suppSGPA<%= i %>">SGPA:</label>
-              <input class="form-control" type="number" step="0.01" id="suppSGPA<%= i %>"
-                name="supplementary[<%= i - 1 %>][sgpa]" value="<%= student.supplementary[i - 1].sgpa %>" required>
-            </div>
-            <% } %>
-        </div>
-
-        <!-- Repeat the above section for each supplementary object -->
-
-        <h2>Backlogs Information</h2>
-        <div class="col-sm-4">
-          <label class="form-label" for="noOfBacklogs">Number of Backlogs:</label>
-          <input class="form-control" type="number" id="noOfBacklogs" name="noOfBacklogs"
-            value="<%= student.backlogsInfo.length %>" required />
-        </div>
-
-        <div class="row g-3" id="backlogsRows">
-          <% for (let i=1; i <=student.backlogsInfo.length ; i++) { %>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <h2>Backlog <%= i %> Information</h2>
-
-              <label class="form-label" for="backlogSubjectCode<%= i %>">Subject Code:</label>
-              <input class="form-control" type="text" id="backlogSubjectCode<%= i %>"
-                name="backlogsInfo[<%= i - 1 %>][subjectCode]" value="<%= student.backlogsInfo[i - 1].subjectCode %>"
-                required>
-
-              <label class="form-label" for="backlogSubjectTitle<%= i %>">Subject Title:</label>
-              <input class="form-control" type="text" id="backlogSubjectTitle<%= i %>"
-                name="backlogsInfo[<%= i - 1 %>][subjectTitle]" value="<%= student.backlogsInfo[i - 1].subjectTitle %>"
-                required>
-
-              <label class="form-label" for="backlogCredits<%= i %>">Credits:</label>
-              <input class="form-control" type="number" id="backlogCredits<%= i %>"
-                name="backlogsInfo[<%= i - 1 %>][credits]" value="<%= student.backlogsInfo[i - 1].credits %>" required>
-
-              <label class="form-check-label" for="backlogCleared<%= i %>">Cleared:</label>
-              <input class="form-check-input" type="checkbox" value="true" id="backlogCleared<%= i %>"
-                name="backlogsInfo[<%= i - 1 %>][cleared]" <%=student.backlogsInfo[i - 1].cleared ? "checked" : "" %> >
-
-              <label class="form-label" for="backlogSem<%= i %>">In Which Sem Cleared:</label>
-              <input class="form-control" type="text" id="backlogSem<%= i %>"
-                name="backlogsInfo[<%= i - 1 %>][semCleared]" value="<%= student.backlogsInfo[i - 1].semCleared %>"
-                required>
-            </div>
-            <% } %>
-        </div>
-        <!-- Repeat the above section for each backlog object -->
-
-        <h2>Current Semester Information</h2>
-        <div class="col-sm-4">
-          <label class="form-label" for="noOfCurrentSubjects">Number of Registered Subjects:</label>
-          <input class="form-control" type="number" id="noOfCurrentSubjects" name="noOfCurrentSubjects"
-            value="<%= student.currentSemInfo.length %>" required />
-        </div>
-
-        <div class="row g-3" id="currentSubjectsRows">
-          <% for (let i=1; i <=student.currentSemInfo.length; i++) { %>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <h2>Current Semester Subject <%= i %> Information</h2>
-
-              <label class="form-label" for="currentSubjectCode<%= i %>">Subject Code:</label>
-              <input class="form-control" type="text" id="currentSubjectCode<%= i %>"
-                name="currentSemInfo[<%= i - 1 %>][subjectCode]"
-                value="<%= student.currentSemInfo[i - 1].subjectCode %>" required>
-
-              <label class="form-label" for="currentSubjectTitle<%= i %>">Subject Title:</label>
-              <input class="form-control" type="text" id="currentSubjectTitle<%= i %>"
-                name="currentSemInfo[<%= i - 1 %>][subjectTitle]"
-                value="<%= student.currentSemInfo[i - 1].subjectTitle %>" required>
-
-              <label class="form-label" for="currentSubjectCredits<%= i %>">Credits:</label>
-              <input class="form-control" type="number" id="currentSubjectCredits<%= i %>"
-                name="currentSemInfo[<%= i - 1 %>][subjectCredits]"
-                value="<%= student.currentSemInfo[i - 1].subjectCredits %>" required>
-            </div>
-            <% } %>
-        </div>
-
-        <!-- Repeat the above section for each currentSemRegSub object -->
-
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <label class="form-label" for="currentCGPA">Current CGPA:</label>
-          <input class="form-control" type="number" step="0.01" id="currentCGPA" name="currentCGPA"
-            value="<%= student.currentCGPA %>" required />
-        </div>
-
-        <h2>Activity Points</h2>
-        <div class="col-sm-6 col-md-4">
-          <label class="form-label" for="communityPts">Community Points Earned:</label>
-          <input class="form-control" type="number" id="communityPts" name="activityPts[communityPts]"
-            value="<%= student.activityPts.communityPts %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4">
-          <label class="form-label" for="alliedPts">Allied Points Earned:</label>
-          <input class="form-control" type="number" id="alliedPts" name="activityPts[alliedPts]"
-            value="<%= student.activityPts.alliedPts %>" required />
-        </div>
-
-        <div class="col-sm-6 col-md-4">
-          <label class="form-label" for="totalPts">Total Points Required:</label>
-          <input class="form-control" type="number" id="totalPts" name="activityPts[totalPts]"
-            value="<%= student.activityPts.totalPts %>" required />
-        </div>
-      </div>
-
-      <div class="row g-3 docs">
-        <h2>Attachments</h2>
-        <div class="col-sm-6 regSemFiles">
-          <label class="form-label" for="regSemFiles">Regular Sem Report Cards:</label>
-          <input class="form-control" type="file" id="regSemFiles" name="regSemFiles" multiple />
-        </div>
-
-        <div class="col-sm-6 suppSemFiles">
-          <label class="form-label" for="suppSemFiles">Supplymentary Sem Report Cards:</label>
-          <input class="form-control" type="file" id="suppSemFiles" name="suppSemFiles" multiple />
-        </div>
-        <p class="text-muted">Each file should be less than 1mb and upload only the report cards you didn't before, in
-          pdf format</p>
-      </div>
-
-      <div class="d-flex justify-content-center">
-        <input class="btn btn-primary mx-2 p-2" type="submit" value="Update" />
-        <input class="btn btn-secondary mx-2 p-2" type="reset" value="Reset" />
-      </div>
-    </form>
-  </div>
-  <script src="/Javascript/editFormVal.js"></script>
-  <%- include('../partials/footer'); -%>
+      </form>
+    </div>
+    <script src="/Javascript/editFormVal.js"></script>
+    <%- include('../partials/footer'); -%>
