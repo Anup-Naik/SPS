@@ -5,33 +5,35 @@ const Student = require("../models/studentModel");
 
 const facultyId = "66251f9ae3a1bc3ea0285515";
 
-exports.showMentees = async (req, res, next) => {
-    const faculty = await Faculty.findById(facultyId).populate(
-      "mentees.mentee"
-    );
+module.exports.facultyDashboard = async (req, res, next) => {
+  const faculty = await Faculty.findById(facultyId);
+  res.render("./faculty",{faculty});
+};
 
-    // Use a Set to store unique student IDs
-    const visitedStudents = new Set();
+module.exports.showMentees = async (req, res, next) => {
+  const faculty = await Faculty.findById(facultyId).populate("mentees.mentee");
 
-    // Filter and sort mentees by semester
-    const sortedMentees = faculty.mentees
-      .filter((mentee) => {
-        const student = mentee.mentee;
-        return (
-          student &&
-          student.fullname &&
-          student.usn &&
-          student.sem &&
-          student.contactNum &&
-          student.email &&
-          student.facultyAdvisorName &&
-          !visitedStudents.has(student._id)
-        );
-      })
-      .sort((a, b) => a.mentee.sem - b.mentee.sem);
+  // Use a Set to store unique student IDs
+  const visitedStudents = new Set();
 
-    res.render("faculty/show", { faculty, sortedMentees });
-  
+  // Filter and sort mentees by semester
+  const sortedMentees = faculty.mentees
+    .filter((mentee) => {
+      const student = mentee.mentee;
+      return (
+        student &&
+        student.fullname &&
+        student.usn &&
+        student.sem &&
+        student.contactNum &&
+        student.email &&
+        student.facultyAdvisorName &&
+        !visitedStudents.has(student._id)
+      );
+    })
+    .sort((a, b) => a.mentee.sem - b.mentee.sem);
+
+  res.render("faculty/show", { faculty, sortedMentees });
 };
 
 // Controller to get faculty's mentees and their remarks
@@ -70,7 +72,7 @@ module.exports.viewStudentProfile = async (req, res, next) => {
 };
 
 // Controller function to add a meeting for a specific mentee
-exports.addMeeting = async (req, res, next) => {
+module.exports.addMeeting = async (req, res, next) => {
   const { studentId } = req.params;
   const { date, outcome } = req.body;
   const faculty = await Faculty.findOneAndUpdate(

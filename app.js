@@ -26,6 +26,7 @@ const {
   getStudentFiles,
   addMeeting,
   showMentees,
+  facultyDashboard,
 } = require("./controllers/facultyCont");
 const {
   councelForm,
@@ -61,8 +62,7 @@ async function main() {
   // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
 
-// Student HomePage
-app.get("/", async (req, res) => res.render("index"));
+
 
 //Admin Dashboard
 app.get("/admin", catchAsync(adminDashboard));
@@ -90,6 +90,8 @@ app.put("/admin/student/:id", catchAsync(updateStudentByAdmin));
 app.delete("/admin/student/:id", catchAsync(deleteStudent));
 
 //Faculty Module Routes
+app.get('/faculty', catchAsync(facultyDashboard));
+
 app.get('/mentees/home', catchAsync(showMentees));
 
 app.get("/mentees", catchAsync(getFacultyMentees));
@@ -122,6 +124,9 @@ app.get("/file/:filename", (req, res) => {
 });
 
 // Student Module Routes
+// Student HomePage
+app.get("/", async (req, res) => res.render("index"));
+
 app.get("/student/:id/new", catchAsync(councelForm));
 
 app.post("/student/:id", myMulter, catchAsync(saveCouncelForm));
