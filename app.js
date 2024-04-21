@@ -34,6 +34,9 @@ const {
   showStudent,
   renderEditStudent,
   updateStudent,
+  getFacultyAdvisor,
+  getChangePasswordForm,
+  changeStudentPassword,
 } = require("./controllers/studentCont");
 const catchAsync = require("./utils/catchAsync");
 const ExpressError = require("./utils/ExpressError");
@@ -62,8 +65,6 @@ async function main() {
   // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
 
-
-
 //Admin Dashboard
 app.get("/admin", catchAsync(adminDashboard));
 
@@ -90,9 +91,9 @@ app.put("/admin/student/:id", catchAsync(updateStudentByAdmin));
 app.delete("/admin/student/:id", catchAsync(deleteStudent));
 
 //Faculty Module Routes
-app.get('/faculty', catchAsync(facultyDashboard));
+app.get("/faculty", catchAsync(facultyDashboard));
 
-app.get('/mentees/home', catchAsync(showMentees));
+app.get("/mentees/home", catchAsync(showMentees));
 
 app.get("/mentees", catchAsync(getFacultyMentees));
 
@@ -134,6 +135,12 @@ app.post("/student/:id", myMulter, catchAsync(saveCouncelForm));
 app.get("/student/:id", catchAsync(showStudent));
 
 app.get("/student/:id/edit", catchAsync(renderEditStudent));
+
+app.get("/student/:id/advisor", catchAsync(getFacultyAdvisor));
+
+app.get("/student/:id/password", catchAsync(getChangePasswordForm));
+
+app.post("/student/:id/password", catchAsync(changeStudentPassword));
 
 app.put("/student/:id", myMulter, catchAsync(updateStudent));
 

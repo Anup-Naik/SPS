@@ -1,9 +1,9 @@
 const Student = require("../models/studentModel");
 
-module.exports.councelForm = async (req, res,next) => {
+module.exports.councelForm = async (req, res, next) => {
   const { id } = req.params;
   const student = await Student.findById({ _id: id });
-  res.render("./students/counsellingForm",{student});
+  res.render("./students/counsellingForm", { student });
 };
 
 module.exports.saveCouncelForm = async (req, res, next) => {
@@ -41,5 +41,39 @@ module.exports.updateStudent = async (req, res, next) => {
     });
   }
   await student.save();
+  res.redirect("/");
+};
+
+module.exports.getFacultyAdvisor = async (req, res, next) => {
+  const { id } = req.params;
+  const student = await Student.findById(id).populate(
+    "facultyAdvisor",
+    "name contact email"
+  );
+  res.render("students/facultyAdvisor", { student });
+};
+
+module.exports.getChangePasswordForm = async (req, res, next) => {
+  const { id } = req.params;
+  const student = await Student.findById(id);
+  res.render("students/changePassword", { student });
+};
+
+module.exports.changeStudentPassword = async (req, res, next) => {
+  const { currentPassword, newPassword, confirmPassword } = req.body;
+  const { id } = req.params;
+  const student = await Student.findById(id);
+
+  if (currentPassword !== student.password) {
+    return res.redirect(`/student/${id}/password`);
+  }
+
+  if (newPassword !== confirmPassword) {
+    return res.redirect(`/student/${id}/password`);
+  }
+
+  student.password = newPassword;
+  await student.save();
+
   res.redirect("/");
 };

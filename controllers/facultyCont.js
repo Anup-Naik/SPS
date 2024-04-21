@@ -45,9 +45,7 @@ module.exports.getFacultyMentees = async (req, res, next) => {
 // Controller to save remarks for a student
 module.exports.saveRemarks = async (req, res, next) => {
   const { studentId } = req.params;
-  const { remarks } = req.body.mentee; // Access the remarks field using req.body.mentee.remarks
-  const facultyId = "662495ae2695faf2fdc1fd70";
-  console.log(req.body);
+  const { remarks } = req.body.mentee; 
   const updatedFaculty = await Faculty.findOneAndUpdate(
     {
       _id: facultyId,
@@ -103,6 +101,5 @@ module.exports.getStudentFiles = async (req, res, next) => {
   const { studentId } = req.params;
   const student = await Student.findById(studentId);
   const { regFiles, suppFiles } = student;
-  console.log(regFiles, suppFiles);
   res.render("faculty/studentFiles", { regFiles, suppFiles, req });
 };

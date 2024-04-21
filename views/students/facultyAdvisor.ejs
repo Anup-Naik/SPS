@@ -1,0 +1,15 @@
+<%- include('../partials/header'); -%> <%- include('../partials/navbar'); -%>
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header bg-secondary text-white">
+      Welcome, <%= student.fullname %>!
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Your Faculty Advisor</h5>
+      <p><strong>Name:</strong> <%= student.facultyAdvisor.name %></p>
+      <p><strong>Contact:</strong> <%= student.facultyAdvisor.contact %></p>
+      <p><strong>Email:</strong> <%= student.facultyAdvisor.email %></p>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer'); -%>
