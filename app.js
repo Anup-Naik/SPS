@@ -16,6 +16,7 @@ const {
   showEditStudentForm,
   deleteStudent,
 } = require("./controllers/adminCont");
+const { getFacultyMentees, saveRemarks, viewStudentProfile, viewStudentAcademic, generateStudentReport, getStudentFiles, addMeeting } = require("./controllers/facultyCont");
 const {
   councelForm,
   saveCouncelForm,
@@ -47,13 +48,13 @@ async function main() {
   // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
 
-app.get("/", async (req, res) => {
-  res.render("index");
-});
+// Student HomePage
+app.get("/", async (req, res) => res.render("index"));
 
-//Admin Facuty Routes
+//Admin Dashboard
 app.get("/admin", catchAsync(adminDashboard));
 
+//Admin-Faculty Routes
 app.get("/admin/faculty", catchAsync(showCreateFacultyForm));
 
 app.post("/admin/faculty", catchAsync(createFaculty));
@@ -64,7 +65,7 @@ app.put("/admin/faculty/:id", catchAsync(updateFaculty));
 
 app.delete("/admin/faculty/:id", catchAsync(deleteFaculty));
 
-//Admin Student Routes
+//Admin-Student Routes
 app.get("/admin/student", catchAsync(showCreateStudentForm));
 
 app.post("/admin/student", catchAsync(createStudent));
@@ -75,10 +76,28 @@ app.put("/admin/student/:id", catchAsync(updateStudentByAdmin));
 
 app.delete("/admin/student/:id", catchAsync(deleteStudent));
 
-// Student Module Routes
-app.get("/student", catchAsync(councelForm));
+//Faculty Module Routes
+// Placeholder for demo faculty ID (replace with actual authentication)
+const facultyId = "662495ae2695faf2fdc1fd70";
 
-app.post("/student", myMulter, catchAsync(saveCouncelForm));
+app.get("/mentees", catchAsync(getFacultyMentees));
+
+app.post("/mentees/:studentId/remarks", catchAsync(saveRemarks));
+
+app.get("/mentees/:studentId/profile", catchAsync(viewStudentProfile));
+
+app.get("/mentees/:studentId/progress", catchAsync(viewStudentAcademic));
+
+app.get("/mentees/:studentId/report", catchAsync(generateStudentReport));
+
+app.get("/mentees/:studentId/studentFiles", catchAsync(getStudentFiles));
+
+app.post("/add-meeting/:menteeId", catchAsync(addMeeting));
+
+// Student Module Routes
+app.get("/student/:id/new", catchAsync(councelForm));
+
+app.post("/student/:id", myMulter, catchAsync(saveCouncelForm));
 
 app.get("/student/:id", catchAsync(showStudent));
 

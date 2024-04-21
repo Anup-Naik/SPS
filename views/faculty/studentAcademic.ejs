@@ -1,0 +1,150 @@
+<%- include('../partials/header'); -%>
+<%- include('../partials/navbar'); -%>
+
+<div class="container">
+  <h2>Student Academic Progress</h2>
+  <div class="academicDetails">
+    <h3>Academic Details</h3>
+    <div>
+      <h4>Class X</h4>
+      <table class="table">
+        <tr>
+          <th>Year of Passing:</th>
+          <td><%= student.classX.yearOfPassing %></td>
+        </tr>
+        <tr>
+          <th>Board:</th>
+          <td><%= student.classX.board %></td>
+        </tr>
+        <tr>
+          <th>Institute:</th>
+          <td><%= student.classX.institute %></td>
+        </tr>
+        <tr>
+          <th>Score:</th>
+          <td><%= student.classX.score %></td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <h4>Class XII</h4>
+      <table class="table">
+        <tr>
+          <th>Year of Passing:</th>
+          <td><%= student.classXII.yearOfPassing %></td>
+        </tr>
+        <tr>
+          <th>Board:</th>
+          <td><%= student.classXII.board %></td>
+        </tr>
+        <tr>
+          <th>Institute:</th>
+          <td><%= student.classXII.institute %></td>
+        </tr>
+        <tr>
+          <th>Score:</th>
+          <td><%= student.classXII.score %></td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <h4>Credits Information</h4>
+      <table class="table">
+        <tr>
+          <th>Sem</th>
+          <th>Credits Registered</th>
+          <th>Credits Earned</th>
+          <th>SGPA</th>
+        </tr>
+        <% student.creditInfo.forEach(info => { %>
+          <tr>
+            <td><%= info.sem %></td>
+            <td><%= info.creditsRegistered %></td>
+            <td><%= info.creditsEarned %></td>
+            <td><%= info.sgpa %></td>
+          </tr>
+        <% }); %>
+      </table>
+    </div>
+    <div>
+      <h4>Supplementary Information</h4>
+      <table class="table">
+        <tr>
+          <th>Supp. Sem</th>
+          <th>Credits Registered</th>
+          <th>Credits Earned</th>
+          <th>SGPA</th>
+        </tr>
+        <% student.supplementary.forEach(supp => { %>
+          <tr>
+            <td><%= supp.sem %></td>
+            <td><%= supp.creditsRegistered %></td>
+            <td><%= supp.creditsEarned %></td>
+            <td><%= supp.sgpa %></td>
+          </tr>
+        <% }); %>
+      </table>
+    </div>
+    <div>
+      <h4>Backlogs Information</h4>
+      <table class="table">
+        <tr>
+          <th>Subject Code</th>
+          <th>Subject Title</th>
+          <th>Credits</th>
+          <th>Cleared</th>
+          <th>Sem in Which Cleared</th>
+        </tr>
+        <% student.backlogsInfo.forEach(backlog => { %>
+          <tr>
+            <td><%= backlog.subjectCode %></td>
+            <td><%= backlog.subjectTitle %></td>
+            <td><%= backlog.credits %></td>
+            <td><%= backlog.cleared %></td>
+            <td><%= backlog.semCleared %></td>
+          </tr>
+        <% }); %>
+      </table>
+    </div>
+    <div>
+      <h4>Current Semester Information</h4>
+      <table class="table">
+        <tr>
+          <th>Subject Code</th>
+          <th>Subject Title</th>
+          <th>Credits</th>
+        </tr>
+        <% student.currentSemInfo.forEach(subject => { %>
+          <tr>
+            <td><%= subject.subjectCode %></td>
+            <td><%= subject.subjectTitle %></td>
+            <td><%= subject.subjectCredits %></td>
+          </tr>
+        <% }); %>
+        <tr>
+          <th>Current CGPA</th>
+          <td colspan="2"><%= student.currentCGPA %></td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <h4>Activity Points Information</h4>
+      <table class="table">
+        <tr>
+          <th>Community Points</th>
+          <td><%= student.activityPts.communityPts %></td>
+        </tr>
+        <tr>
+          <th>Allied Points</th>
+          <td><%= student.activityPts.alliedPts %></td>
+        </tr>
+        <tr>
+          <th>Total Points</th>
+          <td><%= student.activityPts.totalPts %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer'); -%>

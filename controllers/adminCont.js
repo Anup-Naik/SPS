@@ -64,8 +64,11 @@ module.exports.createStudent = async (req, res, next) => {
   const { username, password, facultyAdvisor } = req.body;
   const student = new Student({ username, password, facultyAdvisor });
   await student.save();
+  const faculty = await Faculty.findById(facultyAdvisor);
+  faculty.mentees.push({mentee:student._id});
+  await faculty.save();
   /* req.flash("success", "Student created successfully!"); */
-  res.redirect("/admin");
+  res.redirect("/admin/student");
 };
 
 // Display form to edit a student
@@ -81,14 +84,21 @@ module.exports.updateStudentByAdmin = async (req, res, next) => {
   const { id } = req.params;
   const { username, password, facultyAdvisor } = req.body;
   await Student.findByIdAndUpdate(id, { username, password, facultyAdvisor });
+  const faculty = await Faculty.findById(facultyAdvisor);
+  faculty.mentees.push({mentee:id});
+  await faculty.save();
   /* req.flash("success", "Student updated successfully!"); */
-  res.redirect("/admin");
+  res.redirect("/admin/student");
 };
 
 // Delete a student
 module.exports.deleteStudent = async (req, res, next) => {
   const { id } = req.params;
   await Student.findByIdAndDelete(id);
+  await Faculty.updateMany(
+    { "mentees.mentee": id },
+    { $pull: { mentees: { mentee: id } } }
+  );
   /* req.flash("success", "Student deleted successfully!"); */
-  res.redirect("/admin");
+  res.redirect("/admin/student");
 };

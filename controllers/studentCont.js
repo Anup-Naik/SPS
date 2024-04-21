@@ -1,7 +1,9 @@
 const Student = require("../models/studentModel");
 
-module.exports.councelForm = (req, res) => {
-  res.render("./students/counsellingForm");
+module.exports.councelForm = async (req, res,next) => {
+  const { id } = req.params;
+  const student = await Student.findById({ _id: id });
+  res.render("./students/counsellingForm",{student});
 };
 
 module.exports.saveCouncelForm = async (req, res, next) => {

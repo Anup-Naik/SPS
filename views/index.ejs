@@ -1,11 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SPS - Student Proctoring System</title>
-  </head>
-  <body>
-    <h1>Hi</h1>
-  </body>
-</html>
+<%- include('./partials/header'); -%>
+<%- include('./partials/navbar'); -%>
+    <header class="bg-dark py-4">
+        <div class="container">
+            <h1 class="text-white">Student Proctoring System</h1>
+        </div>
+    </header>
+    <main class="container py-4">
+        <div class="row">
+            <div class="col-md-6 mb-5">
+                <h2>Fill Details</h2>
+                <p>Update your profile and provide necessary information for academic purposes.</p>
+                <a href="/student/:id/new" class="btn btn-primary">Fill Details</a>
+            </div>
+            <div class="col-md-6 mb-5">
+                <h2>View Profile</h2>
+                <p>Explore your academic journey.</p>
+                <a href="/student/:id" class="btn btn-primary">View Profile</a>
+            </div>
+            <div class="col-md-6 mb-5">
+              <h2>Edit Profile</h2>
+              <p>Manage your academic journey.</p>
+              <a href="/student/:id/edit" class="btn btn-primary">Edit Profile</a>
+          </div>
+          <div class="col-md-6 mb-5">
+            <h2>Your Advisor</h2>
+            <p>Contact your advisor.</p>
+            <a href="/student/:id/advisor" class="btn btn-primary">Your Advisor</a>
+        </div>
+        </div>
+    </main>
+    <%- include('./partials/footer'); -%>
+   

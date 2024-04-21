@@ -1,0 +1,17 @@
+<%- include('../partials/header'); -%> <%- include('../partials/navbar'); -%>
+
+<div class="container">
+  <h2>Faculty Mentees</h2>
+  <% if (faculty && faculty.mentees && faculty.mentees.length) { %>
+  <ul>
+    <li><b>USN</b> - <b>Name</b> - <b>Remarks</b></li>
+    <% faculty.mentees.forEach(mentee => { %>
+    <li><%= mentee.mentee.usn %> - <%= mentee.mentee.fullname %> - <%= mentee.remarks %></li>
+    <% }); %>
+  </ul>
+  <% } else { %>
+  <p>No mentees found.</p>
+  <% } %>
+</div>
+
+<%- include('../partials/footer'); -%>

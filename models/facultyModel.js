@@ -9,8 +9,14 @@ const facultySchema = new mongoose.Schema({
   email: String,
   mentees: [
     {
-      mentee: { type: mongoose.Schema.Types.ObjectId, ref: "Student" },
+      mentee: { type: mongoose.Schema.Types.ObjectId, ref: 'Student', required: true },
       remarks: String,
+      meetings: [
+        {
+          date: Date,
+          outcome: String,
+        },
+      ],
     },
   ],
 });

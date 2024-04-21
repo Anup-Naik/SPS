@@ -1,0 +1,130 @@
+<%- include('../partials/header'); -%> <%- include('../partials/navbar'); -%>
+
+<div class="container">
+  <h2>Student Profile</h2>
+  <div class="studentDetails">
+    <h3>Student Details</h3>
+    <table class="table">
+      <tr>
+        <th>FullName:</th>
+        <td><%= student.fullname %></td>
+      </tr>
+      <tr>
+        <th>USN:</th>
+        <td><%= student.usn %></td>
+      </tr>
+      <tr>
+        <th>Year of Admission:</th>
+        <td><%= student.yearOfAdmission %></td>
+      </tr>
+      <tr>
+        <th>Mode of Admission:</th>
+        <td><%= student.modeOfAdmission %></td>
+      </tr>
+      <tr>
+        <th>CET/COMEDK Rank:</th>
+        <td><%= student.cetRank %></td>
+      </tr>
+      <tr>
+        <th>Contact Number:</th>
+        <td><%= student.contactNum %></td>
+      </tr>
+      <tr>
+        <th>Date of Birth:</th>
+        <td><%= student.dob %></td>
+      </tr>
+      <tr>
+        <th>Email:</th>
+        <td><%= student.email %></td>
+      </tr>
+      <tr>
+        <th>Aadhar:</th>
+        <td><%= student.aadhar %></td>
+      </tr>
+      <tr>
+        <th>Blood Group:</th>
+        <td><%= student.bloodGroup %></td>
+      </tr>
+      <tr>
+        <th>Faculty Advisor:</th>
+        <td><%= student.facultyAdvisorName %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="parentDetails">
+    <h3>Parent/Guardian Details</h3>
+    <table class="table">
+      <tr>
+        <th>Name:</th>
+        <td><%= student.parentOrGuardianName %></td>
+      </tr>
+      <tr>
+        <th>Relationship to Student:</th>
+        <td><%= student.parentOrGuardianRelation %></td>
+      </tr>
+      <tr>
+        <th>Occupation:</th>
+        <td><%= student.parentOrGuardianOccupation %></td>
+      </tr>
+      <tr>
+        <th>Qualification:</th>
+        <td><%= student.parentOrGuardianQualification %></td>
+      </tr>
+      <tr>
+        <th>Contact Number:</th>
+        <td><%= student.parentOrGuardianContactNum %></td>
+      </tr>
+      <tr>
+        <th>Alt Contact Number:</th>
+        <td><%= student.parentOrGuardianContactNum1 %></td>
+      </tr>
+      <tr>
+        <th>Email:</th>
+        <td><%= student.parentOrGuardianEmail %></td>
+      </tr>
+      <tr>
+        <th>Address:</th>
+        <td><%= student.address %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="remarksDetails">
+    <h3>Remarks</h3>
+    <table class="table">
+      <tr>
+        <th>Meetings</th>
+        <th>Remarks</th>
+        <th>Add Meeting</th>
+      </tr>
+      <% student.mentees.forEach(mentee => { %>
+      <tr>
+        <td>
+          <ul>
+            <% mentee.meetings.forEach(meeting => { %>
+            <li>
+              <strong>Date:</strong> <%= meeting.date %> -
+              <strong>Outcome:</strong> <%= meeting.outcome %>
+            </li>
+            <% }); %>
+          </ul>
+        </td>
+        <td><%= mentee.remarks %></td>
+        <td>
+          <form action="/faculty/addMeeting/<%= mentee._id %>" method="POST">
+            <input type="date" name="date" required />
+            <input
+              type="text"
+              name="outcome"
+              placeholder="Enter outcome"
+              required
+            />
+            <button type="submit">Add</button>
+          </form>
+        </td>
+      </tr>
+      <% }); %>
+    </table>
+  </div>
+</div>
+
+<%- include('../partials/footer'); -%>

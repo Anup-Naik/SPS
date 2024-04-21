@@ -2,7 +2,7 @@
 <%- include('../partials/navbar'); -%>
   <div class="container">
     <h1>Student Information Form</h1>
-    <form class="row g-3 needs-validation" action="/student" method="POST" enctype="multipart/form-data" novalidate>
+    <form class="row g-3 needs-validation" action="/student/<%= student._id %>" method="POST" enctype="multipart/form-data" novalidate>
       <div class="row g-3 mb-3 studentDetails">
         <h2>Student Details</h2>
         <div class="col-sm-6 col-md-4 col-lg-3">

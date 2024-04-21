@@ -1,0 +1,76 @@
+/* Media print styles for A4 reports */
+@media print {
+    /* Set page margins */
+    @page {
+      size: A4;
+      margin: 20mm 15mm; /* Adjust margins as needed */
+    }
+  
+    /* Reset body margins and padding */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  
+    /* Style for the whole report content */
+    .container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+      box-sizing: border-box;
+      font-family: 'Times New Roman', Times, serif; /* Change font family as needed */
+      font-size: 12px; /* Adjust font size as needed */
+    }
+  
+    /* Styles for different sections of the report */
+    .studDetail,
+    .parentDetail,
+    .academicDetails {
+      margin-bottom: 20px;
+    }
+  
+    /* Table styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+    }
+  
+    th,
+    td {
+      border: 1px solid #000; /* Black border for cells */
+      padding: 8px;
+      text-align: left;
+    }
+  
+    th {
+      background-color: #f2f2f2; /* Light gray background for table headers */
+    }
+  
+    /* Page break for each section */
+    .studDetail,
+    .parentDetail,
+    .academicDetails {
+      page-break-inside: avoid;
+    }
+  
+    /* Hide navbar, header, and footer in print */
+    .navbar,
+    .header,
+    .footer {
+      display: none;
+    }
+  
+    /* Additional styling specific to the report content */
+    .studDetail h2,
+    .parentDetail h2,
+    .academicDetails h2 {
+      margin-bottom: 10px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    /* Customize other elements as needed for your specific report design */
+  
+  }
+  
