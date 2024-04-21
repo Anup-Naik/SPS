@@ -4,17 +4,36 @@
             <form action="/admin/student/<%= student._id %>?_method=PUT" method="POST">
                 <div class="form-group">
                     <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" value="<%= student.username %>" class="form-control" required />
+                    <input type="text" id="username" name="username" value="<%= student.username %>"
+                        class="form-control" required />
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" value="<%= student.password %>" class="form-control" required />
+                    <input type="password" id="password" name="password" value="<%= student.password %>"
+                        class="form-control" required />
                 </div>
+
+                <div class="form-group">
+                    <label for="semester">Semester:</label>
+                    <select id="semester" name="sem" class="form-control" required>
+                        <option value="1">Semester 1</option>
+                        <option value="2">Semester 2</option>
+                        <option value="3">Semester 3</option>
+                        <option value="4">Semester 4</option>
+                        <option value="5">Semester 5</option>
+                        <option value="6">Semester 6</option>
+                        <option value="7">Semester 7</option>
+                        <option value="8">Semester 8</option>
+                    </select>
+                </div>
+
                 <div class="form-group">
                     <label for="facultyAdvisor">Faculty Advisor:</label>
                     <select id="facultyAdvisor" name="facultyAdvisor" class="form-control" required>
                         <% facultyMembers.forEach(faculty=> { %>
-                            <option value="<%= faculty._id %>" <%=(student.facultyAdvisor.toString()===faculty._id.toString())?"selected":"" %>><%= faculty.name %>
+                            <option value="<%= faculty._id %>"
+                                <%=(student.facultyAdvisor.toString()===faculty._id.toString())?"selected":"" %>><%=
+                                    faculty.name %>
                             </option>
                             <% }) %>
                     </select>

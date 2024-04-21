@@ -1,42 +1,84 @@
+const mongoose = require("mongoose");
+
 const Faculty = require("../models/facultyModel");
 const Student = require("../models/studentModel");
 
-// Controller to get faculty's mentees and their remarks
-module.exports.getFacultyMentees = async (req, res, next) => {
-  try {
-    const facultyId = "662495ae2695faf2fdc1fd70";
+const facultyId = "66251f9ae3a1bc3ea0285515";
+
+exports.showMentees = async (req, res, next) => {
     const faculty = await Faculty.findById(facultyId).populate(
       "mentees.mentee"
     );
-    console.log(faculty);
-    res.render("faculty/mentees", { faculty });
-  } catch (err) {
-    console.error(err);
-    // Handle error
-    res.status(500).send("Internal Server Error");
-  }
+
+    // Use a Set to store unique student IDs
+    const visitedStudents = new Set();
+
+    // Filter and sort mentees by semester
+    const sortedMentees = faculty.mentees
+      .filter((mentee) => {
+        const student = mentee.mentee;
+        return (
+          student &&
+          student.fullname &&
+          student.usn &&
+          student.sem &&
+          student.contactNum &&
+          student.email &&
+          student.facultyAdvisorName &&
+          !visitedStudents.has(student._id)
+        );
+      })
+      .sort((a, b) => a.mentee.sem - b.mentee.sem);
+
+    res.render("faculty/show", { faculty, sortedMentees });
+  
+};
+
+// Controller to get faculty's mentees and their remarks
+module.exports.getFacultyMentees = async (req, res, next) => {
+  const faculty = await Faculty.findById(facultyId).populate("mentees.mentee");
+  res.render("faculty/mentees", { faculty });
 };
 
 // Controller to save remarks for a student
 module.exports.saveRemarks = async (req, res, next) => {
   const { studentId } = req.params;
-  const { remarks } = req.body;
-  const faculty = await Faculty.findById(facultyId);
-  const existingMentee = faculty.mentees.find(
-    (mentee) => mentee._id.toString() === studentId
+  const { remarks } = req.body.mentee; // Access the remarks field using req.body.mentee.remarks
+  const facultyId = "662495ae2695faf2fdc1fd70";
+  console.log(req.body);
+  const updatedFaculty = await Faculty.findOneAndUpdate(
+    {
+      _id: facultyId,
+      "mentees.mentee": new mongoose.Types.ObjectId(studentId),
+    },
+    { $set: { "mentees.$[elem].remarks": remarks } },
+    {
+      arrayFilters: [{ "elem.mentee": new mongoose.Types.ObjectId(studentId) }],
+      new: true,
+    }
   );
-  if (existingMentee) {
-    existingMentee.remarks = remarks;
-  }
-  await faculty.save();
-  res.redirect("/faculty/mentees");
+
+  res.redirect("/mentees");
 };
 
 // Controller function to view detailed student profile
 module.exports.viewStudentProfile = async (req, res, next) => {
   const { studentId } = req.params;
   const student = await Student.findById(studentId);
-  res.render("faculty/studentProfile", { student });
+  const faculty = await Faculty.findById(facultyId);
+  res.render("faculty/studentProfile", { student, faculty });
+};
+
+// Controller function to add a meeting for a specific mentee
+exports.addMeeting = async (req, res, next) => {
+  const { studentId } = req.params;
+  const { date, outcome } = req.body;
+  const faculty = await Faculty.findOneAndUpdate(
+    { "mentees.mentee": new mongoose.Types.ObjectId(studentId) },
+    { $push: { "mentees.$.meetings": { date, outcome } } },
+    { new: true }
+  );
+  res.redirect(`/mentees/${studentId}/profile`);
 };
 
 // Controller function to view academic progress of a student
@@ -58,24 +100,7 @@ module.exports.generateStudentReport = async (req, res, next) => {
 module.exports.getStudentFiles = async (req, res, next) => {
   const { studentId } = req.params;
   const student = await Student.findById(studentId);
-};
-
-// Controller function to add a meeting for a specific mentee
-exports.addMeeting = async (req, res, next) => {
-  const { menteeId } = req.params;
-  const { date, outcome } = req.body;
-  const faculty = await Faculty.findByIdAndUpdate(
-    { "mentees._id": menteeId },
-    {
-      $push: {
-        "mentees.$.meetings": {
-          date,
-          outcome,
-        },
-      },
-    },
-    { new: true }
-  );
-
-  res.redirect("/faculty/profile"); // Redirect to the profile page or any other relevant page
+  const { regFiles, suppFiles } = student;
+  console.log(regFiles, suppFiles);
+  res.render("faculty/studentFiles", { regFiles, suppFiles, req });
 };

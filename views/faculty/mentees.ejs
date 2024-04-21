@@ -1,17 +1,39 @@
 <%- include('../partials/header'); -%> <%- include('../partials/navbar'); -%>
 
 <div class="container">
-  <h2>Faculty Mentees</h2>
+  <h2 class="mb-4">Faculty Mentees</h2>
   <% if (faculty && faculty.mentees && faculty.mentees.length) { %>
-  <ul>
-    <li><b>USN</b> - <b>Name</b> - <b>Remarks</b></li>
-    <% faculty.mentees.forEach(mentee => { %>
-    <li><%= mentee.mentee.usn %> - <%= mentee.mentee.fullname %> - <%= mentee.remarks %></li>
-    <% }); %>
-  </ul>
+    <ul class="list-group">
+      <li class="list-group-item bg-secondary text-white mb-3">
+        <div class="row">
+          <div class="col"><b>USN</b></div>
+          <div class="col"><b>Name</b></div>
+          <div class="col"><b>Semester</b></div>
+          <div class="col"><b>Remarks</b></div>
+        </div>
+      </li>
+      <% faculty.mentees.forEach(mentee => { %>
+        <li class="list-group-item mb-3">
+          <div class="row align-items-center">
+            <div class="col"><%= mentee.mentee.username %></div>
+            <div class="col"><%= mentee.mentee.fullname %></div>
+            <div class="col"><%= mentee.mentee.sem %></div>
+            <div class="col">
+              <form action="/mentees/<%= mentee.mentee._id %>/remarks" method="POST">
+                <div class="form-group">
+                  <textarea class="form-control form-control-sm mb-2" id="menteeRemark" name="mentee[remarks]" rows="3"><%= mentee.remarks %></textarea>
+                  <button type="submit" class="btn btn-primary">Save Remark</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </li>
+      <% }); %>
+    </ul>
   <% } else { %>
-  <p>No mentees found.</p>
+    <p>No mentees found.</p>
   <% } %>
 </div>
+
 
 <%- include('../partials/footer'); -%>

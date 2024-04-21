@@ -51,7 +51,7 @@
 
           <div class="col-sm-6 col-md-4 col-lg-3">
             <label class="form-label" for="dob">Date of Birth:</label>
-            <input class="form-control" type="date" id="dob" name="dob" value="<%= student.dob %>" required />
+            <input class="form-control" type="date" id="dob" name="dob" value="<%= student.dob.toString().slice(0,15) %>" required />
           </div>
 
           <div class="col-sm-6 col-md-4 col-lg-3">
@@ -135,7 +135,8 @@
         </div>
 
         <div class="row g-3 academicDetails">
-          <h2>Class X Information</h2>
+          <h2>Academic Details</h2>
+          <h3>Class X Information</h3>
           <div class="col-sm-6 col-md-4 col-lg-3">
             <label class="form-label" for="classXYearOfPassing">Year of Passing:</label>
             <input class="form-control" type="number" id="classXYearOfPassing" name="classX[yearOfPassing]"
@@ -160,7 +161,7 @@
               value="<%= student.classX.score %>" required />
           </div>
 
-          <h2>Class XII Information</h2>
+          <h3 class="mt-5">Class XII Information</h3>
           <div class="col-sm-6 col-md-4 col-lg-3">
             <label class="form-label" for="classXIIPassingYear">Year of Passing:</label>
             <input class="form-control" type="number" id="classXIIPassingYear" name="classXII[yearOfPassing]"
@@ -185,19 +186,12 @@
               value="<%= student.classXII.score %>" required />
           </div>
 
-          <h2>Credit Information</h2>
-
-          <div class="col-sm-4">
-            <label class="form-label" for="noOfSemesters">Number of Semesters Completed:</label>
-            <input class="form-control" type="number" id="noOfSemesters" name="noOfSemesters"
-              value="<%= student.creditInfo.length %>" required />
-          </div>
-
-          <div class="row g-3" id="creditInfoRows">
+          <h3 class="mt-5">Credit Information</h3>
+          <div class="row g-3 mb-4 mt-0" id="creditInfoRows">
             <% for (var i=1; i <=student.creditInfo.length ; i++) { %>
               <div class="col-sm-6 col-md-4 col-lg-3">
-                <h2>Credit Information for Semester <%= i %>
-                </h2>
+                <h4>Credit Information for Semester <%= i %>
+                </h4>
 
                 <label class="form-label" for="creditsSem<%= i %>">Sem:</label>
                 <input class="form-control" type="number" value="<%= i %>" id="creditsSem<%= i %>"
@@ -222,17 +216,11 @@
 
           <!-- Repeat the above section for each creditInfo object -->
 
-          <h2>Supplementary Semester Information</h2>
-          <div class="col-sm-4">
-            <label class="form-label" for="noOfSupplementary">Number of Supplementary Semesters:</label>
-            <input class="form-control" type="number" id="noOfSupplementary" name="noOfSupplementary"
-              value="<%= student.supplementary.length %>" required />
-          </div>
-
-          <div class="row g-3" id="supplementaryInputsContainer">
+          <h3>Supplementary Semester Information</h3>
+          <div class="row g-3 mb-4 mt-0" id="supplementaryInputsContainer">
             <% for (let i=1; i <=student.supplementary.length ; i++) { %>
               <div class="col-sm-6 col-md-4 col-lg-3">
-                <h2>Supplementary Sem <%= i %> Information</h2>
+                <h4>Supplementary Sem <%= i %> Information</h4>
 
                 <label class="form-label" for="suppCreditsRegistered<%= i %>">Credits Registered:</label>
                 <input class="form-control" type="number" id="suppCreditsRegistered<%= i %>"
@@ -253,17 +241,11 @@
 
           <!-- Repeat the above section for each supplementary object -->
 
-          <h2>Backlogs Information</h2>
-          <div class="col-sm-4">
-            <label class="form-label" for="noOfBacklogs">Number of Backlogs:</label>
-            <input class="form-control" type="number" id="noOfBacklogs" name="noOfBacklogs"
-              value="<%= student.backlogsInfo.length %>" required />
-          </div>
-
-          <div class="row g-3" id="backlogsRows">
+          <h3>Backlogs Information</h3>
+          <div class="row g-3 mb-4 mt-0" id="backlogsRows">
             <% for (let i=1; i <=student.backlogsInfo.length ; i++) { %>
               <div class="col-sm-6 col-md-4 col-lg-3">
-                <h2>Backlog <%= i %> Information</h2>
+                <h4>Backlog <%= i %> Information</h4>
 
                 <label class="form-label" for="backlogSubjectCode<%= i %>">Subject Code:</label>
                 <input class="form-control" type="text" id="backlogSubjectCode<%= i %>"
@@ -283,7 +265,7 @@
                 <label class="form-check-label" for="backlogCleared<%= i %>">Cleared:</label>
                 <input class="form-check-input" type="checkbox" value="true" id="backlogCleared<%= i %>"
                   name="backlogsInfo[<%= i - 1 %>][cleared]" <%=student.backlogsInfo[i - 1].cleared ? "checked" : "" %>
-                >
+                > <br>
 
                 <label class="form-label" for="backlogSem<%= i %>">In Which Sem Cleared:</label>
                 <input class="form-control" type="text" id="backlogSem<%= i %>"
@@ -294,17 +276,11 @@
           </div>
           <!-- Repeat the above section for each backlog object -->
 
-          <h2>Current Semester Information</h2>
-          <div class="col-sm-4">
-            <label class="form-label" for="noOfCurrentSubjects">Number of Registered Subjects:</label>
-            <input class="form-control" type="number" id="noOfCurrentSubjects" name="noOfCurrentSubjects"
-              value="<%= student.currentSemInfo.length %>" required />
-          </div>
-
-          <div class="row g-3" id="currentSubjectsRows">
+          <h3>Current Semester Information</h3>
+          <div class="row g-3 mt-0" id="currentSubjectsRows">
             <% for (let i=1; i <=student.currentSemInfo.length; i++) { %>
               <div class="col-sm-6 col-md-4 col-lg-3">
-                <h2>Current Semester Subject <%= i %> Information</h2>
+                <h4>Current Semester Subject <%= i %> Information</h4>
 
                 <label class="form-label" for="currentSubjectCode<%= i %>">Subject Code:</label>
                 <input class="form-control" type="text" id="currentSubjectCode<%= i %>"
@@ -332,7 +308,7 @@
               value="<%= student.currentCGPA %>" required />
           </div>
 
-          <h2>Activity Points</h2>
+          <h3 class="mt-5">Activity Points</h3>
           <div class="col-sm-6 col-md-4">
             <label class="form-label" for="communityPts">Community Points Earned:</label>
             <input class="form-control" type="number" id="communityPts" name="activityPts[communityPts]"
@@ -353,7 +329,7 @@
         </div>
 
         <div class="row g-3 docs">
-          <h2>Attachments</h2>
+          <h3 class="mt-4">Attachments</h3>
           <div class="col-sm-6 regSemFiles">
             <label class="form-label" for="regSemFiles">Regular Sem Report Cards:</label>
             <input class="form-control" type="file" id="regSemFiles" name="regSemFiles" multiple />

@@ -1,0 +1,29 @@
+<%- include('../partials/header'); -%>
+<div class="container">
+  <% if (regFiles.length) { %>
+    <h2>Regular Semester Files</h2>
+    <ul>
+      <% regFiles.forEach(file => { %>
+        <li>
+          <a href="/file/<%= encodeURIComponent(file.filename) %>" download="<%= file.filename %>"><%= file.filename %></a>
+        </li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <h1>No Regular Files Uploaded</h1>
+  <% } %>
+
+  <% if (suppFiles.length) { %>
+    <h2>Supplementary Semester Files</h2>
+    <ul>
+      <% suppFiles.forEach(file => { %>
+        <li>
+          <a href="/file/<%= encodeURIComponent(file.filename) %>" download="<%= file.filename %>"><%= file.filename %></a>
+        </li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <h1>No Supplementary Files Uploaded</h1>
+  <% } %>
+</div>
+<%- include('../partials/footer'); -%>

@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const fs = require("fs");
 const ejs = require("ejs");
 const path = require("path");
 const Admin = require("./models/adminModel");
@@ -16,7 +17,16 @@ const {
   showEditStudentForm,
   deleteStudent,
 } = require("./controllers/adminCont");
-const { getFacultyMentees, saveRemarks, viewStudentProfile, viewStudentAcademic, generateStudentReport, getStudentFiles, addMeeting } = require("./controllers/facultyCont");
+const {
+  getFacultyMentees,
+  saveRemarks,
+  viewStudentProfile,
+  viewStudentAcademic,
+  generateStudentReport,
+  getStudentFiles,
+  addMeeting,
+  showMentees,
+} = require("./controllers/facultyCont");
 const {
   councelForm,
   saveCouncelForm,
@@ -36,7 +46,10 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(methodOverride("_method"));
+
+const UPLOADS_DIR = path.join(__dirname, "..", "uploads");
 
 main()
   .then(() => console.log("Connected to database"))
@@ -77,8 +90,7 @@ app.put("/admin/student/:id", catchAsync(updateStudentByAdmin));
 app.delete("/admin/student/:id", catchAsync(deleteStudent));
 
 //Faculty Module Routes
-// Placeholder for demo faculty ID (replace with actual authentication)
-const facultyId = "662495ae2695faf2fdc1fd70";
+app.get('/mentees/home', catchAsync(showMentees));
 
 app.get("/mentees", catchAsync(getFacultyMentees));
 
@@ -92,7 +104,22 @@ app.get("/mentees/:studentId/report", catchAsync(generateStudentReport));
 
 app.get("/mentees/:studentId/studentFiles", catchAsync(getStudentFiles));
 
-app.post("/add-meeting/:menteeId", catchAsync(addMeeting));
+app.post("/mentees/:studentId/meeting", catchAsync(addMeeting));
+
+/* DO NOT MOVE THIS, File Server */
+app.get("/file/:filename", (req, res) => {
+  const fileName = req.params.filename;
+  const filePath = path.join(__dirname, "uploads", fileName);
+
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader("Content-Disposition", `inline; filename="${fileName}"`);
+  res.sendFile(filePath, (err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Error serving file");
+    }
+  });
+});
 
 // Student Module Routes
 app.get("/student/:id/new", catchAsync(councelForm));

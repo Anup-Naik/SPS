@@ -31,7 +31,7 @@
         </tr>
         <tr>
           <th>Date of Birth:</th>
-          <td><%= student.dob %></td>
+          <td><%= student.dob.toString().slice(0,15) %></td>
         </tr>
         <tr>
           <th>Email:</th>
@@ -220,17 +220,23 @@
         <h3>Activity Points Information</h3>
         <table class="table table-bordered">
           <tr>
-            <th>Community Points</th>
+            <th>Community Points Earned</th>
             <td><%= student.activityPts.communityPts %></td>
           </tr>
           <tr>
-            <th>Allied Points</th>
+            <th>Allied Points Earned</th>
             <td><%= student.activityPts.alliedPts %></td>
           </tr>
           <tr>
-            <th>Total Points</th>
+            <th>Total Points Required</th>
             <td><%= student.activityPts.totalPts %></td>
           </tr>
+          <tr>
+            <th>Required Points</th>
+            <td><%= student.activityPts.totalPts - (student.activityPts.communityPts + student.activityPts.alliedPts) %>
+            </td>
+          </tr>
+            
         </table>
       </div>
     </div>
