@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Faculty = require("../models/facultyModel");
 const Student = require("../models/studentModel");
 
-const facultyId = "66251f9ae3a1bc3ea0285515";
+const facultyId = req.session.user._id;
 
 module.exports.facultyDashboard = async (req, res, next) => {
   const faculty = await Faculty.findById(facultyId);
@@ -57,7 +57,7 @@ module.exports.saveRemarks = async (req, res, next) => {
       new: true,
     }
   );
-
+  req.flash("success", "Remarks saved successfully!");
   res.redirect("/mentees");
 };
 
@@ -78,6 +78,7 @@ module.exports.addMeeting = async (req, res, next) => {
     { $push: { "mentees.$.meetings": { date, outcome } } },
     { new: true }
   );
+  req.flash("success", "Meeting added successfully!");
   res.redirect(`/mentees/${studentId}/profile`);
 };
 

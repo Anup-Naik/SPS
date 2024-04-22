@@ -1,5 +1,8 @@
 <%- include('./partials/header'); -%>
 <%- include('./partials/navbar'); -%>
+<%- include('./partials/flash', { messages: successMessages, type: 'success' }) %>
+<%- include('./partials/flash', { messages: errorMessages, type: 'danger' }) %>
+
     <header class="bg-dark py-4">
         <div class="container">
             <h1 class="text-white">Student Proctoring System</h1>

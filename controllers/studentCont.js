@@ -12,6 +12,7 @@ module.exports.saveCouncelForm = async (req, res, next) => {
   if (req.files.regSemFiles) student.regFiles = req.files.regSemFiles;
   if (req.files.suppSemFiles) student.suppFiles = req.files.suppSemFiles;
   await student.save();
+  req.flash("success", "Counseling form saved successfully!");
   res.redirect("/");
 };
 
@@ -41,6 +42,7 @@ module.exports.updateStudent = async (req, res, next) => {
     });
   }
   await student.save();
+  req.flash("success", "Student information updated successfully!");
   res.redirect("/");
 };
 
@@ -65,15 +67,17 @@ module.exports.changeStudentPassword = async (req, res, next) => {
   const student = await Student.findById(id);
 
   if (currentPassword !== student.password) {
+    req.flash("error", "Current password is incorrect!");
     return res.redirect(`/student/${id}/password`);
   }
 
   if (newPassword !== confirmPassword) {
+    req.flash("error", "New password and confirm password do not match!");
     return res.redirect(`/student/${id}/password`);
   }
 
   student.password = newPassword;
   await student.save();
-
+  req.flash("success", "Password changed successfully!");
   res.redirect("/");
 };

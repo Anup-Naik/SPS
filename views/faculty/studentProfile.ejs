@@ -1,5 +1,8 @@
 <%- include('../partials/header'); -%>
 <%- include('../partials/facultyNav'); -%>
+<%- include('../partials/flash', { messages: successMessages, type: 'success' }) %>
+<%- include('../partials/flash', { messages: errorMessages, type: 'danger' }) %>
+
 
 <div class="container">
   <h1>Student Profile</h1>

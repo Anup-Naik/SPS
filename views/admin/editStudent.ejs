@@ -1,4 +1,7 @@
 <%- include('../partials/header'); -%> <%- include('../partials/adminNav'); -%>
+<%- include('../partials/flash', { messages: successMessages, type: 'success' }) %>
+<%- include('../partials/flash', { messages: errorMessages, type: 'danger' }) %>
+
         <div class="container">
             <h1 class="mt-4 mb-4">Edit Student</h1>
             <form action="/admin/student/<%= student._id %>?_method=PUT" method="POST">

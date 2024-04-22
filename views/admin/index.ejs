@@ -1,5 +1,8 @@
 <%- include('../partials/header'); -%>
 <%- include('../partials/adminNav'); -%>
+<%- include('../partials/flash', { messages: successMessages, type: 'success' }) %>
+<%- include('../partials/flash', { messages: errorMessages, type: 'danger' }) %>
+
      <div class="container mt-4">
         <div class="card">
             <div class="card-body">

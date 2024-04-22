@@ -2,6 +2,7 @@ module.exports.adminDashboard = async (req, res, next) => {
   res.render("./admin");
 };
 
+//Faculty Controllers For Admin
 const Faculty = require("../models/facultyModel");
 
 // Display form to create a new faculty member
@@ -15,7 +16,7 @@ module.exports.createFaculty = async (req, res, next) => {
   const { username, password, name, contact, email } = req.body;
   const faculty = new Faculty({ username, password, name, contact, email });
   await faculty.save();
-  /*  req.flash("success", "Faculty member created successfully!"); */
+  req.flash("success", "Faculty member created successfully!");
   res.redirect("/admin");
 };
 
@@ -37,7 +38,7 @@ module.exports.updateFaculty = async (req, res, next) => {
     contact,
     email,
   });
-  /* req.flash("success", "Faculty member updated successfully!"); */
+  req.flash("success", "Faculty member updated successfully!");
   res.redirect("/admin");
 };
 
@@ -45,7 +46,7 @@ module.exports.updateFaculty = async (req, res, next) => {
 module.exports.deleteFaculty = async (req, res, next) => {
   const { id } = req.params;
   await Faculty.findByIdAndDelete(id);
-  /* req.flash("success", "Faculty member deleted successfully!"); */
+  req.flash("success", "Faculty member deleted successfully!");
   res.redirect("/admin");
 };
 
@@ -67,7 +68,7 @@ module.exports.createStudent = async (req, res, next) => {
   const faculty = await Faculty.findById(facultyAdvisor);
   faculty.mentees.push({ mentee: student._id });
   await faculty.save();
-  /* req.flash("success", "Student created successfully!"); */
+  req.flash("success", "Student created successfully!");
   res.redirect("/admin/student");
 };
 
@@ -92,7 +93,7 @@ module.exports.updateStudentByAdmin = async (req, res, next) => {
   const faculty = await Faculty.findById(facultyAdvisor);
   faculty.mentees.push({ mentee: id });
   await faculty.save();
-  /* req.flash("success", "Student updated successfully!"); */
+  req.flash("success", "Student updated successfully!");
   res.redirect("/admin/student");
 };
 
@@ -104,6 +105,6 @@ module.exports.deleteStudent = async (req, res, next) => {
     { "mentees.mentee": id },
     { $pull: { mentees: { mentee: id } } }
   );
-  /* req.flash("success", "Student deleted successfully!"); */
+  req.flash("success", "Student deleted successfully!");
   res.redirect("/admin/student");
 };

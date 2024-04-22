@@ -1,7 +1,6 @@
 const express = require("express");
 const session = require("express-session");
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const mongoose = require("mongoose");
 const ejs = require("ejs");
@@ -50,32 +49,16 @@ const {
   isLoggedInFaculty,
   isLoggedInStudent,
 } = require("./utils/authCheck");
+const {
+  loggingUserIn,
+  loggingUserOut,
+  renderLoginForm,
+} = require("./controllers/sessionCont");
 
 const app = express();
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public")));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use(methodOverride("_method"));
-app.use(passport.initialize());
-app.use(
-  session({
-    secret: "your-secret-key",
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: true },
-  })
-);
-
-app.use(passport.session());
-app.use(flash());
-
-require("./config/passportConfig")(passport);
-
-const UPLOADS_DIR = path.join(__dirname, "..", "uploads");
 
 main()
   .then(() => console.log("Connected to database"))
@@ -83,59 +66,41 @@ main()
 
 async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/SPS");
-
-  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
 
-//Login Routes
-app.get("/login", (req, res, next) => {
-  res.render("login", { messages: req.flash("error") });
+app.use(
+  session({
+    secret: "your-secret-key",
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/SPS" }),
+    cookie: {
+      maxAge: 3600000,
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      sameSite: "Strict",
+    },
+    rolling: true,
+  })
+);
+app.use(flash());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(methodOverride("_method"));
+app.use((req, res, next) => {
+  res.locals.successMessages = req.flash('success');
+  res.locals.errorMessages = req.flash('error');
+  res.locals.currentUser = req.session.user;
+  next();
 });
 
-app.post(
-  "/login",
-  (req, res, next) => {
-    const { role } = req.body;
-    req.session.role = role; // Store role in session for redirection
-    next();
-  },
-  (req, res, next) => {
-    // Choose the appropriate strategy based on the role
-    if (req.body.role === "admin") {
-      passport.authenticate("admin", {
-        failureRedirect: "/login",
-        failureFlash: true,
-      })(req, res, next);
-    } else if (req.body.role === "faculty") {
-      passport.authenticate("faculty", {
-        failureRedirect: "/login",
-        failureFlash: true,
-      })(req, res, next);
-    } else if (req.body.role === "student") {
-      passport.authenticate("student", {
-        failureRedirect: "/login",
-        failureFlash: true,
-      })(req, res, next);
-    } else {
-      res.redirect("/login");
-    }
-  },
-  (req, res) => {
-    const { role } = req.session.passport ? req.session.passport.user : { role: null };
-    console.log("Session ID:", req.sessionID);
-    console.log("Session:", req.session);
-    console.log("Role:", role);
-    if (role === "admin") {
-      res.redirect("/admin");
-    } else if (role === "faculty") {
-      res.redirect("/faculty");
-    } else if (role === "student") {
-      res.redirect("/");
-    } else {
-      res.redirect("/login");
-    }
-  }
-);
+/* const UPLOADS_DIR = path.join(__dirname, "..", "uploads"); */
+
+//Login Routes
+app.get("/login", renderLoginForm);
+
+app.post("/login", catchAsync(loggingUserIn));
 
 //Admin Dashboard
 app.get("/admin", isLoggedIn, isLoggedInAdmin, catchAsync(adminDashboard));
@@ -350,10 +315,7 @@ app.put(
   catchAsync(updateStudent)
 );
 
-app.get("/logout", isLoggedIn, (req, res) => {
-  req.logout();
-  res.redirect("/login");
-});
+app.get("/logout", isLoggedIn, loggingUserOut);
 
 // All Routes Except Above
 app.all("*", (req, res, next) => {
