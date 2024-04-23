@@ -1,6 +1,5 @@
-<!-- Example of flash partial template -->
 <% if (messages && messages.length > 0) { %>
-  <div class="alert alert-<%= type || 'info' %> alert-dismissible fade show" role="alert">
+  <div class="alert alert-<%= type || 'info' %> alert-dismissible fade show fixed-top mx-auto mt-4 text-center" role="alert" style="max-width: 300px;">
     <% messages.forEach(message => { %>
       <%= message %>
     <% }); %>
