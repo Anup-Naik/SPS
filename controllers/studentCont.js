@@ -1,13 +1,13 @@
 const Student = require("../models/studentModel");
 
 module.exports.councelForm = async (req, res, next) => {
-  const { id } = req.params;
+  const id = req.session.user._id;
   const student = await Student.findById({ _id: id });
   res.render("./students/counsellingForm", { student });
 };
 
 module.exports.saveCouncelForm = async (req, res, next) => {
-  const { id } = req.params;
+  const id = req.session.user._id;
   const student = await Student.findByIdAndUpdate(id, req.body);
   if (req.files.regSemFiles) student.regFiles = req.files.regSemFiles;
   if (req.files.suppSemFiles) student.suppFiles = req.files.suppSemFiles;
@@ -17,19 +17,19 @@ module.exports.saveCouncelForm = async (req, res, next) => {
 };
 
 module.exports.showStudent = async (req, res, next) => {
-  const { id } = req.params;
+  const id = req.session.user._id;
   const student = await Student.findById({ _id: id });
   res.render("./students/show", { student });
 };
 
 module.exports.renderEditStudent = async (req, res, next) => {
-  const { id } = req.params;
+  const id = req.session.user._id;
   const student = await Student.findById({ _id: id });
   res.render("./students/edit", { student });
 };
 
 module.exports.updateStudent = async (req, res, next) => {
-  const { id } = req.params;
+  const id = req.session.user._id;
   const student = await Student.findByIdAndUpdate(id, req.body);
   if (req.files.regSemFiles) {
     req.files.regSemFiles.forEach((element) => {
@@ -47,7 +47,7 @@ module.exports.updateStudent = async (req, res, next) => {
 };
 
 module.exports.getFacultyAdvisor = async (req, res, next) => {
-  const { id } = req.params;
+  const id = req.session.user._id;
   const student = await Student.findById(id).populate(
     "facultyAdvisor",
     "name contact email"
@@ -56,14 +56,14 @@ module.exports.getFacultyAdvisor = async (req, res, next) => {
 };
 
 module.exports.getChangePasswordForm = async (req, res, next) => {
-  const { id } = req.params;
+  const id = req.session.user._id;
   const student = await Student.findById(id);
   res.render("students/changePassword", { student });
 };
 
 module.exports.changeStudentPassword = async (req, res, next) => {
   const { currentPassword, newPassword, confirmPassword } = req.body;
-  const { id } = req.params;
+  const id = req.session.user._id;
   const student = await Student.findById(id);
 
   if (currentPassword !== student.password) {

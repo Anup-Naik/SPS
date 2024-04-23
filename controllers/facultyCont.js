@@ -3,15 +3,13 @@ const mongoose = require("mongoose");
 const Faculty = require("../models/facultyModel");
 const Student = require("../models/studentModel");
 
-const facultyId = req.session.user._id;
-
 module.exports.facultyDashboard = async (req, res, next) => {
-  const faculty = await Faculty.findById(facultyId);
-  res.render("./faculty",{faculty});
+  const faculty = await Faculty.findById(req.session.user._id);
+  res.render("./faculty", { faculty });
 };
 
 module.exports.showMentees = async (req, res, next) => {
-  const faculty = await Faculty.findById(facultyId).populate("mentees.mentee");
+  const faculty = await Faculty.findById(req.session.user._id).populate("mentees.mentee");
 
   // Use a Set to store unique student IDs
   const visitedStudents = new Set();
@@ -38,17 +36,17 @@ module.exports.showMentees = async (req, res, next) => {
 
 // Controller to get faculty's mentees and their remarks
 module.exports.getFacultyMentees = async (req, res, next) => {
-  const faculty = await Faculty.findById(facultyId).populate("mentees.mentee");
+  const faculty = await Faculty.findById(req.session.user._id).populate("mentees.mentee");
   res.render("faculty/mentees", { faculty });
 };
 
 // Controller to save remarks for a student
 module.exports.saveRemarks = async (req, res, next) => {
   const { studentId } = req.params;
-  const { remarks } = req.body.mentee; 
+  const { remarks } = req.body.mentee;
   const updatedFaculty = await Faculty.findOneAndUpdate(
     {
-      _id: facultyId,
+      _id: req.session.user._id,
       "mentees.mentee": new mongoose.Types.ObjectId(studentId),
     },
     { $set: { "mentees.$[elem].remarks": remarks } },
@@ -65,7 +63,7 @@ module.exports.saveRemarks = async (req, res, next) => {
 module.exports.viewStudentProfile = async (req, res, next) => {
   const { studentId } = req.params;
   const student = await Student.findById(studentId);
-  const faculty = await Faculty.findById(facultyId);
+  const faculty = await Faculty.findById(req.session.user._id);
   res.render("faculty/studentProfile", { student, faculty });
 };
 

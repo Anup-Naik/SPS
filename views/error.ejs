@@ -1,12 +1,26 @@
 <%- include('./partials/header'); -%>
-<div class="row">
-    <div class="col-6 offset-3">
+<% if (currentUser && currentUser.role === "student") { %>
+    <%- include('./partials/navbar'); -%>
+<% } else if (currentUser && currentUser.role === "faculty") { %>
+    <%- include('./partials/facultyNav'); -%>
+<% } else if (currentUser && currentUser.role === "admin") { %>
+    <%- include('./partials/adminNav'); -%>
+<% } %>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 text-center">
+      <% if (!currentUser) { %>
+        <h1>Welcome to the Student Proctoring System</h1>
+        <p>Please <a href="/login">log in</a> to access more features</p>
+      <% } else { %>
         <div class="alert alert-danger" role="alert">
-            <h4 class="alert-heading"><%=err.message%></h4>
-            <% if (process.env.NODE_ENV !== "production") { %>
-            <p><%= err.stack %></p>
-            <% } %>
+          <h4 class="alert-heading"><%=err.message%></h4>
         </div>
+      <% } %>
     </div>
+  </div>
 </div>
+
 <%- include('./partials/footer'); -%>
