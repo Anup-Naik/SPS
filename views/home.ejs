@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SPS - Student Proctoring System</title>
+    <link rel="stylesheet" href="/CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="/CSS/home.css" />
+  </head>
+
+  <body class="d-flex text-center text-white bg-dark">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+      <header class="mb-auto">
+        <div>
+          <h3 class="float-md-left mb-0">
+            Basaveshwar Engineering College, Bagalkote
+          </h3>
+          <nav class="nav nav-masthead justify-content-center float-md-right">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <% if(!currentUser) { %>
+            <a class="nav-link" href="/login">Login</a>
+            <% } else { %>
+            <a class="nav-link" href="/logout">Logout</a>
+            <% } %>
+          </nav>
+        </div>
+      </header>
+      <main class="px-3">
+        <h1>Student Proctoring System</h1>
+        <p class="lead">
+          Welcome to Student Proctoring System! <br />
+          Streamline Academic Advising<br />
+          
+        </p>
+        <a
+          href="/login"
+          class="btn btn-lg btn-secondary font-weight-bold border-white bg-white"
+          >Login</a
+        >
+      </main>
+
+      <footer class="mt-auto text-white-50">
+        <p>&copy; 2024, Contact admin for queries!</p>
+      </footer>
+    </div>
+
+    <script src="/Javascript/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

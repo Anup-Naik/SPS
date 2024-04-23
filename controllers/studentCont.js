@@ -1,5 +1,9 @@
 const Student = require("../models/studentModel");
 
+module.exports.studentDashboard = async (req, res) => {
+  res.render("./students");
+};
+
 module.exports.councelForm = async (req, res, next) => {
   const id = req.session.user._id;
   const student = await Student.findById({ _id: id });
@@ -13,7 +17,7 @@ module.exports.saveCouncelForm = async (req, res, next) => {
   if (req.files.suppSemFiles) student.suppFiles = req.files.suppSemFiles;
   await student.save();
   req.flash("success", "Counseling form saved successfully!");
-  res.redirect("/");
+  res.redirect("/student");
 };
 
 module.exports.showStudent = async (req, res, next) => {
@@ -43,7 +47,7 @@ module.exports.updateStudent = async (req, res, next) => {
   }
   await student.save();
   req.flash("success", "Student information updated successfully!");
-  res.redirect("/");
+  res.redirect("/student");
 };
 
 module.exports.getFacultyAdvisor = async (req, res, next) => {
@@ -79,5 +83,5 @@ module.exports.changeStudentPassword = async (req, res, next) => {
   student.password = newPassword;
   await student.save();
   req.flash("success", "Password changed successfully!");
-  res.redirect("/");
+  res.redirect("/student");
 };

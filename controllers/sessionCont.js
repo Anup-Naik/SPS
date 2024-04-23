@@ -41,7 +41,7 @@ module.exports.loggingUserIn = async (req, res) => {
         break;
       case "student":
         req.flash("success", "Welcome!");
-        res.redirect("/");
+        res.redirect("/student");
         break;
       default:
         res.redirect("/login");

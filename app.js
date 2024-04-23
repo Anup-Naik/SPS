@@ -1,5 +1,7 @@
 const express = require("express");
+const helmet = require("helmet");
 const session = require("express-session");
+const rateLimit = require("express-rate-limit");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const mongoose = require("mongoose");
@@ -38,6 +40,7 @@ const {
   getFacultyAdvisor,
   getChangePasswordForm,
   changeStudentPassword,
+  studentDashboard,
 } = require("./controllers/studentCont");
 const catchAsync = require("./utils/catchAsync");
 const ExpressError = require("./utils/ExpressError");
@@ -83,14 +86,33 @@ app.use(
     rolling: true,
   })
 );
+app.use(
+  helmet({
+    contentSecurityPolicy: false, // Disable CSP temporarily for debugging
+    frameguard: {
+      action: "sameorigin",
+    },
+    hsts: {
+      maxAge: 31536000,
+      includeSubDomains: true,
+    },
+  })
+);
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+});
+
+app.use(limiter); // Apply the rate limiting middleware globally
 app.use(flash());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(methodOverride("_method"));
 app.use((req, res, next) => {
-  res.locals.successMessages = req.flash('success');
-  res.locals.errorMessages = req.flash('error');
+  res.locals.successMessages = req.flash("success");
+  res.locals.errorMessages = req.flash("error");
   res.locals.currentUser = req.session.user;
   next();
 });
@@ -256,11 +278,19 @@ app.get("/file/:filename", isLoggedIn, isLoggedInFaculty, (req, res) => {
   });
 });
 
-// Student Module Routes
-// Student HomePage
-app.get("/", isLoggedIn, isLoggedInStudent, async (req, res) => {
-  res.render("index");
+//Home Page
+app.get("/", (req, res) => {
+  res.render("home");
 });
+
+// Student Module Routes
+// Student Dashboard
+app.get(
+  "/student",
+  isLoggedIn,
+  isLoggedInStudent,
+  catchAsync(studentDashboard)
+);
 
 app.get(
   "/student/:id/new",
@@ -329,7 +359,8 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error", { err });
 });
 
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Serving on port ${port}`);
-});
+    console.log(`Serving on port ${port}`)
+})

@@ -27,10 +27,10 @@
         <p><strong>Semester:</strong> <%= student.sem %></p>
         <p><strong>Contact:</strong> <%= student.contactNum %></p>
         <p><strong>Email:</strong> <%= student.email %></p>
-        <a href="/mentees/<%= student._id %>/profile" class="btn btn-primary">View Profile</a>
-        <a href="/mentees/<%= student._id %>/progress" class="btn btn-success">View Academic Progress</a>
-        <a href="/mentees/<%= student._id %>/report" class="btn btn-info">Generate Report</a>
-        <a href="/mentees/<%= student._id %>/studentFiles" class="btn btn-secondary">View Files</a>
+        <a href="/mentees/<%= student._id %>/profile" class="btn btn-primary mb-2">View Profile</a>
+        <a href="/mentees/<%= student._id %>/progress" class="btn btn-success mb-2">View Academic Progress</a>
+        <a href="/mentees/<%= student._id %>/report" class="btn btn-info mb-2">Generate Report</a>
+        <a href="/mentees/<%= student._id %>/studentFiles" class="btn btn-secondary mb-2">View Files</a>
       </div>
     </div>
     <% }}); %>
