@@ -89,15 +89,29 @@ module.exports.showEditStudentForm = async (req, res, next) => {
 module.exports.updateStudentByAdmin = async (req, res, next) => {
   const { id } = req.params;
   const { username, password, sem, facultyAdvisor } = req.body;
-  await Student.findByIdAndUpdate(id, {
-    username,
-    password,
-    sem,
-    facultyAdvisor,
-  });
-  const faculty = await Faculty.findById(facultyAdvisor);
-  faculty.mentees.push({ mentee: id });
-  await faculty.save();
+  const student = await Student.findById(id);
+
+  if (student.facultyAdvisor.toString() !== facultyAdvisor.toString()) {
+    await Faculty.findByIdAndUpdate(student.facultyAdvisor, {
+      $pull: { mentees: { mentee: id } },
+    });
+    await Student.findByIdAndUpdate(id, {
+      username,
+      password,
+      sem,
+      facultyAdvisor,
+    });
+    const faculty = await Faculty.findById(facultyAdvisor);
+    faculty.mentees.push({ mentee: id });
+    await faculty.save();
+  } else {
+    await Student.findByIdAndUpdate(id, {
+      username,
+      password,
+      sem,
+    });
+  }
+
   req.flash("success", "Student updated successfully!");
   res.redirect("/admin/allStudents");
 };

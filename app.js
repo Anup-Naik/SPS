@@ -1,6 +1,7 @@
 const express = require("express");
 const helmet = require("helmet");
 const session = require("express-session");
+const mongoSanitize = require("express-mongo-sanitize");
 const rateLimit = require("express-rate-limit");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
@@ -117,6 +118,7 @@ app.use((req, res, next) => {
   res.locals.currentUser = req.session.user;
   next();
 });
+app.use(mongoSanitize());
 
 /* const UPLOADS_DIR = path.join(__dirname, "..", "uploads"); */
 

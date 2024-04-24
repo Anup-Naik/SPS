@@ -19,14 +19,14 @@
                 <div class="form-group">
                     <label for="semester">Semester:</label>
                     <select id="semester" name="sem" class="form-control" required>
-                        <option value="1">Semester 1</option>
-                        <option value="2">Semester 2</option>
-                        <option value="3">Semester 3</option>
-                        <option value="4">Semester 4</option>
-                        <option value="5">Semester 5</option>
-                        <option value="6">Semester 6</option>
-                        <option value="7">Semester 7</option>
-                        <option value="8">Semester 8</option>
+                        <option value="1" <%= student.sem == '1'?'selected':"" %> >Semester 1</option>
+                        <option value="2" <%= student.sem == '2'?'selected':"" %> >Semester 2</option>
+                        <option value="3" <%= student.sem == '3'?'selected':"" %> >Semester 3</option>
+                        <option value="4" <%= student.sem == '4'?'selected':"" %> >Semester 4</option>
+                        <option value="5" <%= student.sem == '5'?'selected':"" %> >Semester 5</option>
+                        <option value="6" <%= student.sem == '6'?'selected':"" %> >Semester 6</option>
+                        <option value="7" <%= student.sem == '7'?'selected':"" %> >Semester 7</option>
+                        <option value="8" <%= student.sem == '8'?'selected':"" %> >Semester 8</option>
                     </select>
                 </div>
 
