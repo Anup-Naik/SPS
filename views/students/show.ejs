@@ -1,6 +1,7 @@
 <%- include('../partials/header'); -%>
 <%- include('../partials/navbar'); -%>
   <div class="container">
+    <% if (student.fullname&&student.usn&&student.parentOrGuardianName) { %>
     <div class="studDetail">
       <h2>Student Details</h2>
       <table class="table">
@@ -336,5 +337,6 @@
         </table>
       </div>
     </div>
+    <% } else{%>  <h1>No Info Entered</h1> <% } %>
   </div>
   <%- include('../partials/footer'); -%>
