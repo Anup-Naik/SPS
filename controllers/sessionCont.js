@@ -58,6 +58,6 @@ module.exports.loggingUserOut = (req, res) => {
     if (err) {
       console.log(err);
     }
-    res.redirect("/login");
+    res.redirect("/");
   });
 };

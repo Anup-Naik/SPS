@@ -1,0 +1,77 @@
+@media print {
+  /* General Styles */
+  body {
+    font-size: 12px;
+    font-family: 'Times New Roman', Times, serif;
+    line-height: 1.5;
+    color: #000;
+    background-color: #fff;
+  }
+
+  /* Header and Footer */
+  header,
+  footer,
+  .navbar {
+    display: none;
+  }
+  #printBtn {
+    display: none;
+  }
+  /* Container */
+  .container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #000;
+    margin-bottom: 20px;
+  }
+
+  th,
+  td {
+    padding: 8px;
+    border: 1px solid #000;
+  }
+
+  th {
+    font-weight: bold;
+    background-color: #f2f2f2;
+  }
+
+  /* Headings */
+  h1,
+  h2,
+  h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  /* Page Break */
+  .page-break {
+    page-break-before: always;
+  }
+  .academicDetails {
+    page-break-inside: avoid;
+  }
+
+  .activityInfo,
+  .currSemInfo,
+  .backInfo,
+  .suppInfo,
+  .creditsInfo,
+  .classXIIinfo,
+  .classXinfo {
+    page-break-inside: avoid;
+  }
+
+  @page {
+    margin: 30px 80px;
+    padding: 5px 20px;
+  }
+}

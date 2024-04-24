@@ -53,11 +53,16 @@ module.exports.deleteFaculty = async (req, res, next) => {
 // STUDENT CONTROLLERS FOR ADMIN
 const Student = require("../models/studentModel");
 
+//Display Students
+module.exports.allStudentUsers = async (req, res, next) => {
+  const students = await Student.find();
+  res.render("admin/allStudents", { students });
+};
+
 // Display form to create a new student with minimal info
 module.exports.showCreateStudentForm = async (req, res, next) => {
   const facultyMembers = await Faculty.find();
-  const students = await Student.find();
-  res.render("admin/students", { facultyMembers, students });
+  res.render("admin/students", { facultyMembers });
 };
 
 // Create a new student with minimal info
@@ -94,7 +99,7 @@ module.exports.updateStudentByAdmin = async (req, res, next) => {
   faculty.mentees.push({ mentee: id });
   await faculty.save();
   req.flash("success", "Student updated successfully!");
-  res.redirect("/admin/student");
+  res.redirect("/admin/allStudents");
 };
 
 // Delete a student
@@ -106,5 +111,5 @@ module.exports.deleteStudent = async (req, res, next) => {
     { $pull: { mentees: { mentee: id } } }
   );
   req.flash("success", "Student deleted successfully!");
-  res.redirect("/admin/student");
+  res.redirect("/admin/allStudents");
 };

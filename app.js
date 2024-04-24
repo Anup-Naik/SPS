@@ -19,6 +19,7 @@ const {
   updateStudentByAdmin,
   showEditStudentForm,
   deleteStudent,
+  allStudentUsers,
 } = require("./controllers/adminCont");
 const {
   getFacultyMentees,
@@ -164,6 +165,13 @@ app.delete(
 );
 
 //Admin-Student Routes
+app.get(
+  "/admin/allStudents",
+  isLoggedIn,
+  isLoggedInAdmin,
+  catchAsync(allStudentUsers)
+);
+
 app.get(
   "/admin/student",
   isLoggedIn,
@@ -359,8 +367,7 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error", { err });
 });
 
-
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`Serving on port ${port}`)
-})
+  console.log(`Serving on port ${port}`);
+});

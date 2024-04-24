@@ -11,7 +11,7 @@
         </div>
         <div class="form-group">
           <label for="password">Password:</label>
-          <input type="password" id="password" name="password" class="form-control" required />
+          <input type="password" id="password" name="password" minlength="8" class="form-control" required />
         </div>
 
         <div class="form-group">
@@ -40,21 +40,6 @@
         </div>
         <button type="submit" class="btn btn-primary mt-3">Create Student</button>
       </form>
-      <% if(students.length){ %>
-        <h2 class="mt-4 mb-4">Student List</h2>
-        <ul class="list-group">
-          <% students.forEach(student=> { %>
-            <li class="list-group-item d-flex justify-content-between align-items-center mb-1">
-              <%= student.username %>
-                <div class="btn-group" role="group">
-                  <a href="/admin/student/<%= student._id %>/edit" class="btn btn-sm btn-info">Edit</a>
-                  <form action="/admin/student/<%= student._id %>?_method=DELETE" method="POST">
-                    <button type="submit" class="btn btn-sm btn-danger mx-3">Delete</button>
-                  </form>
-                </div>
-            </li>
-            <% }) %>
-        </ul>
-        <% } %>
+      <a href="/admin/allStudents" class="btn btn-secondary my-2">View Students</a>
     </div>
     <%- include('../partials/footer'); -%>

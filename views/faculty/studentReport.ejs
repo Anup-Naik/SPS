@@ -94,7 +94,7 @@
     </div>
     <div class="academicDetails">
       <h2>Academic Details</h2>
-      <div>
+      <div class="classXinfo">
         <h3>Class X</h3>
         <table class="table table-bordered">
           <tr>
@@ -115,7 +115,7 @@
           </tr>
         </table>
       </div>
-      <div>
+      <div class="classXIIinfo">
         <h3>Class XII</h3>
         <table class="table table-bordered">
           <tr>
@@ -136,7 +136,7 @@
           </tr>
         </table>
       </div>
-      <div>
+      <div class="creditsInfo">
         <h3>Credits Information</h3>
         <table class="table table-bordered">
           <tr>
@@ -155,7 +155,7 @@
           <% } %>
         </table>
       </div>
-      <div>
+      <div class="suppInfo">
         <h3>Supplementary Information</h3>
         <table class="table table-bordered">
           <tr>
@@ -174,7 +174,7 @@
           <% } %>
         </table>
       </div>
-      <div>
+      <div class="backInfo">
         <h3>Backlogs Information</h3>
         <table class="table table-bordered">
           <tr>
@@ -195,7 +195,7 @@
           <% } %>
         </table>
       </div>
-      <div>
+      <div class="currSemInfo">
         <h3>Current Semester Information</h3>
         <table class="table table-bordered">
           <tr>
@@ -216,7 +216,7 @@
           </tr>
         </table>
       </div>
-      <div>
+      <div class="activityInfo">
         <h3>Activity Points Information</h3>
         <table class="table table-bordered">
           <tr>
@@ -240,5 +240,7 @@
         </table>
       </div>
     </div>
+    <button type="button" id="printBtn" class="btn btn-primary">Print</button>
   </div>
+  <script src="/Javascript/printReport.js"></script>
   <%- include('../partials/footer'); -%>

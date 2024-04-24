@@ -30,13 +30,21 @@
         <p class="lead">
           Welcome to Student Proctoring System! <br />
           Streamline Academic Advising<br />
-          
         </p>
+
+        <% if(!currentUser) { %>
         <a
           href="/login"
           class="btn btn-lg btn-secondary font-weight-bold border-white bg-white"
           >Login</a
         >
+        <% } else { %>
+        <a
+          href="/logout"
+          class="btn btn-lg btn-secondary font-weight-bold border-white bg-white"
+          >Logout</a
+        >
+        <% } %>
       </main>
 
       <footer class="mt-auto text-white-50">
