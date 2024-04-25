@@ -13,7 +13,8 @@ module.exports.showCreateFacultyForm = async (req, res, next) => {
 
 // Create a new faculty member
 module.exports.createFaculty = async (req, res, next) => {
-  const { username, password, name, contact, email } = req.body;
+  var { username, password, name, contact, email } = req.body;
+  username = username.trim();
   const faculty = new Faculty({ username, password, name, contact, email });
   await faculty.save();
   req.flash("success", "Faculty member created successfully!");
@@ -30,7 +31,8 @@ module.exports.showEditFacultyForm = async (req, res, next) => {
 // Update a faculty member
 module.exports.updateFaculty = async (req, res, next) => {
   const { id } = req.params;
-  const { username, password, name, contact, email } = req.body;
+  var { username, password, name, contact, email } = req.body;
+  username = username.trim();
   await Faculty.findByIdAndUpdate(id, {
     username,
     password,
@@ -55,7 +57,7 @@ const Student = require("../models/studentModel");
 
 //Display Students
 module.exports.allStudentUsers = async (req, res, next) => {
-  const students = await Student.find();
+  const students = await Student.find().sort({username:1});
   res.render("admin/allStudents", { students });
 };
 
@@ -67,7 +69,8 @@ module.exports.showCreateStudentForm = async (req, res, next) => {
 
 // Create a new student with minimal info
 module.exports.createStudent = async (req, res, next) => {
-  const { username, password, sem, facultyAdvisor } = req.body;
+  var { username, password, sem, facultyAdvisor } = req.body;
+  username = username.trim();
   const student = new Student({ username, password, sem, facultyAdvisor });
   await student.save();
   const faculty = await Faculty.findById(facultyAdvisor);
@@ -88,7 +91,8 @@ module.exports.showEditStudentForm = async (req, res, next) => {
 // Update student information
 module.exports.updateStudentByAdmin = async (req, res, next) => {
   const { id } = req.params;
-  const { username, password, sem, facultyAdvisor } = req.body;
+  var { username, password, sem, facultyAdvisor } = req.body;
+  username = username.trim();
   const student = await Student.findById(id);
 
   if (student.facultyAdvisor.toString() !== facultyAdvisor.toString()) {

@@ -43,6 +43,8 @@ const {
   getChangePasswordForm,
   changeStudentPassword,
   studentDashboard,
+  registerStudent,
+  registerForm,
 } = require("./controllers/studentCont");
 const catchAsync = require("./utils/catchAsync");
 const ExpressError = require("./utils/ExpressError");
@@ -295,6 +297,11 @@ app.get("/", (req, res) => {
 
 // Student Module Routes
 // Student Dashboard
+
+app.get("/student/register", catchAsync(registerForm));
+
+app.post("/student/register", catchAsync(registerStudent));
+
 app.get(
   "/student",
   isLoggedIn,

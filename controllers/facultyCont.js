@@ -37,6 +37,16 @@ module.exports.showMentees = async (req, res, next) => {
 // Controller to get faculty's mentees and their remarks
 module.exports.getFacultyMentees = async (req, res, next) => {
   const faculty = await Faculty.findById(req.session.user._id).populate("mentees.mentee");
+  if (faculty && faculty.mentees && faculty.mentees.length > 0) {
+    // Sort the populated mentees based on username
+    faculty.mentees.sort((a, b) => {
+      const usernameA = a.mentee.username.toLowerCase();
+      const usernameB = b.mentee.username.toLowerCase();
+      if (usernameA < usernameB) return -1;
+      if (usernameA > usernameB) return 1;
+      return 0;
+    });
+  }
   res.render("faculty/mentees", { faculty });
 };
 
