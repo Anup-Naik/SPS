@@ -1,4 +1,6 @@
 const express = require("express");
+const https = require("https");
+const fs = require("fs");
 const helmet = require("helmet");
 const session = require("express-session");
 const mongoSanitize = require("express-mongo-sanitize");
@@ -75,30 +77,44 @@ async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/SPS");
 }
 
+require('dotenv').config();
+const privateKey = fs.readFileSync( process.env.PRIVATE_KEY_PATH , "utf8");
+const certificate = fs.readFileSync(process.env.CERTIFICATE_PATH , "utf8");
+const httpsServer = https.createServer(
+  { key: privateKey, cert: certificate },
+  app
+);
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 app.use(
   session({
+    name: "spsession",
     secret: "your-secret-key",
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/SPS" }),
     cookie: {
       maxAge: 3600000,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
       httpOnly: true,
       sameSite: "Strict",
     },
     rolling: true,
   })
 );
+app.use(helmet());
 app.use(
-  helmet({
-    contentSecurityPolicy: false, // Disable CSP temporarily for debugging
-    frameguard: {
-      action: "sameorigin",
-    },
-    hsts: {
-      maxAge: 31536000,
-      includeSubDomains: true,
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: [],
+      connectSrc: ["'self'"],
+      scriptSrc: ["'unsafe-inline'", "'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      workerSrc: ["'self'", "blob:"],
+      childSrc: ["blob:"],
+      objectSrc: [],
+      imgSrc: ["'self'", "blob:", "data:"],
+      fontSrc: ["'self'"],
     },
   })
 );
@@ -377,6 +393,6 @@ app.use((err, req, res, next) => {
 });
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Serving on port ${port}`);
+httpsServer.listen(port, "0.0.0.0", () => {
+  console.log(`HTTPS Server running on port ${port}`);
 });
