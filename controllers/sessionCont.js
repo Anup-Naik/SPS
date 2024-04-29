@@ -6,7 +6,8 @@ module.exports.renderLoginForm = (req, res) => {
 };
 
 module.exports.loggingUserIn = async (req, res) => {
-  const { role, username, password } = req.body;
+  var { role, username, password } = req.body;
+  username = username.trim();
   let user;
 
   switch (role) {

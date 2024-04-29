@@ -77,14 +77,14 @@ async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/SPS");
 }
 
-require('dotenv').config();
-const privateKey = fs.readFileSync( process.env.PRIVATE_KEY_PATH , "utf8");
-const certificate = fs.readFileSync(process.env.CERTIFICATE_PATH , "utf8");
+require("dotenv").config();
+const privateKey = fs.readFileSync(process.env.PRIVATE_KEY_PATH, "utf8");
+const certificate = fs.readFileSync(process.env.CERTIFICATE_PATH, "utf8");
 const httpsServer = https.createServer(
   { key: privateKey, cert: certificate },
   app
 );
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"; //Remove after getting a cert from a valid CA
 
 app.use(
   session({

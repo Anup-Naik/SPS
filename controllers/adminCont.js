@@ -57,7 +57,7 @@ const Student = require("../models/studentModel");
 
 //Display Students
 module.exports.allStudentUsers = async (req, res, next) => {
-  const students = await Student.find().sort({username:1});
+  const students = await Student.find().sort({ username: 1 });
   res.render("admin/allStudents", { students });
 };
 
@@ -71,6 +71,13 @@ module.exports.showCreateStudentForm = async (req, res, next) => {
 module.exports.createStudent = async (req, res, next) => {
   var { username, password, sem, facultyAdvisor } = req.body;
   username = username.trim();
+  const existingStudent = await Student.findOne({
+    username: username,
+  });
+  if (existingStudent) {
+    req.flash("error", "User already exists");
+    return res.redirect("/admin/student");
+  }
   const student = new Student({ username, password, sem, facultyAdvisor });
   await student.save();
   const faculty = await Faculty.findById(facultyAdvisor);
@@ -93,6 +100,13 @@ module.exports.updateStudentByAdmin = async (req, res, next) => {
   const { id } = req.params;
   var { username, password, sem, facultyAdvisor } = req.body;
   username = username.trim();
+  const existingStudent = await Student.findOne({
+    username: username,
+  });
+  if (existingStudent) {
+    req.flash("error", "User already exists");
+    return res.redirect("/admin/allStudents");
+  }
   const student = await Student.findById(id);
 
   if (student.facultyAdvisor.toString() !== facultyAdvisor.toString()) {
