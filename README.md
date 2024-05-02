@@ -5,3 +5,4 @@ npm install,
 Create uploads folder, 
 Run node app.js in terminal, 
 Use https to access the app
+Make sure to configure environment variables
