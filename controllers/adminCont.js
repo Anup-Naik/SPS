@@ -100,13 +100,14 @@ module.exports.updateStudentByAdmin = async (req, res, next) => {
   const { id } = req.params;
   var { username, password, sem, facultyAdvisor } = req.body;
   username = username.trim();
-  const existingStudent = await Student.findOne({
+  //THE FOLLOWING LOGIC IS INCORRECT
+  /* const existingStudent = await Student.findOne({
     username: username,
   });
   if (existingStudent) {
     req.flash("error", "User already exists");
     return res.redirect("/admin/allStudents");
-  }
+  } */
   const student = await Student.findById(id);
 
   if (student.facultyAdvisor.toString() !== facultyAdvisor.toString()) {
