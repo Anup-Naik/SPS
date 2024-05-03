@@ -1,0 +1,35 @@
+<%- include('../partials/header'); -%>
+<%- include('../partials/facultyNav'); -%>
+<%- include('../partials/flash', { messages: successMessages, type: 'success' }) %>
+<%- include('../partials/flash', { messages: errorMessages, type: 'danger' }) %>
+  <div class="container mt-4">
+    <h1 class="mb-4">Graduate Students List</h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>USN</th>
+          <th>Full Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (graduates.length > 0) { %>
+          <% graduates.forEach(graduate => { %>
+            <tr>
+              <td><%= graduate.usn %></td>
+              <td><%= graduate.fullname %></td>
+              <td>
+                <a href="/faculty/graduates/<%= graduate._id %>" class="btn btn-primary btn-sm">View Details</a>
+              </td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr>
+            <td colspan="3" class="text-center">No graduate students found.</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <%- include('../partials/footer'); -%>

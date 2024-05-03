@@ -9,7 +9,9 @@ module.exports.facultyDashboard = async (req, res, next) => {
 };
 
 module.exports.showMentees = async (req, res, next) => {
-  const faculty = await Faculty.findById(req.session.user._id).populate("mentees.mentee");
+  const faculty = await Faculty.findById(req.session.user._id).populate(
+    "mentees.mentee"
+  );
 
   // Use a Set to store unique student IDs
   const visitedStudents = new Set();
@@ -36,7 +38,9 @@ module.exports.showMentees = async (req, res, next) => {
 
 // Controller to get faculty's mentees and their remarks
 module.exports.getFacultyMentees = async (req, res, next) => {
-  const faculty = await Faculty.findById(req.session.user._id).populate("mentees.mentee");
+  const faculty = await Faculty.findById(req.session.user._id).populate(
+    "mentees.mentee"
+  );
   if (faculty && faculty.mentees && faculty.mentees.length > 0) {
     // Sort the populated mentees based on username
     faculty.mentees.sort((a, b) => {
@@ -66,7 +70,7 @@ module.exports.saveRemarks = async (req, res, next) => {
     }
   );
   req.flash("success", "Remarks saved successfully!");
-  res.redirect("/mentees");
+  res.redirect("/faculty/mentees");
 };
 
 // Controller function to view detailed student profile
@@ -87,7 +91,7 @@ module.exports.addMeeting = async (req, res, next) => {
     { new: true }
   );
   req.flash("success", "Meeting added successfully!");
-  res.redirect(`/mentees/${studentId}/profile`);
+  res.redirect(`/faculty/mentees/${studentId}/profile`);
 };
 
 // Controller function to view academic progress of a student
@@ -111,4 +115,49 @@ module.exports.getStudentFiles = async (req, res, next) => {
   const student = await Student.findById(studentId);
   const { regFiles, suppFiles } = student;
   res.render("faculty/studentFiles", { regFiles, suppFiles, req });
+};
+
+// Graduates
+const Graduate = require("../models/graduatesModel");
+const catchAsync = require("../utils/catchAsync");
+
+module.exports.displayGraduatesList = async (req, res) => {
+  const facultyId = req.session.user._id;
+  const graduates = await Graduate.find({ facultyAdvisor: facultyId });
+  res.render("faculty/graduatesList", { graduates });
+};
+
+module.exports.showGraduate = async (req, res) => {
+  const graduateId = req.params.id;
+  const graduate = await Graduate.findById(graduateId);
+  res.render("faculty/graduateDetails", { graduate });
+};
+
+// Memos
+
+module.exports.renderMemo = async (req, res) => {
+  const faculty = await Faculty.findById(req.session.user._id);
+  res.render("faculty/memos", { memos: faculty.memos });
+};
+
+module.exports.addMemo = async (req, res) => {
+  const { title, description } = req.body;
+  const facultyId = req.session.user._id;
+  const faculty = await Faculty.findById(facultyId);
+  faculty.memos.push({ title, description });
+  await faculty.save();
+  req.flash("success", "Memo added successfully");
+  res.redirect("/faculty/memos");
+};
+
+module.exports.deleteMemo = async (req, res) => {
+  const facultyId = req.session.user._id;
+  const { memoId } = req.params;
+  await Faculty.findByIdAndUpdate(
+    facultyId,
+    { $pull: { memos: { _id: memoId } } },
+    { new: true }
+  );
+  req.flash("success", "Memo deleted successfully");
+  res.redirect("/faculty/memos");
 };

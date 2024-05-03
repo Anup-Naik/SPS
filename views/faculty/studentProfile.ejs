@@ -1,8 +1,7 @@
-<%- include('../partials/header'); -%>
-<%- include('../partials/facultyNav'); -%>
-<%- include('../partials/flash', { messages: successMessages, type: 'success' }) %>
-<%- include('../partials/flash', { messages: errorMessages, type: 'danger' }) %>
-
+<%- include('../partials/header'); -%> <%- include('../partials/facultyNav');
+-%> <%- include('../partials/flash', { messages: successMessages, type:
+'success' }) %> <%- include('../partials/flash', { messages: errorMessages,
+type: 'danger' }) %>
 
 <div class="container">
   <h1>Student Profile</h1>
@@ -20,6 +19,10 @@
       <tr>
         <th>Year of Admission:</th>
         <td><%= student.yearOfAdmission %></td>
+      </tr>
+      <tr>
+        <th>Year of Graduation:</th>
+        <td><%=student.yearOfGraduation %></td>
       </tr>
       <tr>
         <th>Mode of Admission:</th>
@@ -50,10 +53,10 @@
         <td><%= student.bloodGroup %></td>
       </tr>
       <% if (faculty && faculty.name) { %>
-        <tr>
-          <th>Faculty Advisor:</th>
-          <td><%= faculty.name %></td>
-        </tr>
+      <tr>
+        <th>Faculty Advisor:</th>
+        <td><%= faculty.name %></td>
+      </tr>
       <% } %>
     </table>
   </div>
@@ -102,27 +105,33 @@
         <th>Remarks</th>
         <th>Add Meeting</th>
       </tr>
-      <% faculty.mentees.filter(mentee => mentee.mentee.toString() === student._id.toString()).forEach(mentee => { %>
-        <tr>
-          <td>
-            <ul>
-              <% mentee.meetings.forEach(meeting => { %>
-                <li>
-                  <strong>Date:</strong> <%= meeting.date.toString().slice(0, 15) %> -
-                  <strong>Outcome:</strong> <%= meeting.outcome %>
-                </li>
-              <% }); %>
-            </ul>
-          </td>
-          <td><%= mentee.remarks %></td>
-          <td>
-            <form action="/mentees/<%= mentee.mentee %>/meeting" method="POST">
-              <input type="date" name="date" required />
-              <input type="text" name="outcome" placeholder="Enter outcome" required />
-              <button type="submit">Add</button>
-            </form>
-          </td>
-        </tr>
+      <% faculty.mentees.filter(mentee => mentee.mentee.toString() ===
+      student._id.toString()).forEach(mentee => { %>
+      <tr>
+        <td>
+          <ul>
+            <% mentee.meetings.forEach(meeting => { %>
+            <li>
+              <strong>Date:</strong> <%= meeting.date.toString().slice(0, 15) %>
+              - <strong>Outcome:</strong> <%= meeting.outcome %>
+            </li>
+            <% }); %>
+          </ul>
+        </td>
+        <td><%= mentee.remarks %></td>
+        <td>
+          <form action="/faculty/mentees/<%= mentee.mentee %>/meeting" method="POST">
+            <input type="date" name="date" required />
+            <input
+              type="text"
+              name="outcome"
+              placeholder="Enter outcome"
+              required
+            />
+            <button type="submit">Add</button>
+          </form>
+        </td>
+      </tr>
       <% }); %>
     </table>
   </div>

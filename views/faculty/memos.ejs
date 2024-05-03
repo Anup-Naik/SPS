@@ -1,0 +1,47 @@
+<!-- views/memos.ejs -->
+
+<%- include('../partials/header'); -%>
+<%- include('../partials/facultyNav'); -%>
+
+<div class="container mt-5">
+  <h1>Memos</h1>
+
+  <% if (memos.length > 0) { %>
+    <ul class="list-group mt-3">
+      <% memos.forEach(memo => { %>
+        <li class="list-group-item mb-1">
+          <h5><%= memo.title %></h5>
+          <p><%= memo.description %></p>
+          <p>Date: <%= memo.date.toDateString() %></p>
+          <!-- Add delete button for each memo -->
+          <form action="/faculty/memos/<%= memo._id %>?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p class="mt-3">No memos found.</p>
+  <% } %>
+
+  <!-- Form to add new memo -->
+  <div class="container mt-5">
+    <h2>Add New Memo</h2>
+    <form action="/faculty/memos" method="POST">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title:</label>
+        <input type="text" id="title" name="title" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description:</label>
+        <textarea id="description" name="description" class="form-control" rows="3" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Memo</button>
+    </form>
+  </div>
+
+  <%- include('../partials/flash', { messages: successMessages, type: 'success' }) %>
+  <%- include('../partials/flash', { messages: errorMessages, type: 'danger' }) %>
+</div>
+
+<%- include('../partials/footer'); -%>

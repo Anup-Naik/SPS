@@ -7,6 +7,13 @@ const facultySchema = new mongoose.Schema({
   name: String,
   contact: Number,
   email: String,
+  memos: [
+    {
+      title: String,
+      description: String,
+      date: { type: Date, default: Date.now },
+    },
+  ],
   mentees: [
     {
       mentee: { type: mongoose.Schema.Types.ObjectId, ref: 'Student', required: true },

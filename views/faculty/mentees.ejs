@@ -30,7 +30,7 @@
                           <%= mentee.mentee.sem %>
                         </div>
                         <div class="col">
-                          <form action="/mentees/<%= mentee.mentee._id %>/remarks" method="POST">
+                          <form action="/faculty/mentees/<%= mentee.mentee._id %>/remarks" method="POST">
                             <div class="form-group">
                               <textarea class="form-control form-control-sm mb-2" id="menteeRemark"
                                 name="mentee[remarks]" rows="3">

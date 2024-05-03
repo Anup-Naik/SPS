@@ -146,3 +146,34 @@ module.exports.deleteStudent = async (req, res, next) => {
   req.flash("success", "Student deleted successfully!");
   res.redirect("/admin/allStudents");
 };
+
+// Graduated Students
+const Graduate = require("../models/graduatesModel");
+
+module.exports.renderGraduateForm = async (req, res) => {
+  res.render("admin/graduateForm");
+};
+
+// Controller function to store graduate data and delete from Student model
+module.exports.storeGraduateData = async (req, res, next) => {
+  const { graduationYear } = req.body;
+  // Find students who have graduated in the specified year
+  const graduatedStudents = await Student.find({
+    yearOfGraduation: graduationYear,
+  });
+  for (const student of graduatedStudents) {
+    // Create a new Graduate document
+    const studentData = student.toObject();
+    const graduate = new Graduate(studentData);
+    // Save the graduate data
+    await graduate.save();
+    // Remove the student from the mentees array of the associated faculty
+    await Faculty.findByIdAndUpdate(student.facultyAdvisor, {
+      $pull: { mentees: { mentee: student._id } },
+    });
+    // Delete the student document
+    await Student.findByIdAndDelete(student._id);
+  }
+  req.flash("success", "Graduate data stored successfully!");
+  res.redirect("/admin");
+};

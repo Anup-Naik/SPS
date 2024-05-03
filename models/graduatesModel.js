@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
 
-const studentSchema = new mongoose.Schema({
-  username: { type: String, unique: [true, "User already exists"] },
-  password: String,
-  role: { type: String, enum: ["student"], default: "student" },
+const graduatesSchema = new mongoose.Schema({
   facultyAdvisor: { type: mongoose.Schema.Types.ObjectId, ref: "Faculty" },
   fullname: String,
   usn: String,
@@ -17,7 +14,6 @@ const studentSchema = new mongoose.Schema({
   aadhar: Number,
   bloodGroup: String,
   facultyAdvisorName: String,
-  sem: Number,
   parentOrGuardianName: String,
   parentOrGuardianRelation: String,
   parentOrGuardianOccupation: String,
@@ -62,14 +58,10 @@ const studentSchema = new mongoose.Schema({
       semCleared: String,
     },
   ],
-
-  currentSemInfo: [
-    { subjectCode: String, subjectTitle: String, subjectCredits: Number },
-  ],
   currentCGPA: Number,
   activityPts: { communityPts: Number, alliedPts: Number, totalPts: Number },
   regFiles: [{ filename: String, path: String }],
   suppFiles: [{ filename: String, path: String }],
 });
 
-module.exports = mongoose.model("Student", studentSchema);
+module.exports = mongoose.model("Graduate", graduatesSchema);

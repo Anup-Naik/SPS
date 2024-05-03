@@ -1,0 +1,129 @@
+<%- include('../partials/header'); -%> <%- include('../partials/facultyNav');
+-%> <%- include('../partials/flash', { messages: successMessages, type:
+'success' }) %> <%- include('../partials/flash', { messages: errorMessages,
+type: 'danger' }) %>
+
+<div class="container mt-4">
+  <h1 class="mb-4">Graduate Details</h1>
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title"><%= graduate.fullname %></h3>
+      <p class="card-text">USN: <%= graduate.usn %></p>
+      <p class="card-text">
+        Year of Admission: <%= graduate.yearOfAdmission %>
+      </p>
+      <p class="card-text">
+        Year of Graduation: <%= graduate.yearOfGraduation %>
+      </p>
+      <p class="card-text">CGPA: <%= graduate.currentCGPA %></p>
+
+      <p class="card-text">
+        Mode of Admission: <%= graduate.modeOfAdmission %>
+      </p>
+      <p class="card-text">CET Rank: <%= graduate.cetRank %></p>
+      <p class="card-text">Contact Number: <%= graduate.contactNum %></p>
+      <p class="card-text">Date of Birth: <%= graduate.dob.toDateString() %></p>
+      <p class="card-text">Email: <%= graduate.email %></p>
+      <p class="card-text">Aadhaar: <%= graduate.aadhar %></p>
+      <p class="card-text">Blood Group: <%= graduate.bloodGroup %></p>
+      <p class="card-text">
+        Faculty Advisor Name: <%= graduate.facultyAdvisorName %>
+      </p>
+      <p class="card-text">
+        Parent/Guardian Name: <%= graduate.parentOrGuardianName %>
+      </p>
+      <p class="card-text">
+        Parent/Guardian Relation: <%= graduate.parentOrGuardianRelation %>
+      </p>
+      <p class="card-text">
+        Parent/Guardian Occupation: <%= graduate.parentOrGuardianOccupation %>
+      </p>
+      <p class="card-text">
+        Parent/Guardian Qualification: <%=
+        graduate.parentOrGuardianQualification %>
+      </p>
+      <p class="card-text">
+        Parent/Guardian Contact Number: <%= graduate.parentOrGuardianContactNum
+        %>
+      </p>
+      <p class="card-text">
+        Parent/Guardian Contact Number 1: <%=
+        graduate.parentOrGuardianContactNum1 %>
+      </p>
+      <p class="card-text">
+        Parent/Guardian Email: <%= graduate.parentOrGuardianEmail %>
+      </p>
+      <p class="card-text">Address: <%= graduate.address %></p>
+      <h4 class="card-subtitle mb-2 text-muted">Class X</h4>
+      <p class="card-text">
+        Year of Passing: <%= graduate.classX.yearOfPassing %>
+      </p>
+      <p class="card-text">Board: <%= graduate.classX.board %></p>
+      <p class="card-text">Institute: <%= graduate.classX.institute %></p>
+      <p class="card-text">Score: <%= graduate.classX.score %></p>
+      <h4 class="card-subtitle mb-2 text-muted">Class XII</h4>
+      <p class="card-text">
+        Year of Passing: <%= graduate.classXII.yearOfPassing %>
+      </p>
+      <p class="card-text">Board: <%= graduate.classXII.board %></p>
+      <p class="card-text">Institute: <%= graduate.classXII.institute %></p>
+      <p class="card-text">Score: <%= graduate.classXII.score %></p>
+      <h4 class="card-subtitle mb-2 text-muted">Credit Information</h4>
+      <% graduate.creditInfo.forEach(creditInfo=> { %>
+      <p class="card-text">
+        Semester: <%= creditInfo.sem %><br />
+        Credits Registered: <%= creditInfo.creditsRegistered %><br />
+        Credits Earned: <%= creditInfo.creditsEarned %><br />
+        SGPA: <%= creditInfo.sgpa %>
+      </p>
+      <% }) %>
+      <h4 class="card-subtitle mb-2 text-muted">Supplementary</h4>
+      <% graduate.supplementary.forEach(supplementaryInfo=> { %>
+      <p class="card-text">
+        Credits Registered: <%= supplementaryInfo.creditsRegistered %><br />
+        Credits Earned: <%= supplementaryInfo.creditsEarned %><br />
+        SGPA: <%= supplementaryInfo.sgpa %>
+      </p>
+      <% }) %>
+      <h4 class="card-subtitle mb-2 text-muted">Backlogs Information</h4>
+      <% graduate.backlogsInfo.forEach(backlogInfo=> { %>
+      <p class="card-text">
+        Subject Code: <%= backlogInfo.subjectCode %><br />
+        Subject Title: <%= backlogInfo.subjectTitle %><br />
+        Credits: <%= backlogInfo.credits %><br />
+        Cleared: <%= backlogInfo.cleared %><br />
+        Semester Cleared: <%= backlogInfo.semCleared %>
+      </p>
+      <% }) %>
+      <h4 class="card-subtitle mb-2 text-muted">Activity Points</h4>
+      <p class="card-text">
+        Community Points: <%= graduate.activityPts.communityPts %><br />
+        Allied Points: <%= graduate.activityPts.alliedPts %><br />
+        Total Points: <%= graduate.activityPts.totalPts %>
+      </p>
+      <h4 class="card-subtitle mb-2 text-muted">Regular Files</h4>
+      <% graduate.regFiles.forEach(regFile=> { %>
+      <p class="card-text">
+        <a
+          href="/file/<%= encodeURIComponent(regFile.filename) %>"
+          download="<%= regFile.filename %>"
+        >
+          <%= regFile.filename %>
+        </a>
+      </p>
+      <% }) %>
+      <h4 class="card-subtitle mb-2 text-muted">Supplementary Files</h4>
+      <% graduate.suppFiles.forEach(suppFile=> { %>
+      <p class="card-text">
+        <a
+          href="/file/<%= encodeURIComponent(suppFile.filename) %>"
+          download="<%= suppFile.filename %>"
+        >
+          <%= suppFile.filename %>
+        </a>
+      </p>
+      <% }) %>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer'); -%>

@@ -10,59 +10,14 @@ const flash = require("connect-flash");
 const mongoose = require("mongoose");
 const ejs = require("ejs");
 const path = require("path");
-const {
-  showCreateFacultyForm,
-  createFaculty,
-  showEditFacultyForm,
-  updateFaculty,
-  deleteFaculty,
-  adminDashboard,
-  showCreateStudentForm,
-  createStudent,
-  updateStudentByAdmin,
-  showEditStudentForm,
-  deleteStudent,
-  allStudentUsers,
-} = require("./controllers/adminCont");
-const {
-  getFacultyMentees,
-  saveRemarks,
-  viewStudentProfile,
-  viewStudentAcademic,
-  generateStudentReport,
-  getStudentFiles,
-  addMeeting,
-  showMentees,
-  facultyDashboard,
-} = require("./controllers/facultyCont");
-const {
-  councelForm,
-  saveCouncelForm,
-  showStudent,
-  renderEditStudent,
-  updateStudent,
-  getFacultyAdvisor,
-  getChangePasswordForm,
-  changeStudentPassword,
-  studentDashboard,
-  registerStudent,
-  registerForm,
-} = require("./controllers/studentCont");
-const catchAsync = require("./utils/catchAsync");
+const sessionRoutes = require("./routes/sessionRoutes");
+const adminRoutes = require("./routes/adminRoutes");
+const facultyRoutes = require("./routes/facultyRoutes");
+const studentRoutes = require("./routes/studentRoutes");
 const ExpressError = require("./utils/ExpressError");
-const { myMulter } = require("./utils/multerUtil");
 const methodOverride = require("method-override");
-const {
-  isLoggedIn,
-  isLoggedInAdmin,
-  isLoggedInFaculty,
-  isLoggedInStudent,
-} = require("./utils/authCheck");
-const {
-  loggingUserIn,
-  loggingUserOut,
-  renderLoginForm,
-} = require("./controllers/sessionCont");
+const { isLoggedIn, isLoggedInFaculty } = require("./utils/authCheck");
+require("dotenv").config();
 
 const app = express();
 
@@ -74,10 +29,9 @@ main()
   .catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/SPS");
+  await mongoose.connect(process.env.MONGO_URL);
 }
 
-require("dotenv").config();
 const privateKey = fs.readFileSync(process.env.PRIVATE_KEY_PATH, "utf8");
 const certificate = fs.readFileSync(process.env.CERTIFICATE_PATH, "utf8");
 const httpsServer = https.createServer(
@@ -89,7 +43,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"; //Remove after getting a cert fr
 app.use(
   session({
     name: "spsession",
-    secret: "your-secret-key",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/SPS" }),
@@ -138,160 +92,16 @@ app.use((req, res, next) => {
 });
 app.use(mongoSanitize());
 
-/* const UPLOADS_DIR = path.join(__dirname, "..", "uploads"); */
+//Home Page
+app.get("/", (req, res) => {
+  res.render("home");
+});
+app.use("/", sessionRoutes);
+app.use("/admin", adminRoutes);
+app.use("/faculty", facultyRoutes);
+app.use("/student", studentRoutes);
 
-//Login Routes
-app.get("/login", renderLoginForm);
-
-app.post("/login", catchAsync(loggingUserIn));
-
-//Admin Dashboard
-app.get("/admin", isLoggedIn, isLoggedInAdmin, catchAsync(adminDashboard));
-
-//Admin-Faculty Routes
-app.get(
-  "/admin/faculty",
-  isLoggedIn,
-  isLoggedInAdmin,
-  catchAsync(showCreateFacultyForm)
-);
-
-app.post(
-  "/admin/faculty",
-  isLoggedIn,
-  isLoggedInAdmin,
-  catchAsync(createFaculty)
-);
-
-app.get(
-  "/admin/faculty/:id/edit",
-  isLoggedIn,
-  isLoggedInAdmin,
-  catchAsync(showEditFacultyForm)
-);
-
-app.put(
-  "/admin/faculty/:id",
-  isLoggedIn,
-  isLoggedInAdmin,
-  catchAsync(updateFaculty)
-);
-
-app.delete(
-  "/admin/faculty/:id",
-  isLoggedIn,
-  isLoggedInAdmin,
-  catchAsync(deleteFaculty)
-);
-
-//Admin-Student Routes
-app.get(
-  "/admin/allStudents",
-  isLoggedIn,
-  isLoggedInAdmin,
-  catchAsync(allStudentUsers)
-);
-
-app.get(
-  "/admin/student",
-  isLoggedIn,
-  isLoggedInAdmin,
-  catchAsync(showCreateStudentForm)
-);
-
-app.post(
-  "/admin/student",
-  isLoggedIn,
-  isLoggedInAdmin,
-  catchAsync(createStudent)
-);
-
-app.get(
-  "/admin/student/:id/edit",
-  isLoggedIn,
-  isLoggedInAdmin,
-  catchAsync(showEditStudentForm)
-);
-
-app.put(
-  "/admin/student/:id",
-  isLoggedIn,
-  isLoggedInAdmin,
-  catchAsync(updateStudentByAdmin)
-);
-
-app.delete(
-  "/admin/student/:id",
-  isLoggedIn,
-  isLoggedInAdmin,
-  catchAsync(deleteStudent)
-);
-
-//Faculty Module Routes
-app.get(
-  "/faculty",
-  isLoggedIn,
-  isLoggedInFaculty,
-  catchAsync(facultyDashboard)
-);
-
-app.get(
-  "/mentees/home",
-  isLoggedIn,
-  isLoggedInFaculty,
-  catchAsync(showMentees)
-);
-
-app.get(
-  "/mentees",
-  isLoggedIn,
-  isLoggedInFaculty,
-  catchAsync(getFacultyMentees)
-);
-
-app.post(
-  "/mentees/:studentId/remarks",
-  isLoggedIn,
-  isLoggedInFaculty,
-  catchAsync(saveRemarks)
-);
-
-app.get(
-  "/mentees/:studentId/profile",
-  isLoggedIn,
-  isLoggedInFaculty,
-  catchAsync(viewStudentProfile)
-);
-
-app.get(
-  "/mentees/:studentId/progress",
-  isLoggedIn,
-  isLoggedInFaculty,
-  catchAsync(viewStudentAcademic)
-);
-
-app.get(
-  "/mentees/:studentId/report",
-  isLoggedIn,
-  isLoggedInFaculty,
-  catchAsync(generateStudentReport)
-);
-
-app.get(
-  "/mentees/:studentId/studentFiles",
-  isLoggedIn,
-  isLoggedInFaculty,
-  catchAsync(getStudentFiles)
-);
-
-app.post(
-  "/mentees/:studentId/meeting",
-  isLoggedIn,
-  isLoggedInFaculty,
-  catchAsync(addMeeting)
-);
-
-/* DO NOT MOVE THIS, File Server */
+/* DO NOT MOVE THIS, File Route */
 app.get("/file/:filename", isLoggedIn, isLoggedInFaculty, (req, res) => {
   const fileName = req.params.filename;
   const filePath = path.join(__dirname, "uploads", fileName);
@@ -305,80 +115,6 @@ app.get("/file/:filename", isLoggedIn, isLoggedInFaculty, (req, res) => {
     }
   });
 });
-
-//Home Page
-app.get("/", (req, res) => {
-  res.render("home");
-});
-
-// Student Module Routes
-// Student Dashboard
-
-app.get("/student/register", catchAsync(registerForm));
-
-app.post("/student/register", catchAsync(registerStudent));
-
-app.get(
-  "/student",
-  isLoggedIn,
-  isLoggedInStudent,
-  catchAsync(studentDashboard)
-);
-
-app.get(
-  "/student/:id/new",
-  isLoggedIn,
-  isLoggedInStudent,
-  catchAsync(councelForm)
-);
-
-app.post(
-  "/student/:id",
-  isLoggedIn,
-  isLoggedInStudent,
-  myMulter,
-  catchAsync(saveCouncelForm)
-);
-
-app.get("/student/:id", isLoggedIn, isLoggedInStudent, catchAsync(showStudent));
-
-app.get(
-  "/student/:id/edit",
-  isLoggedIn,
-  isLoggedInStudent,
-  catchAsync(renderEditStudent)
-);
-
-app.get(
-  "/student/:id/advisor",
-  isLoggedIn,
-  isLoggedInStudent,
-  catchAsync(getFacultyAdvisor)
-);
-
-app.get(
-  "/student/:id/password",
-  isLoggedIn,
-  isLoggedInStudent,
-  catchAsync(getChangePasswordForm)
-);
-
-app.post(
-  "/student/:id/password",
-  isLoggedIn,
-  isLoggedInStudent,
-  catchAsync(changeStudentPassword)
-);
-
-app.put(
-  "/student/:id",
-  isLoggedIn,
-  isLoggedInStudent,
-  myMulter,
-  catchAsync(updateStudent)
-);
-
-app.get("/logout", isLoggedIn, loggingUserOut);
 
 // All Routes Except Above
 app.all("*", (req, res, next) => {
