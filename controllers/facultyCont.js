@@ -114,7 +114,7 @@ module.exports.getStudentFiles = async (req, res, next) => {
   const { studentId } = req.params;
   const student = await Student.findById(studentId);
   const { regFiles, suppFiles } = student;
-  res.render("faculty/studentFiles", { regFiles, suppFiles, req });
+  res.render("faculty/studentFiles", { regFiles, suppFiles, req ,student});
 };
 
 // Graduates

@@ -2,7 +2,6 @@
 -%> <%- include('../partials/flash', { messages: successMessages, type:
 'success' }) %> <%- include('../partials/flash', { messages: errorMessages,
 type: 'danger' }) %>
-
 <div class="container">
   <h1>Student Profile</h1>
   <div class="studentDetails">
@@ -136,5 +135,9 @@ type: 'danger' }) %>
     </table>
   </div>
 </div>
-
+<div class="container my-3">
+  <a href="/faculty/mentees/<%= student._id %>/progress" class="btn btn-success mb-2">View Academic Progress</a>
+  <a href="/faculty/mentees/<%= student._id %>/report" class="btn btn-info mb-2">Generate Report</a>
+  <a href="/faculty/mentees/<%= student._id %>/studentFiles" class="btn btn-secondary mb-2">View Files</a>
+</div>
 <%- include('../partials/footer'); -%>
