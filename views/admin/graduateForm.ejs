@@ -3,10 +3,10 @@
 %> <%- include('../partials/flash', { messages: errorMessages, type: 'danger' })
 %>
 <div class="container">
-  <h1 class="mt-4">Enter Graduation Year</h1>
+  <h1 class="mt-4">Store Graduation Data</h1>
   <form action="/admin/graduateStudents" method="POST" class="mt-4">
     <div class="mb-3">
-      <label for="graduationYear" class="form-label">Graduation Year:</label>
+      <label for="graduationYear" class="form-label">Enter Graduation Year:</label>
       <input
         type="number"
         class="form-control"
@@ -15,11 +15,11 @@
         required
       />
       <p class="text-muted">
-        Caution: If dumped, all student user accounts with graduation year
+        Caution: If proceeded, all student user accounts with graduation year
         entered above will be deleted.
       </p>
     </div>
-    <button type="submit" class="btn btn-primary">Dump</button>
+    <button type="submit" class="btn btn-primary">Proceed</button>
   </form>
 </div>
 <%- include('../partials/footer'); -%>
