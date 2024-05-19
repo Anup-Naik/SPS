@@ -16,16 +16,18 @@ const {
 } = require("../controllers/studentCont");
 const catchAsync = require("../utils/catchAsync");
 const { isLoggedIn, isLoggedInStudent } = require("../utils/authCheck");
+const { allowStudentAccess } = require("../utils/accessControl");
 
 // Student Module Routes
 // Student Dashboard
 
-router.get("/register", catchAsync(registerForm));
+router.get("/register", allowStudentAccess, catchAsync(registerForm));
 
-router.post("/register", catchAsync(registerStudent));
+router.post("/register", allowStudentAccess, catchAsync(registerStudent));
 
 router.get(
   "/",
+  allowStudentAccess,
   isLoggedIn,
   isLoggedInStudent,
   catchAsync(studentDashboard)
@@ -33,6 +35,7 @@ router.get(
 
 router.get(
   "/:id/new",
+  allowStudentAccess,
   isLoggedIn,
   isLoggedInStudent,
   catchAsync(councelForm)
@@ -40,16 +43,24 @@ router.get(
 
 router.post(
   "/:id",
+  allowStudentAccess,
   isLoggedIn,
   isLoggedInStudent,
   myMulter,
   catchAsync(saveCouncelForm)
 );
 
-router.get("/:id", isLoggedIn, isLoggedInStudent, catchAsync(showStudent));
+router.get(
+  "/:id",
+  allowStudentAccess,
+  isLoggedIn,
+  isLoggedInStudent,
+  catchAsync(showStudent)
+);
 
 router.get(
   "/:id/edit",
+  allowStudentAccess,
   isLoggedIn,
   isLoggedInStudent,
   catchAsync(renderEditStudent)
@@ -57,6 +68,7 @@ router.get(
 
 router.get(
   "/:id/advisor",
+  allowStudentAccess,
   isLoggedIn,
   isLoggedInStudent,
   catchAsync(getFacultyAdvisor)
@@ -64,6 +76,7 @@ router.get(
 
 router.get(
   "/:id/password",
+  allowStudentAccess,
   isLoggedIn,
   isLoggedInStudent,
   catchAsync(getChangePasswordForm)
@@ -71,6 +84,7 @@ router.get(
 
 router.post(
   "/:id/password",
+  allowStudentAccess,
   isLoggedIn,
   isLoggedInStudent,
   catchAsync(changeStudentPassword)
@@ -78,6 +92,7 @@ router.post(
 
 router.put(
   "/:id",
+  allowStudentAccess,
   isLoggedIn,
   isLoggedInStudent,
   myMulter,

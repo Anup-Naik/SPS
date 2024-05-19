@@ -177,3 +177,17 @@ module.exports.storeGraduateData = async (req, res, next) => {
   req.flash("success", "Graduate data stored successfully!");
   res.redirect("/admin");
 };
+
+//Student Access Control
+const Admin = require("../models/adminModel");
+module.exports.toggleStudentAccess = async (req, res, next) => {
+  const admin = await Admin.findOne({ role: "admin" });
+
+  // Toggle the value of allowStudAccess
+  admin.allowStudAccess = !admin.allowStudAccess;
+
+  // Save the updated admin document
+  await admin.save();
+  req.flash("success", "Student access toggled successfully");
+  res.redirect("/admin");
+};

@@ -18,7 +18,16 @@ module.exports.loggingUserIn = async (req, res) => {
       user = await Faculty.findOne({ username, password });
       break;
     case "student":
-      user = await Student.findOne({ username, password });
+      const admin = await Admin.findOne(
+        { role: "admin" },
+        { allowStudAccess: 1 }
+      );
+      if (admin && admin.allowStudAccess) {
+        user = await Student.findOne({ username, password });
+      } else {
+        req.flash("error", "Students Access Denied");
+        return res.redirect("/login");
+      }
       break;
     default:
       break;

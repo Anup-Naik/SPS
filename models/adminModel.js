@@ -5,6 +5,7 @@ const adminSchema = new mongoose.Schema({
   password: String,
   name: String,
   role: { type: String, enum: ["admin"], default: "admin" },
+  allowStudAccess: Boolean,
 });
 
 module.exports = mongoose.model("Admin", adminSchema);
