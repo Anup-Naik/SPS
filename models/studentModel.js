@@ -70,6 +70,8 @@ const studentSchema = new mongoose.Schema({
   activityPts: { communityPts: Number, alliedPts: Number, totalPts: Number },
   regFiles: [{ filename: String, path: String }],
   suppFiles: [{ filename: String, path: String }],
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
 });
 
 module.exports = mongoose.model("Student", studentSchema);

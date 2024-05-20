@@ -16,7 +16,11 @@ const facultySchema = new mongoose.Schema({
   ],
   mentees: [
     {
-      mentee: { type: mongoose.Schema.Types.ObjectId, ref: 'Student', required: true },
+      mentee: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Student",
+        required: true,
+      },
       remarks: String,
       meetings: [
         {
@@ -26,6 +30,8 @@ const facultySchema = new mongoose.Schema({
       ],
     },
   ],
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
 });
 
 module.exports = mongoose.model("Faculty", facultySchema);

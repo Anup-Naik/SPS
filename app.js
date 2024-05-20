@@ -14,6 +14,7 @@ const sessionRoutes = require("./routes/sessionRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const facultyRoutes = require("./routes/facultyRoutes");
 const studentRoutes = require("./routes/studentRoutes");
+const forgotPasswordRoutes = require("./routes/forgotPasswordRoutes");
 const ExpressError = require("./utils/ExpressError");
 const methodOverride = require("method-override");
 const { isLoggedIn, isLoggedInFaculty } = require("./utils/authCheck");
@@ -97,6 +98,7 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 app.use("/", sessionRoutes);
+app.use("/", forgotPasswordRoutes);
 app.use("/admin", adminRoutes);
 app.use("/faculty", facultyRoutes);
 app.use("/student", studentRoutes);
@@ -125,7 +127,10 @@ app.all("*", (req, res, next) => {
 app.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
   if (!err.message) err.message = "Oh No, Something Went Wrong!";
-  res.status(statusCode).render("error", { err });
+
+  if (!res.headersSent) {
+    res.status(statusCode).render("error", { err });
+  }
 });
 
 const port = process.env.PORT || 3000;
