@@ -172,3 +172,61 @@ module.exports.deleteMemo = async (req, res) => {
   req.flash("success", "Memo deleted successfully");
   res.redirect("/faculty/memos");
 };
+
+//Mails
+
+module.exports.renderEmailForm = (req, res) => {
+  res.render("faculty/sendEmail");
+};
+
+const transporter = require("../utils/nodemailerConfig");
+
+module.exports.sendEmailToMentees = async (req, res) => {
+  const facultyId = req.session.user._id;
+  const { subject, message, semester } = req.body;
+
+  // Find the faculty and populate the mentees
+  const faculty = await Faculty.findById(facultyId).populate("mentees.mentee");
+
+  // Filter mentees based on semester (if specified)
+  const mentees = semester
+    ? faculty.mentees.filter((mentee) => mentee.mentee.sem === Number(semester))
+    : faculty.mentees;
+
+  let failedEmails = [];
+  let successfulEmails = [];
+
+  // Send email to each mentee
+  for (const mentee of mentees) {
+    const student = mentee.mentee;
+    if (student.email) {
+      const mailOptions = {
+        to: student.email,
+        from: process.env.GMAIL_USER,
+        subject,
+        text: `${message}\n\nFrom,\n${faculty.username}`,
+      };
+
+      try {
+        await transporter.sendMail(mailOptions);
+        successfulEmails.push(`${student.fullname} (${student.usn})`);
+      } catch (err) {
+        console.error("Error sending email to", student.email, err);
+        failedEmails.push(`${student.fullname} (${student.usn})`);
+      }
+    }
+  }
+
+  if (failedEmails.length > 0) {
+    req.flash("error", `Failed to send emails to: ${failedEmails.join(", ")}`);
+  }
+
+  if (successfulEmails.length > 0) {
+    req.flash(
+      "success",
+      `Emails sent successfully to ${successfulEmails.length} students`
+    );
+  }
+
+  res.redirect("/faculty/mentees");
+};

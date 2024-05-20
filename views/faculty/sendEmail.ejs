@@ -1,0 +1,33 @@
+<%- include('../partials/header'); -%>
+<%- include('../partials/facultyNav'); -%>
+
+<div class="container my-5">
+  <h1 class="mb-4">Send Email to Mentees</h1>
+  <form action="/faculty/send-email" method="POST">
+    <div class="mb-3">
+      <label for="subject" class="form-label">Subject:</label>
+      <input type="text" id="subject" name="subject" class="form-control" required />
+    </div>
+    <div class="mb-3">
+      <label for="message" class="form-label">Message:</label>
+      <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="semester" class="form-label">Semester (optional):</label>
+      <select id="semester" name="semester" class="form-select">
+        <option value="">All Semesters</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Send Email</button>
+  </form>
+</div>
+
+<%- include('../partials/footer'); -%>

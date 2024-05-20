@@ -3,6 +3,7 @@
 
 <div class="container">
   <h1>Students Under Faculty: <%= faculty.name %></h1>
+  <a href="/faculty/send-email" class="btn btn-warning mb-2" >Send Email to Mentees</a>
   <div class="studentList">
     <% const visitedStudents = new Set(); %>
     <% faculty.mentees.sort((a, b) => a.mentee.sem - b.mentee.sem).forEach(mentee => {
