@@ -4,7 +4,6 @@ const fs = require("fs");
 const helmet = require("helmet");
 const session = require("express-session");
 const mongoSanitize = require("express-mongo-sanitize");
-const rateLimit = require("express-rate-limit");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const mongoose = require("mongoose");
@@ -15,9 +14,20 @@ const adminRoutes = require("./routes/adminRoutes");
 const facultyRoutes = require("./routes/facultyRoutes");
 const studentRoutes = require("./routes/studentRoutes");
 const forgotPasswordRoutes = require("./routes/forgotPasswordRoutes");
+const {
+  globalLimiter,
+  adminRateLimiter,
+  facultyRateLimiter,
+  studentRateLimiter,
+} = require("./utils/rateLimiter");
 const ExpressError = require("./utils/ExpressError");
 const methodOverride = require("method-override");
-const { isLoggedIn, isLoggedInFaculty } = require("./utils/authCheck");
+const {
+  isLoggedIn,
+  isLoggedInFaculty,
+  isLoggedInAdmin,
+} = require("./utils/authCheck");
+const { allowStudentAccess } = require("./utils/accessControl");
 require("dotenv").config();
 
 const app = express();
@@ -74,12 +84,7 @@ app.use(
   })
 );
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 300, // limit each IP to 300 requests per windowMs
-});
-
-app.use(limiter); // Apply the rate limiting middleware globally
+app.use(globalLimiter); // Apply the rate limiting middleware globally
 app.use(flash());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -99,24 +104,36 @@ app.get("/", (req, res) => {
 });
 app.use("/", sessionRoutes);
 app.use("/", forgotPasswordRoutes);
-app.use("/admin", adminRoutes);
-app.use("/faculty", facultyRoutes);
-app.use("/student", studentRoutes);
+app.use("/admin", isLoggedIn, isLoggedInAdmin, adminRateLimiter, adminRoutes);
+app.use(
+  "/faculty",
+  isLoggedIn,
+  isLoggedInFaculty,
+  facultyRateLimiter,
+  facultyRoutes
+);
+app.use("/student",allowStudentAccess, studentRateLimiter, studentRoutes);
 
 /* DO NOT MOVE THIS, File Route */
-app.get("/file/:filename", isLoggedIn, isLoggedInFaculty, (req, res) => {
-  const fileName = req.params.filename;
-  const filePath = path.join(__dirname, "uploads", fileName);
+app.get(
+  "/file/:filename",
+  facultyRateLimiter,
+  isLoggedIn,
+  isLoggedInFaculty,
+  (req, res) => {
+    const fileName = req.params.filename;
+    const filePath = path.join(__dirname, "uploads", fileName);
 
-  res.setHeader("Content-Type", "application/pdf");
-  res.setHeader("Content-Disposition", `inline; filename="${fileName}"`);
-  res.sendFile(filePath, (err) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send("Error serving file");
-    }
-  });
-});
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", `inline; filename="${fileName}"`);
+    res.sendFile(filePath, (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error serving file");
+      }
+    });
+  }
+);
 
 // All Routes Except Above
 app.all("*", (req, res, next) => {
