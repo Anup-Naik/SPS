@@ -13,6 +13,17 @@ module.exports.showMentees = async (req, res, next) => {
     "mentees.mentee"
   );
 
+  if (faculty && faculty.mentees && faculty.mentees.length > 0) {
+    // Sort the populated mentees based on username(USN)
+    faculty.mentees.sort((a, b) => {
+      const usernameA = a.mentee.username.toLowerCase();
+      const usernameB = b.mentee.username.toLowerCase();
+      if (usernameA < usernameB) return -1;
+      if (usernameA > usernameB) return 1;
+      return 0;
+    });
+  }
+
   // Use a Set to store unique student IDs
   const visitedStudents = new Set();
 
@@ -114,7 +125,7 @@ module.exports.getStudentFiles = async (req, res, next) => {
   const { studentId } = req.params;
   const student = await Student.findById(studentId);
   const { regFiles, suppFiles } = student;
-  res.render("faculty/studentFiles", { regFiles, suppFiles, req ,student});
+  res.render("faculty/studentFiles", { regFiles, suppFiles, req, student });
 };
 
 // Graduates
