@@ -227,6 +227,34 @@ module.exports.sendEmailToMentees = async (req, res) => {
       `Emails sent successfully to ${successfulEmails.length} students`
     );
   }
-
   res.redirect("/faculty/mentees/home");
 };
+
+//Change Password
+module.exports.getChangeFacultyPasswordForm = async (req, res, next) => {
+  const id = req.session.user._id;
+  const faculty = await Faculty.findById(id);
+  res.render("faculty/changePassword", { faculty });
+};
+
+module.exports.changeFacultyPassword = async (req, res, next) => {
+  const { currentPassword, newPassword, confirmPassword } = req.body;
+  const id = req.session.user._id;
+  const faculty = await Faculty.findById(id);
+
+  if (currentPassword !== faculty.password) {
+    req.flash("error", "Current password is incorrect!");
+    return res.redirect(`/faculty/password`);
+  }
+
+  if (newPassword !== confirmPassword) {
+    req.flash("error", "New password and confirm password do not match!");
+    return res.redirect(`/faculty/password`);
+  }
+
+  faculty.password = newPassword;
+  await faculty.save();
+  req.flash("success", "Password changed successfully!");
+  res.redirect("/faculty");
+};
+

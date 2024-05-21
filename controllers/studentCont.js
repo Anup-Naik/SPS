@@ -1,6 +1,7 @@
 const Student = require("../models/studentModel");
 const Faculty = require("../models/facultyModel");
 
+//register students
 module.exports.registerForm = async (req, res) => {
   const facultyMembers = await Faculty.find();
   res.render("./students/registerStudent", { facultyMembers });
@@ -25,6 +26,7 @@ module.exports.registerStudent = async (req, res, next) => {
   res.redirect("/login");
 };
 
+//student functionalities
 module.exports.studentDashboard = async (req, res) => {
   const id = req.session.user._id;
   const student = await Student.findById({ _id: id });

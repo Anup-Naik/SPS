@@ -17,6 +17,8 @@ const {
   deleteMemo,
   renderEmailForm,
   sendEmailToMentees,
+  getChangeFacultyPasswordForm,
+  changeFacultyPassword,
 } = require("../controllers/facultyCont");
 const catchAsync = require("../utils/catchAsync");
 const { isLoggedIn, isLoggedInFaculty } = require("../utils/authCheck");
@@ -57,5 +59,10 @@ router.delete("/memos/:memoId", catchAsync(deleteMemo));
 router.get("/send-email", catchAsync(renderEmailForm));
 
 router.post("/send-email", catchAsync(sendEmailToMentees));
+
+//changePassword
+router.get("/password", catchAsync(getChangeFacultyPasswordForm));
+
+router.post("/password", catchAsync(changeFacultyPassword));
 
 module.exports = router;
