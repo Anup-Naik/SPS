@@ -26,7 +26,7 @@ module.exports.loggingUserIn = async (req, res) => {
         user = await Student.findOne({ username, password });
       } else {
         req.flash("error", "Students Access Denied");
-        return res.redirect("/login");
+        return res.redirect("/");
       }
       break;
     default:

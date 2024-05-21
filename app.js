@@ -18,7 +18,6 @@ const {
   globalLimiter,
   adminRateLimiter,
   facultyRateLimiter,
-  studentRateLimiter,
 } = require("./utils/rateLimiter");
 const ExpressError = require("./utils/ExpressError");
 const methodOverride = require("method-override");
@@ -112,14 +111,14 @@ app.use(
   facultyRateLimiter,
   facultyRoutes
 );
-app.use("/student",allowStudentAccess, studentRateLimiter, studentRoutes);
+app.use("/student", allowStudentAccess, studentRoutes);
 
 /* DO NOT MOVE THIS, File Route */
 app.get(
   "/file/:filename",
-  facultyRateLimiter,
   isLoggedIn,
   isLoggedInFaculty,
+  facultyRateLimiter,
   (req, res) => {
     const fileName = req.params.filename;
     const filePath = path.join(__dirname, "uploads", fileName);

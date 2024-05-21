@@ -6,6 +6,6 @@ module.exports.allowStudentAccess = async (req, res, next) => {
     next();
   } else {
     req.flash("error", "Students Access Denied");
-    return res.redirect("/login");
+    return res.redirect("/");
   }
 };

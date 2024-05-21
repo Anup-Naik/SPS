@@ -228,5 +228,5 @@ module.exports.sendEmailToMentees = async (req, res) => {
     );
   }
 
-  res.redirect("/faculty/mentees");
+  res.redirect("/faculty/mentees/home");
 };

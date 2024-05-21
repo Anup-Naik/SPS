@@ -31,11 +31,11 @@ module.exports.showEditFacultyForm = async (req, res, next) => {
 // Update a faculty member
 module.exports.updateFaculty = async (req, res, next) => {
   const { id } = req.params;
-  var { username, password, name, contact, email } = req.body;
+  var { username, name, contact, email } = req.body;
+  //var { username, password, name, contact, email } = req.body;
   username = username.trim();
   await Faculty.findByIdAndUpdate(id, {
-    username,
-    password,
+    username,//password,
     name,
     contact,
     email,
@@ -98,16 +98,8 @@ module.exports.showEditStudentForm = async (req, res, next) => {
 // Update student information
 module.exports.updateStudentByAdmin = async (req, res, next) => {
   const { id } = req.params;
-  var { username, password, sem, facultyAdvisor } = req.body;
+  var { username, sem, facultyAdvisor } = req.body;
   username = username.trim();
-  //THE FOLLOWING LOGIC IS INCORRECT
-  /* const existingStudent = await Student.findOne({
-    username: username,
-  });
-  if (existingStudent) {
-    req.flash("error", "User already exists");
-    return res.redirect("/admin/allStudents");
-  } */
   const student = await Student.findById(id);
 
   if (student.facultyAdvisor.toString() !== facultyAdvisor.toString()) {
@@ -116,7 +108,6 @@ module.exports.updateStudentByAdmin = async (req, res, next) => {
     });
     await Student.findByIdAndUpdate(id, {
       username,
-      password,
       sem,
       facultyAdvisor,
     });
@@ -126,7 +117,6 @@ module.exports.updateStudentByAdmin = async (req, res, next) => {
   } else {
     await Student.findByIdAndUpdate(id, {
       username,
-      password,
       sem,
     });
   }
