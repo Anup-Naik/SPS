@@ -310,6 +310,14 @@
                   <%= student.currentCGPA %>
                 </td>
               </tr>
+              <tr>
+                <th>Credits Earned</th>
+                <td colspan="2">
+                  <%var credits=0;student.creditInfo.forEach(sem=>{credits=credits+sem.creditsEarned;});
+                    student.backlogsInfo.forEach(backlog=>{if(backlog.cleared){credits=credits+backlog.credits;}})%>
+                    <%= credits %>
+                </td>
+              </tr>
         </table>
       </div>
       <div>

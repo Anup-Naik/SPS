@@ -1,13 +1,33 @@
-<%- include('../partials/header'); -%> 
-<%- include('../partials/navbar'); -%>
-<%- include('../partials/flash', { messages: successMessages, type: 'success' }) %>
-<%- include('../partials/flash', { messages: errorMessages, type: 'danger' }) %>
+<%- include('../partials/header'); -%> <%- include('../partials/navbar'); -%>
+<%- include('../partials/flash', { messages: successMessages, type: 'success' })
+%> <%- include('../partials/flash', { messages: errorMessages, type: 'danger' })
+%>
 
 <header class="bg-dark py-4">
   <div class="container">
     <h1 class="text-white">
       Welcome, <% if(student.fullname) {%> <%= student.fullname %> <% } else{ %>
       <%= student.username %> <% } %>
+      <button
+        type="button"
+        class="btn btn-dark p-0 mb-2"
+        data-bs-toggle="tooltip"
+        data-bs-html="true"
+        data-bs-placement="bottom"
+        data-bs-title="<div class='card' style='width: 25rem;'>
+          <div class='card-body'>
+            <h6 class='card-title'>Current Progress</h6>
+            <p class='card-text'>CGPA:  <%= student.currentCGPA || '0' %> </br>
+              Activity Points: <%= (student.activityPts.communityPts + student.activityPts.alliedPts) ||'0' %> </br>
+              Backlogs: <%= student.backlogsInfo.length?student.backlogsInfo.length:'0'%> </br>
+              Backlogs Cleared: <%var count = 0; student.backlogsInfo.forEach(backlog=>{if(backlog.cleared){count++;}})%> <%= count %> </br>
+              Credits Earned: <%var credits = 0;student.creditInfo.forEach(sem=>{credits=credits+sem.creditsEarned;}); student.backlogsInfo.forEach(backlog=>{if(backlog.cleared){credits=credits+backlog.credits;}})%> <%= credits %>
+            </p>
+          </div>
+        </div>"
+      >
+        <img src="/images/studInf.png" width="35rem" height="35rem">
+      </button>
     </h1>
   </div>
 </header>
@@ -48,10 +68,22 @@
         <div class="card-body">
           <h2 class="card-title">Your Advisor</h2>
           <p>Contact your advisor.</p>
-          <a href="/student/:id/advisor" class="btn btn-primary">Your Advisor</a>
+          <a href="/student/:id/advisor" class="btn btn-primary"
+            >Your Advisor</a
+          >
         </div>
       </div>
     </div>
   </div>
 </main>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const tooltipTriggerList = document.querySelectorAll(
+      '[data-bs-toggle="tooltip"]'
+    );
+    const tooltipList = [...tooltipTriggerList].map(
+      (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+    );
+  });
+</script>
 <%- include('../partials/footer'); -%>
