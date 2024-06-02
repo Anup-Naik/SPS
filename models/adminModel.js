@@ -5,7 +5,8 @@ const adminSchema = new mongoose.Schema({
   password: String,
   name: String,
   role: { type: String, enum: ["admin"], default: "admin" },
-  allowStudAccess: Boolean,
+  allowStudAccess: { type: Boolean, default: false },
+  allowStudEditAccess: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model("Admin", adminSchema);

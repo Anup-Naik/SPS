@@ -16,6 +16,7 @@ const {
   storeGraduateData,
   renderGraduateForm,
   toggleStudentAccess,
+  toggleStudentEditAccess,
 } = require("../controllers/adminCont");
 const catchAsync = require("../utils/catchAsync");
 
@@ -35,6 +36,8 @@ router.delete("/faculty/:id", catchAsync(deleteFaculty));
 
 //Admin-Student Routes
 router.get("/studAccess", catchAsync(toggleStudentAccess));
+
+router.get("/studEditAccess", catchAsync(toggleStudentEditAccess));
 
 router.get("/allStudents", catchAsync(allStudentUsers));
 

@@ -17,7 +17,7 @@ const {
 const catchAsync = require("../utils/catchAsync");
 const { isLoggedIn, isLoggedInStudent } = require("../utils/authCheck");
 const { studentRateLimiter } = require("../utils/rateLimiter");
-
+const { allowStudentEditAccess } = require("../utils/accessControl");
 // Student Module Routes
 
 router.get("/register", studentRateLimiter, catchAsync(registerForm));
@@ -36,6 +36,7 @@ router.get(
   "/:id/new",
   isLoggedIn,
   isLoggedInStudent,
+  allowStudentEditAccess,
   studentRateLimiter,
   catchAsync(councelForm)
 );
@@ -44,6 +45,7 @@ router.post(
   "/:id",
   isLoggedIn,
   isLoggedInStudent,
+  allowStudentEditAccess,
   studentRateLimiter,
   myMulter,
   catchAsync(saveCouncelForm)
@@ -61,6 +63,7 @@ router.get(
   "/:id/edit",
   isLoggedIn,
   isLoggedInStudent,
+  allowStudentEditAccess,
   studentRateLimiter,
   catchAsync(renderEditStudent)
 );
@@ -93,6 +96,7 @@ router.put(
   "/:id",
   isLoggedIn,
   isLoggedInStudent,
+  allowStudentEditAccess,
   studentRateLimiter,
   myMulter,
   catchAsync(updateStudent)

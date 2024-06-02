@@ -9,3 +9,13 @@ module.exports.allowStudentAccess = async (req, res, next) => {
     return res.redirect("/");
   }
 };
+
+module.exports.allowStudentEditAccess = async (req, res, next) => {
+  const admin = await Admin.findOne({ role: "admin" }, { allowStudEditAccess: 1 });
+  if (admin && admin.allowStudEditAccess) {
+    next();
+  } else {
+    req.flash("error", "Edit Access Denied");
+    return res.redirect("/student");
+  }
+};

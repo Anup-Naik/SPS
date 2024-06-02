@@ -57,11 +57,16 @@
               <input class="form-control" type="number" id="contactNum" name="contactNum"
                 value="<%= student.contactNum %>" required />
             </div>
-
+          <%
+          var parts = student.dob.toString().slice(0,15).split(' ');
+          var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+          var monthIndex = months.indexOf(parts[1]);
+          var formattedDate = parts[3] + '-' + (monthIndex + 1).toString().padStart(2, '0') + '-' + parts[2];
+           %>
             <div class="col-sm-6 col-md-4 col-lg-3">
               <label class="form-label" for="dob">Date of Birth:</label>
               <input class="form-control" type="date" id="dob" name="dob"
-                value="<%= student.dob.toString().slice(0,15) %>" required />
+                value="<%= formattedDate %>" required />
             </div>
 
             <div class="col-sm-6 col-md-4 col-lg-3">

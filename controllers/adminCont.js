@@ -1,10 +1,12 @@
+const Admin = require("../models/adminModel");
+const Faculty = require("../models/facultyModel");
+const Student = require("../models/studentModel");
+
 module.exports.adminDashboard = async (req, res, next) => {
   res.render("./admin");
 };
 
 //Faculty Controllers For Admin
-const Faculty = require("../models/facultyModel");
-
 // Display form to create a new faculty member
 module.exports.showCreateFacultyForm = async (req, res, next) => {
   const facultyMembers = await Faculty.find();
@@ -35,7 +37,7 @@ module.exports.updateFaculty = async (req, res, next) => {
   //var { username, password, name, contact, email } = req.body;
   username = username.trim();
   await Faculty.findByIdAndUpdate(id, {
-    username,//password,
+    username, //password,
     name,
     contact,
     email,
@@ -53,8 +55,6 @@ module.exports.deleteFaculty = async (req, res, next) => {
 };
 
 // STUDENT CONTROLLERS FOR ADMIN
-const Student = require("../models/studentModel");
-
 //Display Students
 module.exports.allStudentUsers = async (req, res, next) => {
   const students = await Student.find().sort({ username: 1 });
@@ -63,8 +63,9 @@ module.exports.allStudentUsers = async (req, res, next) => {
 
 // Display form to create a new student with minimal info
 module.exports.showCreateStudentForm = async (req, res, next) => {
+  const admin = await Admin.findOne({ _id: req.session.user._id });
   const facultyMembers = await Faculty.find();
-  res.render("admin/students", { facultyMembers });
+  res.render("admin/students", { facultyMembers, admin });
 };
 
 // Create a new student with minimal info
@@ -169,7 +170,6 @@ module.exports.storeGraduateData = async (req, res, next) => {
 };
 
 //Student Access Control
-const Admin = require("../models/adminModel");
 module.exports.toggleStudentAccess = async (req, res, next) => {
   const admin = await Admin.findOne({ role: "admin" });
 
@@ -179,5 +179,18 @@ module.exports.toggleStudentAccess = async (req, res, next) => {
   // Save the updated admin document
   await admin.save();
   req.flash("success", "Student access toggled successfully");
+  res.redirect("/admin");
+};
+
+// Student editAccess
+module.exports.toggleStudentEditAccess = async (req, res, next) => {
+  const admin = await Admin.findOne({ role: "admin" });
+
+  // Toggle the value of allowStudAccess
+  admin.allowStudEditAccess = !admin.allowStudEditAccess;
+
+  // Save the updated admin document
+  await admin.save();
+  req.flash("success", "Student Edit access toggled successfully");
   res.redirect("/admin");
 };
