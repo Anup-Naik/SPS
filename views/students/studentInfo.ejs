@@ -1,0 +1,123 @@
+<%- include('../partials/header'); -%>
+<%- include('../partials/navbar'); -%>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Student Information Form</h1>
+
+    <!-- Progress Bar -->
+    <div class="progress mb-4">
+        <% var progvar = 0; progvar = student.contactNum?15:0  %>
+        <div class="progress-bar" role="progressbar" style="width:<%=progvar%>%;"  aria-valuenow="<%=progvar%>" aria-valuemin="0" aria-valuemax="100"><%=progvar%>%</div>
+    </div>
+
+    <form class="row g-3 needs-validation" action="/student/update?_method=PUT&nextForm=parentsInfo"
+        method="POST" enctype="multipart/form-data" novalidate>
+        
+        <div class="row g-3 mb-3 studentDetails p-4 bg-light rounded-3 shadow-sm">
+            <h2 class="mb-4">Student Details</h2>
+
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <label class="form-label" for="fullname">Full Name:</label>
+                <input class="form-control" type="text" id="fullname" name="fullname"
+                    value="<%= student.fullname %>" required />
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <label class="form-label" for="usn">USN:</label>
+                <input class="form-control" type="text" id="usn" name="usn" value="<%= student.usn %>"
+                    required />
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <label class="form-label" for="yearOfAdmission">Year of Admission:</label>
+                <input class="form-control" type="number" id="yearOfAdmission" name="yearOfAdmission"
+                    value="<%= student.yearOfAdmission %>" required />
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <label class="form-label" for="yearOfGraduation">Year of Graduation:</label>
+                <input class="form-control" type="number" id="yearOfGraduation" name="yearOfGraduation"
+                    value="<%= student.yearOfGraduation %>" required />
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <label class="form-label" for="modeOfAdmission">Mode of Admission:</label>
+                <select class="form-select" id="modeOfAdmission" name="modeOfAdmission" required>
+                    <option value="CET(Aided)" <%=student.modeOfAdmission==="CET(Aided)" ? "selected" :"" %>>
+                        CET (Aided)
+                    </option>
+                    <option value="CET(UnAided)" <%=student.modeOfAdmission==="CET(UnAided)" ? "selected" :"" %>>
+                        CET (UnAided)</option>
+                    <option value="Management" <%=student.modeOfAdmission==="Management" ? "selected" :"" %>>
+                        Management
+                    </option>
+                    <option value="COMEDK" <%=student.modeOfAdmission==="COMEDK" ? "selected" :"" %>>
+                        COMEDK
+                    </option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <label class="form-label" for="cetRank">CET/COMEDK Rank:</label>
+                <input class="form-control" type="number" id="cetRank" name="cetRank"
+                    value="<%= student.cetRank %>" required />
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <label class="form-label" for="contactNum">Contact Number:</label>
+                <input class="form-control" type="number" id="contactNum" name="contactNum"
+                    value="<%= student.contactNum %>" required />
+            </div>
+
+            <% if (student.dob) { 
+                var parts = student.dob.toString().slice(0, 15).split(' '); 
+                var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']; 
+                var monthIndex = months.indexOf(parts[1]); 
+                var formattedDate = parts[3] + '-' + (monthIndex + 1).toString().padStart(2, '0') + '-' + parts[2]; 
+            } %>
+            
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <label class="form-label" for="dob">Date of Birth:</label>
+                <input class="form-control" type="date" id="dob" name="dob" value="<%= formattedDate %>"
+                    required />
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <label class="form-label" for="email">Email:</label>
+                <input class="form-control" type="email" id="email" name="email"
+                    value="<%= student.email %>" required />
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <label class="form-label" for="aadhar">Aadhar Number:</label>
+                <input class="form-control" type="number" id="aadhar" name="aadhar"
+                    value="<%= student.aadhar %>" required />
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <label class="form-label" for="bloodGroup">Blood Group:</label>
+                <input class="form-control" type="text" id="bloodGroup" name="bloodGroup"
+                    value="<%= student.bloodGroup %>" required />
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <label class="form-label" for="facultyAdvisorName">Faculty Advisor Name:</label>
+                <input class="form-control" type="text" id="facultyAdvisorName" name="facultyAdvisorName"
+                    value="<%= student.facultyAdvisorName %>" required />
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <label class="form-label" for="sem">Semester:</label>
+                <input class="form-control" type="number" id="sem" name="sem" value="<%= student.sem %>"
+                    required />
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <input class="btn btn-primary mx-2 p-2" type="submit" value="Next" />
+            <input class="btn btn-secondary mx-2 p-2" type="reset" value="Reset" />
+        </div>
+    </form>
+</div>
+<script src="/Javascript/editFormVal.js"></script>
+<%- include('../partials/footer'); -%>

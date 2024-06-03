@@ -13,6 +13,10 @@ const {
   studentDashboard,
   registerStudent,
   registerForm,
+  renderStudentInfoForm,
+  renderParentsInfoForm,
+  renderAcademicInfoForm,
+  renderAcademicInfoContForm,
 } = require("../controllers/studentCont");
 const catchAsync = require("../utils/catchAsync");
 const { isLoggedIn, isLoggedInStudent } = require("../utils/authCheck");
@@ -33,26 +37,7 @@ router.get(
 );
 
 router.get(
-  "/:id/new",
-  isLoggedIn,
-  isLoggedInStudent,
-  allowStudentEditAccess,
-  studentRateLimiter,
-  catchAsync(councelForm)
-);
-
-router.post(
-  "/:id",
-  isLoggedIn,
-  isLoggedInStudent,
-  allowStudentEditAccess,
-  studentRateLimiter,
-  myMulter,
-  catchAsync(saveCouncelForm)
-);
-
-router.get(
-  "/:id",
+  "/show",
   isLoggedIn,
   isLoggedInStudent,
   studentRateLimiter,
@@ -60,16 +45,7 @@ router.get(
 );
 
 router.get(
-  "/:id/edit",
-  isLoggedIn,
-  isLoggedInStudent,
-  allowStudentEditAccess,
-  studentRateLimiter,
-  catchAsync(renderEditStudent)
-);
-
-router.get(
-  "/:id/advisor",
+  "/advisor",
   isLoggedIn,
   isLoggedInStudent,
   studentRateLimiter,
@@ -77,7 +53,7 @@ router.get(
 );
 
 router.get(
-  "/:id/password",
+  "/password",
   isLoggedIn,
   isLoggedInStudent,
   studentRateLimiter,
@@ -85,15 +61,51 @@ router.get(
 );
 
 router.post(
-  "/:id/password",
+  "/password",
   isLoggedIn,
   isLoggedInStudent,
   studentRateLimiter,
   catchAsync(changeStudentPassword)
 );
 
+router.get(
+  "/studentInfo",
+  isLoggedIn,
+  isLoggedInStudent,
+  allowStudentEditAccess,
+  studentRateLimiter,
+  catchAsync(renderStudentInfoForm)
+);
+
+router.get(
+  "/parentsInfo",
+  isLoggedIn,
+  isLoggedInStudent,
+  allowStudentEditAccess,
+  studentRateLimiter,
+  catchAsync(renderParentsInfoForm)
+);
+
+router.get(
+  "/academicInfo",
+  isLoggedIn,
+  isLoggedInStudent,
+  allowStudentEditAccess,
+  studentRateLimiter,
+  catchAsync(renderAcademicInfoForm)
+);
+
+router.get(
+  "/academicInfoCont",
+  isLoggedIn,
+  isLoggedInStudent,
+  allowStudentEditAccess,
+  studentRateLimiter,
+  catchAsync(renderAcademicInfoContForm)
+);
+
 router.put(
-  "/:id",
+  "/update",
   isLoggedIn,
   isLoggedInStudent,
   allowStudentEditAccess,

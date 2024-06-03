@@ -1,0 +1,156 @@
+<%- include('../partials/header'); -%> 
+<%- include('../partials/navbar'); -%>
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Academic Information Form</h1>
+
+  <!-- Progress Bar -->
+  <div class="progress mb-4">
+    <% var progvar = 0; progvar = student.creditInfo.length?65:30  %>
+        <div class="progress-bar" role="progressbar" style="width:<%=progvar%>%;"  aria-valuenow="<%=progvar%>" aria-valuemin="0" aria-valuemax="100"><%=progvar%>%</div>
+    </div>
+  <form
+    class="row g-3 needs-validation"
+    action="/student/update?_method=PUT&nextForm=academicInfoCont"
+    method="POST"
+    enctype="multipart/form-data"
+    novalidate
+  >
+    <div class="row g-3 academicDetails p-4 bg-light rounded-3 shadow-sm">
+      <h2 class="mb-4">Academic Details</h2>
+
+      <h3>Class X Information</h3>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <label class="form-label" for="classXYearOfPassing">Year of Passing:</label>
+        <input class="form-control" type="number" id="classXYearOfPassing" name="classX[yearOfPassing]" value="<%= student.classX.yearOfPassing %>" required />
+      </div>
+
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <label class="form-label" for="classXBoard">Board:</label>
+        <input class="form-control" type="text" id="classXBoard" name="classX[board]" value="<%= student.classX.board %>" required />
+      </div>
+
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <label class="form-label" for="classXInstitute">Institute:</label>
+        <input class="form-control" type="text" id="classXInstitute" name="classX[institute]" value="<%= student.classX.institute %>" required />
+      </div>
+
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <label class="form-label" for="classXScore">Score:</label>
+        <input class="form-control" type="text" id="classXScore" name="classX[score]" value="<%= student.classX.score %>" required />
+      </div>
+
+      <h3 class="mt-5">Class XII Information</h3>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <label class="form-label" for="classXIIPassingYear">Year of Passing:</label>
+        <input class="form-control" type="number" id="classXIIPassingYear" name="classXII[yearOfPassing]" value="<%= student.classXII.yearOfPassing %>" required />
+      </div>
+
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <label class="form-label" for="classXIIBoard">Board:</label>
+        <input class="form-control" type="text" id="classXIIBoard" name="classXII[board]" value="<%= student.classXII.board %>" required />
+      </div>
+
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <label class="form-label" for="classXIIInstitute">Institute:</label>
+        <input class="form-control" type="text" id="classXIIInstitute" name="classXII[institute]" value="<%= student.classXII.institute %>" required />
+      </div>
+
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <label class="form-label" for="classXIIScore">Score:</label>
+        <input class="form-control" type="text" id="classXIIScore" name="classXII[score]" value="<%= student.classXII.score %>" required />
+      </div>
+
+      <h3 class="mt-5">Credit Information</h3>
+      <div class="col-sm-4">
+        <label class="form-label" for="noOfSemesters">Number of Semesters Completed:</label>
+        <input class="form-control" type="number" id="noOfSemesters" name="noOfSemesters" value="<%= student.creditInfo.length %>" required />
+      </div>
+
+      <div class="row g-3 mb-4 mt-0" id="creditInfoRows">
+        <!-- Dynamic credit information fields -->
+      </div>
+
+      <h3 class="mt-5">Supplementary Semester Information</h3>
+      <div class="col-sm-4">
+        <label class="form-label" for="noOfSupplementary">Number of Supplementary Semesters:</label>
+        <input class="form-control" type="number" id="noOfSupplementary" name="noOfSupplementary" value="<%= student.supplementary.length %>" required />
+      </div>
+
+      <div class="row g-3 mb-4 mt-0" id="supplementaryInputsContainer">
+        <!-- Dynamic supplementary semester fields -->
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <a href="/student/parentsInfo" class="btn btn-secondary mx-2 p-2">Prev</a>
+      <input class="btn btn-primary mx-2 p-2" type="submit" value="Next" />
+      <input class="btn btn-secondary mx-2 p-2" type="reset" value="Reset" />
+    </div>
+  </form>
+</div>
+
+<script>
+  // Function to generate credit info rows
+  function generateCreditInfoRows(numSemesters, existingData) {
+    const container = document.getElementById('creditInfoRows');
+    container.innerHTML = ''; // Clear existing rows
+
+    for (let i = 1; i <= numSemesters; i++) {
+      const row = document.createElement('div');
+      row.className = 'col-sm-6 col-md-4 col-lg-3';
+      row.innerHTML = `
+        <h4>Credit Information for Semester ${i}</h4>
+        <label class="form-label" for="creditsSem${i}">Sem:</label>
+        <input class="form-control" type="number" value="${i}" id="creditsSem${i}" name="creditInfo[${i - 1}][sem]" required>
+        <label class="form-label" for="creditsRegistered${i}">Credits Registered:</label>
+        <input class="form-control" type="number" id="creditsRegistered${i}" name="creditInfo[${i - 1}][creditsRegistered]" value="${existingData[i - 1]?.creditsRegistered || ''}" required>
+        <label class="form-label" for="creditsEarned${i}">Credits Earned:</label>
+        <input class="form-control" type="number" id="creditsEarned${i}" name="creditInfo[${i - 1}][creditsEarned]" value="${existingData[i - 1]?.creditsEarned || ''}" required>
+        <label class="form-label" for="sgpa${i}">SGPA:</label>
+        <input class="form-control" type="number" step="0.01" id="sgpa${i}" name="creditInfo[${i - 1}][sgpa]" value="${existingData[i - 1]?.sgpa || ''}" required>
+      `;
+      container.appendChild(row);
+    }
+  }
+
+  // Function to generate supplementary semester info rows
+  function generateSupplementaryRows(numSemesters, existingData) {
+    const container = document.getElementById('supplementaryInputsContainer');
+    container.innerHTML = ''; // Clear existing rows
+
+    for (let i = 1; i <= numSemesters; i++) {
+      const row = document.createElement('div');
+      row.className = 'col-sm-6 col-md-4 col-lg-3';
+      row.innerHTML = `
+        <h4>Supplementary Sem ${i} Information</h4>
+        <label class="form-label" for="suppCreditsRegistered${i}">Credits Registered:</label>
+        <input class="form-control" type="number" id="suppCreditsRegistered${i}" name="supplementary[${i - 1}][creditsRegistered]" value="${existingData[i - 1]?.creditsRegistered || ''}" required>
+        <label class="form-label" for="suppCreditsEarned${i}">Credits Earned:</label>
+        <input class="form-control" type="number" id="suppCreditsEarned${i}" name="supplementary[${i - 1}][creditsEarned]" value="${existingData[i - 1]?.creditsEarned || ''}" required>
+        <label class="form-label" for="suppSGPA${i}">SGPA:</label>
+        <input class="form-control" type="number" step="0.01" id="suppSGPA${i}" name="supplementary[${i - 1}][sgpa]" value="${existingData[i - 1]?.sgpa || ''}" required>
+      `;
+      container.appendChild(row);
+    }
+  }
+
+  // Add event listeners to number input fields
+  document.getElementById('noOfSemesters').addEventListener('input', function() {
+    const numSemesters = this.value;
+    const existingData = <%- JSON.stringify(student.creditInfo) %>;
+    generateCreditInfoRows((numSemesters <= 8 ? numSemesters : 8), existingData);
+  });
+
+  document.getElementById('noOfSupplementary').addEventListener('input', function() {
+    const numSemesters = this.value;
+    const existingData = <%- JSON.stringify(student.supplementary) %>;
+    generateSupplementaryRows((numSemesters <= 8 ? numSemesters : 8), existingData);
+  });
+
+  // Initial rendering of rows
+  const initialCreditInfoData = <%- JSON.stringify(student.creditInfo) %>;
+  const initialSupplementaryData = <%- JSON.stringify(student.supplementary) %>;
+  generateCreditInfoRows('<%= student.creditInfo.length %>', initialCreditInfoData);
+  generateSupplementaryRows('<%= student.supplementary.length %>', initialSupplementaryData);
+</script>
+<script src="/Javascript/editFormVal.js"></script>
+<%- include('../partials/footer'); -%>

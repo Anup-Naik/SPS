@@ -33,32 +33,34 @@ module.exports.studentDashboard = async (req, res) => {
   res.render("./students", { student });
 };
 
-module.exports.councelForm = async (req, res, next) => {
-  const id = req.session.user._id;
-  const student = await Student.findById({ _id: id });
-  res.render("./students/counsellingForm", { student });
-};
-
-module.exports.saveCouncelForm = async (req, res, next) => {
-  const id = req.session.user._id;
-  const student = await Student.findByIdAndUpdate(id, req.body);
-  if (req.files.regSemFiles) student.regFiles = req.files.regSemFiles;
-  if (req.files.suppSemFiles) student.suppFiles = req.files.suppSemFiles;
-  await student.save();
-  req.flash("success", "Counseling form saved successfully!");
-  res.redirect("/student");
-};
-
 module.exports.showStudent = async (req, res, next) => {
   const id = req.session.user._id;
   const student = await Student.findById({ _id: id });
   res.render("./students/show", { student });
 };
 
-module.exports.renderEditStudent = async (req, res, next) => {
+module.exports.renderStudentInfoForm = async (req, res, next) => {
   const id = req.session.user._id;
   const student = await Student.findById({ _id: id });
-  res.render("./students/edit", { student });
+  res.render("./students/studentInfo", { student });
+};
+
+module.exports.renderParentsInfoForm = async (req, res, next) => {
+  const id = req.session.user._id;
+  const student = await Student.findById({ _id: id });
+  res.render("./students/parentsInfo", { student });
+};
+
+module.exports.renderAcademicInfoForm = async (req, res, next) => {
+  const id = req.session.user._id;
+  const student = await Student.findById({ _id: id });
+  res.render("./students/academicInfo", { student });
+};
+
+module.exports.renderAcademicInfoContForm = async (req, res, next) => {
+  const id = req.session.user._id;
+  const student = await Student.findById({ _id: id });
+  res.render("./students/academicInfoCont", { student });
 };
 
 module.exports.updateStudent = async (req, res, next) => {
@@ -76,7 +78,8 @@ module.exports.updateStudent = async (req, res, next) => {
   }
   await student.save();
   req.flash("success", "Student information updated successfully!");
-  res.redirect("/student");
+  const nextForm = "/student/" + (req.query.nextForm || "");
+  res.redirect(nextForm);
 };
 
 module.exports.getFacultyAdvisor = async (req, res, next) => {
@@ -101,12 +104,12 @@ module.exports.changeStudentPassword = async (req, res, next) => {
 
   if (currentPassword !== student.password) {
     req.flash("error", "Current password is incorrect!");
-    return res.redirect(`/student/${id}/password`);
+    return res.redirect(`/student/password`);
   }
 
   if (newPassword !== confirmPassword) {
     req.flash("error", "New password and confirm password do not match!");
-    return res.redirect(`/student/${id}/password`);
+    return res.redirect(`/student/password`);
   }
 
   student.password = newPassword;

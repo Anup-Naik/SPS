@@ -1,0 +1,119 @@
+<%- include('../partials/header'); -%> 
+<%- include('../partials/navbar'); -%>
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Parent/Guardian Information Form</h1>
+
+  <!-- Progress Bar -->
+  <div class="progress mb-4">
+    <% var progvar = 0; progvar = student.parentOrGuardianContactNum?30:15  %>
+        <div class="progress-bar" role="progressbar" style="width:<%=progvar%>%;"  aria-valuenow="<%=progvar%>" aria-valuemin="0" aria-valuemax="100"><%=progvar%>%</div>
+    </div>
+  <form
+    class="row g-3 needs-validation"
+    action="/student/update?_method=PUT&nextForm=academicInfo"
+    method="POST"
+    enctype="multipart/form-data"
+    novalidate
+  >
+    <div class="row g-3 mb-3 parentDetails p-4 bg-light rounded-3 shadow-sm">
+      <h2 class="mb-4">Parent/Guardian Details</h2>
+
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <label class="form-label" for="parentOrGuardianName">Name:</label>
+        <input
+          class="form-control"
+          type="text"
+          id="parentOrGuardianName"
+          name="parentOrGuardianName"
+          value="<%= student.parentOrGuardianName %>"
+          required
+        />
+      </div>
+
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <label class="form-label" for="parentOrGuardianRelation">Relationship to Student:</label>
+        <input
+          class="form-control"
+          type="text"
+          id="parentOrGuardianRelation"
+          name="parentOrGuardianRelation"
+          value="<%= student.parentOrGuardianRelation %>"
+          required
+        />
+      </div>
+
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <label class="form-label" for="parentOrGuardianOccupation">Occupation:</label>
+        <input
+          class="form-control"
+          type="text"
+          id="parentOrGuardianOccupation"
+          name="parentOrGuardianOccupation"
+          value="<%= student.parentOrGuardianOccupation %>"
+          required
+        />
+      </div>
+
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <label class="form-label" for="parentOrGuardianQualification">Qualification:</label>
+        <input
+          class="form-control"
+          type="text"
+          id="parentOrGuardianQualification"
+          name="parentOrGuardianQualification"
+          value="<%= student.parentOrGuardianQualification %>"
+          required
+        />
+      </div>
+
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <label class="form-label" for="parentOrGuardianContactNum">Contact Number:</label>
+        <input
+          class="form-control"
+          type="number"
+          id="parentOrGuardianContactNum"
+          name="parentOrGuardianContactNum"
+          value="<%= student.parentOrGuardianContactNum %>"
+          required
+        />
+      </div>
+
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <label class="form-label" for="parentOrGuardianContactNum1">Alt Contact Number:</label>
+        <input
+          class="form-control"
+          type="number"
+          id="parentOrGuardianContactNum1"
+          name="parentOrGuardianContactNum1"
+          value="<%= student.parentOrGuardianContactNum1 %>"
+          required
+        />
+      </div>
+
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <label class="form-label" for="parentOrGuardianEmail">Email:</label>
+        <input
+          class="form-control"
+          type="email"
+          id="parentOrGuardianEmail"
+          name="parentOrGuardianEmail"
+          value="<%= student.parentOrGuardianEmail %>"
+          required
+        />
+      </div>
+
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <label class="form-label" for="address">Address:</label>
+        <textarea class="form-control" id="address" name="address" required><%= student.address %></textarea>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <a href="/student/studentInfo" class="btn btn-secondary mx-2 p-2">Prev</a>
+      <input class="btn btn-primary mx-2 p-2" type="submit" value="Next" />
+      <input class="btn btn-secondary mx-2 p-2" type="reset" value="Reset" />
+    </div>
+  </form>
+</div>
+<script src="/Javascript/editFormVal.js"></script>
+<%- include('../partials/footer'); -%>

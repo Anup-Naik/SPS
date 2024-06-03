@@ -1,0 +1,162 @@
+<%- include('../partials/header'); -%> 
+<%- include('../partials/navbar'); -%>
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Academic Information Form</h1>
+
+  <!-- Progress Bar -->
+  <div class="progress mb-4">
+    <% var progvar = 0; progvar = student.currentSemInfo.length?100:65  %>
+        <div class="progress-bar" role="progressbar" style="width:<%=progvar%>%;"  aria-valuenow="<%=progvar%>" aria-valuemin="0" aria-valuemax="100"><%=progvar%>%</div>
+  </div>
+
+  <form
+    class="row g-3 needs-validation"
+    action="/student/update?_method=PUT"
+    method="POST"
+    enctype="multipart/form-data"
+    novalidate
+  >
+    <div class="row g-3 academicDetails p-4 bg-light rounded-3 shadow-sm">
+      <h2 class="mb-4">Academic Details</h2>
+
+      <h3>Backlogs Information</h3>
+      <div class="col-sm-4">
+        <label class="form-label" for="noOfBacklogs">Number of Backlogs:</label>
+        <input class="form-control" type="number" id="noOfBacklogs" name="noOfBacklogs" value="<%= student.backlogsInfo.length %>" required />
+      </div>
+      <div class="row g-3" id="backlogsRows"></div>
+
+      <h3 class="mt-5">Current Semester Information</h3>
+      <div class="col-sm-4">
+        <label class="form-label" for="noOfCurrentSubjects">Number of Registered Subjects:</label>
+        <input class="form-control" type="number" id="noOfCurrentSubjects" name="noOfCurrentSubjects" value="<%= student.currentSemInfo.length %>" required />
+      </div>
+      <div class="row g-3" id="currentSubjectsRows"></div>
+
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <label class="form-label" for="currentCGPA">Current CGPA:</label>
+        <input class="form-control" type="number" step="0.01" id="currentCGPA" name="currentCGPA" value="<%= student.currentCGPA %>" required />
+      </div>
+
+      <h3 class="mt-5">Activity Points</h3>
+      <div class="col-sm-6 col-md-4">
+        <label class="form-label" for="communityPts">Community Points Earned:</label>
+        <input class="form-control" type="number" id="communityPts" name="activityPts[communityPts]" value="<%= student.activityPts.communityPts %>" required />
+      </div>
+
+      <div class="col-sm-6 col-md-4">
+        <label class="form-label" for="alliedPts">Allied Points Earned:</label>
+        <input class="form-control" type="number" id="alliedPts" name="activityPts[alliedPts]" value="<%= student.activityPts.alliedPts %>" required />
+      </div>
+
+      <div class="col-sm-6 col-md-4">
+        <label class="form-label" for="totalPts">Total Points Required:</label>
+        <input class="form-control" type="number" id="totalPts" name="activityPts[totalPts]" value="<%= student.activityPts.totalPts %>" required />
+      </div>
+    </div>
+
+    <div class="row g-3 docs">
+      <h3 class="mt-4">Attachments</h3>
+      <div class="col-sm-6 regSemFiles">
+        <label class="form-label" for="regSemFiles">Regular Sem Report Cards:</label>
+        <input class="form-control" type="file" id="regSemFiles" name="regSemFiles" multiple <%= student.regFiles.length ? ' ' : "required" %> />
+      </div>
+
+      <div class="col-sm-6 suppSemFiles">
+        <label class="form-label" for="suppSemFiles">Supplementary Sem Report Cards:</label>
+        <input class="form-control" type="file" id="suppSemFiles" name="suppSemFiles" multiple />
+      </div>
+      <p class="text-muted">Each file should be less than 1mb and upload all relevant report cards in pdf format (upload only the report cards you didn't before)</p>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <a href="/student/academicInfo" class="btn btn-secondary mx-2 p-2">Prev</a>
+      <input class="btn btn-primary mx-2 p-2" type="submit" value="Submit" />
+      <input class="btn btn-secondary mx-2 p-2" type="reset" value="Reset" />
+    </div>
+  </form>
+</div>
+
+<script>
+  // Function to generate backlogs information rows
+  function generateBacklogsRows(numBacklogs, existingData) {
+    const container = document.getElementById('backlogsRows');
+    container.innerHTML = '';
+
+    for (let i = 1; i <= numBacklogs; i++) {
+      const row = document.createElement('div');
+      row.className = 'col col-sm-6 col-md-4 col-lg-3';
+
+      const html = `
+        <h4>Backlog ${i} Information</h4>
+        <label class="form-label" for="backlogSubjectCode${i}">Subject Code:</label>
+        <input class="form-control" type="text" id="backlogSubjectCode${i}" name="backlogsInfo[${i - 1}][subjectCode]" value="${existingData[i - 1]?.subjectCode || ''}" required>
+        <label class="form-label" for="backlogSubjectTitle${i}">Subject Title:</label>
+        <input class="form-control" type="text" id="backlogSubjectTitle${i}" name="backlogsInfo[${i - 1}][subjectTitle]" value="${existingData[i - 1]?.subjectTitle || ''}" required>
+        <label class="form-label" for="backlogCredits${i}">Credits:</label>
+        <input class="form-control" type="number" id="backlogCredits${i}" name="backlogsInfo[${i - 1}][credits]" value="${existingData[i - 1]?.credits || ''}" required>
+        <label class="form-label" for="backlogCleared${i}">Cleared:</label>
+        <select class="form-control" id="backlogCleared${i}" name="backlogsInfo[${i - 1}][cleared]" required>
+          <option value="true" ${existingData[i - 1]?.cleared ? 'selected' : ''}>Yes</option>
+          <option value="false" ${!existingData[i - 1]?.cleared ? 'selected' : ''}>No</option>
+        </select>
+        <label class="form-label" for="backlogSemCleared${i}">Semester in Which Cleared:</label>
+        <input class="form-control" type="text" id="backlogSemCleared${i}" name="backlogsInfo[${i - 1}][semCleared]" value="${existingData[i - 1]?.semCleared || ''}" required>
+      `;
+
+      row.innerHTML = html;
+      container.appendChild(row);
+    }
+  }
+
+  // Function to generate current semester rows
+  function generateCurrentSemesterRows(numCurrentSubjects, existingData) {
+    const container = document.getElementById('currentSubjectsRows');
+    container.innerHTML = '';
+
+    for (let i = 1; i <= numCurrentSubjects; i++) {
+      const row = document.createElement('div');
+      row.className = 'col col-sm-6 col-md-4 col-lg-3';
+
+      const html = `
+        <h4>Current Semester Subject ${i} Information</h4>
+        <div>
+          <label class="form-label" for="currentSubjectCode${i}">Subject Code:</label>
+          <input class="form-control" type="text" id="currentSubjectCode${i}" name="currentSemInfo[${i - 1}][subjectCode]" value="${existingData[i - 1]?.subjectCode || ''}" required>
+        </div>
+        <div>
+          <label class="form-label" for="currentSubjectTitle${i}">Subject Title:</label>
+          <input class="form-control" type="text" id="currentSubjectTitle${i}" name="currentSemInfo[${i - 1}][subjectTitle]" value="${existingData[i - 1]?.subjectTitle || ''}" required>
+        </div>
+        <div>
+          <label class="form-label" for="currentSubjectCredits${i}">Credits:</label>
+          <input class="form-control" type="number" id="currentSubjectCredits${i}" name="currentSemInfo[${i - 1}][subjectCredits]" value="${existingData[i - 1]?.subjectCredits || ''}" required>
+        </div>
+      `;
+
+      row.innerHTML = html;
+      container.appendChild(row);
+    }
+  }
+
+  // Add event listeners to number input fields
+  document.getElementById('noOfBacklogs').addEventListener('input', function () {
+    const numBacklogs = this.value;
+    const existingData = <%- JSON.stringify(student.backlogsInfo) %>;
+    generateBacklogsRows((numBacklogs <= 30 ? numBacklogs : 30), existingData);
+  });
+
+  document.getElementById('noOfCurrentSubjects').addEventListener('input', function () {
+    const numCurrentSubjects = this.value;
+    const existingData = <%- JSON.stringify(student.currentSemInfo) %>;
+    generateCurrentSemesterRows((numCurrentSubjects <= 12 ? numCurrentSubjects : 12), existingData);
+  });
+
+  // Initial rendering of rows
+  const initialBacklogsData = <%- JSON.stringify(student.backlogsInfo) %>;
+  const initialCurrentSemData = <%- JSON.stringify(student.currentSemInfo) %>;
+  generateBacklogsRows('<%= student.backlogsInfo.length %>', initialBacklogsData);
+  generateCurrentSemesterRows('<%= student.currentSemInfo.length %>', initialCurrentSemData);
+</script>
+<script src="/Javascript/editFormVal.js"></script>
+<%- include('../partials/footer'); -%>
