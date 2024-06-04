@@ -1,47 +1,95 @@
 <%- include('../partials/header'); -%> <%- include('../partials/adminNav'); -%>
-<%- include('../partials/flash', { messages: successMessages, type: 'success' }) %>
-<%- include('../partials/flash', { messages: errorMessages, type: 'danger' }) %>
+<%- include('../partials/flash', { messages: successMessages, type: 'success' })
+%> <%- include('../partials/flash', { messages: errorMessages, type: 'danger' })
+%>
 
-    <div class="container">
-      <h1 class="mt-4 mb-4">Create Student</h1>
-      <form action="/admin/student" method="POST">
-        <div class="form-group">
-          <label for="username">Username:</label>
-          <input type="text" id="username" name="username" class="form-control" required />
-        </div>
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password" minlength="8" class="form-control" required />
-        </div>
+<div class="container">
+  <h1 class="mt-4 mb-4">Create Student</h1>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-body">
+          <form action="/admin/student" method="POST">
+            <div class="form-group">
+              <label for="username">Username:</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                minlength="8"
+                class="form-control"
+                required
+              />
+            </div>
 
-        <div class="form-group">
-          <label for="semester">Semester:</label>
-          <select id="semester" name="sem" class="form-control" required>
-            <option value="1">Semester 1</option>
-            <option value="2">Semester 2</option>
-            <option value="3">Semester 3</option>
-            <option value="4">Semester 4</option>
-            <option value="5">Semester 5</option>
-            <option value="6">Semester 6</option>
-            <option value="7">Semester 7</option>
-            <option value="8">Semester 8</option>
-          </select>
-        </div>
+            <div class="form-group">
+              <label for="semester">Semester:</label>
+              <select id="semester" name="sem" class="form-control" required>
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+                <option value="5">Semester 5</option>
+                <option value="6">Semester 6</option>
+                <option value="7">Semester 7</option>
+                <option value="8">Semester 8</option>
+              </select>
+            </div>
 
-        <div class="form-group">
-          <label for="facultyAdvisor">Faculty Advisor:</label>
-          <select id="facultyAdvisor" name="facultyAdvisor" class="form-control" required>
-            <% facultyMembers.forEach(faculty=> { %>
-              <option value="<%= faculty._id %>">
-                <%= faculty.name %>
-              </option>
-              <% }) %>
-          </select>
+            <div class="form-group">
+              <label for="facultyAdvisor">Faculty Advisor:</label>
+              <select
+                id="facultyAdvisor"
+                name="facultyAdvisor"
+                class="form-control"
+                required
+              >
+                <% facultyMembers.forEach(faculty=> { %>
+                <option value="<%= faculty._id %>"><%= faculty.name %></option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary mt-3">
+                Create Student
+              </button>
+            </div>
+          </form>
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Create Student</button>
-      </form>
-      <a href="/admin/allStudents" class="btn btn-secondary my-2">View Students</a>
-      <a href="/admin/studAccess" class="btn btn-<%= admin.allowStudAccess?'success':'danger' %> my-2">Toggle Students Access</a>
-      <a href="/admin/studEditAccess" class="btn btn-<%= admin.allowStudEditAccess?'success':'danger' %> my-2">Toggle Students Edit Access</a>
+      </div>
     </div>
-    <%- include('../partials/footer'); -%>
+  </div>
+  <div class="row justify-content-center mt-3">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <h4 class="card-title text-center my-1">Manage Students</h4>
+        <div class="card-body text-center py-0">
+          <a href="/admin/allStudents" class="btn btn-secondary my-2"
+            >View Students</a
+          >
+          <a
+            href="/admin/studAccess"
+            class="btn btn-<%= admin.allowStudAccess?'success':'danger' %> my-2"
+            >Toggle Students Access</a
+          >
+          <a
+            href="/admin/studEditAccess"
+            class="btn btn-<%= admin.allowStudEditAccess?'success':'danger' %> my-2"
+            >Toggle Students Edit Access</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer'); -%>

@@ -1,53 +1,41 @@
 <%- include('../partials/header'); -%> <%- include('../partials/facultyNav'); -%> <%- include('../partials/flash', {
-      messages: successMessages, type: 'success' }) %> <%- include('../partials/flash', { messages: errorMessages,
-        type: 'danger' }) %>
-
-        <div class="container">
-          <h2 class="mb-4">Faculty Mentees</h2>
-          <% if (faculty && faculty.mentees && faculty.mentees.length) { %>
-            <ul class="list-group">
-              <li class="list-group-item bg-secondary text-white mb-3">
-                <div class="row">
-                  <div class="col"><b>USN</b></div>
-                  <div class="col"><b>Name</b></div>
-                  <div class="col"><b>Semester</b></div>
-                  <div class="col"><b>Remarks</b></div>
-                </div>
-              </li>
-              <% for( let i=1; i <=8; i++ ) { %>
-                <% faculty.mentees.forEach(mentee=> { %>
-                  <% if (mentee.mentee.sem==i) { %>
-
-                    <li class="list-group-item mb-3">
-                      <div class="row align-items-center">
-                        <div class="col">
-                          <%= mentee.mentee.username %>
-                        </div>
-                        <div class="col">
-                          <%= mentee.mentee.fullname %>
-                        </div>
-                        <div class="col">
-                          <%= mentee.mentee.sem %>
-                        </div>
-                        <div class="col">
-                          <form action="/faculty/mentees/<%= mentee.mentee._id %>/remarks" method="POST">
-                            <div class="form-group">
-                              <textarea class="form-control form-control-sm mb-2" id="menteeRemark"
-                                name="mentee[remarks]" rows="3">
-                              <%= mentee.remarks %></textarea>
-                              <button type="submit" class="btn btn-primary">Save Remark</button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </li>
-                    <% } %>
-                      <% }); %>
-                        <% } %>
-            </ul>
-            <% } else { %>
-              <p>No mentees found.</p>
-              <% } %>
+  messages: successMessages, type: 'success' }) %> <%- include('../partials/flash', { messages: errorMessages, type:
+  'danger' }) %>
+  
+  <div class="container">
+    <h2 class="mb-4">Faculty Mentees</h2>
+    <% if (faculty && faculty.mentees && faculty.mentees.length) { %>
+    <div class="list-group">
+      <div class="list-group-item bg-secondary text-white d-flex align-items-center mb-2 py-2">
+        <div class="col-2"><b>USN</b></div>
+        <div class="col-3"><b>Name</b></div>
+        <div class="col-2"><b>Semester</b></div>
+        <div class="col-5"><b>Remarks</b></div>
+      </div>
+      <% for( let i=1; i <=8; i++ ) { %>
+      <% faculty.mentees.forEach(mentee=> { %>
+      <% if (mentee.mentee.sem==i) { %>
+      <div class="list-group-item d-flex align-items-center mb-2 py-2">
+        <div class="col-2"><%= mentee.mentee.username %></div>
+        <div class="col-3"><%= mentee.mentee.fullname %></div>
+        <div class="col-2"><%= mentee.mentee.sem %></div>
+        <div class="col-5">
+          <form action="/faculty/mentees/<%= mentee.mentee._id %>/remarks" method="POST" class="mb-0">
+            <div class="form-group mb-2">
+              <textarea class="form-control form-control-sm" id="menteeRemark" name="mentee[remarks]" rows="2">
+  <%= mentee.remarks %></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">Save Remark</button>
+          </form>
         </div>
-
-        <%- include('../partials/footer'); -%>
+      </div>
+      <% } %>
+      <% }); %>
+      <% } %>
+    </div>
+    <% } else { %>
+    <p>No mentees found.</p>
+    <% } %>
+  </div>
+  
+  <%- include('../partials/footer'); -%>
