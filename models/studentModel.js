@@ -5,6 +5,7 @@ const studentSchema = new mongoose.Schema({
   password: String,
   role: { type: String, enum: ["student"], default: "student" },
   facultyAdvisor: { type: mongoose.Schema.Types.ObjectId, ref: "Faculty" },
+  department: String,
   fullname: String,
   usn: String,
   yearOfAdmission: Number,

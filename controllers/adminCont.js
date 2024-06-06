@@ -15,9 +15,16 @@ module.exports.showCreateFacultyForm = async (req, res, next) => {
 
 // Create a new faculty member
 module.exports.createFaculty = async (req, res, next) => {
-  var { username, password, name, contact, email } = req.body;
+  var { username, password, name, contact, email, department } = req.body;
   username = username.trim();
-  const faculty = new Faculty({ username, password, name, contact, email });
+  const faculty = new Faculty({
+    username,
+    password,
+    name,
+    contact,
+    email,
+    department,
+  });
   await faculty.save();
   req.flash("success", "Faculty member created successfully!");
   res.redirect("/admin");
@@ -33,14 +40,14 @@ module.exports.showEditFacultyForm = async (req, res, next) => {
 // Update a faculty member
 module.exports.updateFaculty = async (req, res, next) => {
   const { id } = req.params;
-  var { username, name, contact, email } = req.body;
-  //var { username, password, name, contact, email } = req.body;
+  var { username, name, contact, email, department } = req.body;
   username = username.trim();
   await Faculty.findByIdAndUpdate(id, {
-    username, //password,
+    username,
     name,
     contact,
     email,
+    department,
   });
   req.flash("success", "Faculty member updated successfully!");
   res.redirect("/admin");
@@ -70,7 +77,7 @@ module.exports.showCreateStudentForm = async (req, res, next) => {
 
 // Create a new student with minimal info
 module.exports.createStudent = async (req, res, next) => {
-  var { username, password, sem, facultyAdvisor } = req.body;
+  var { username, password, sem, facultyAdvisor, department } = req.body;
   username = username.trim();
   const existingStudent = await Student.findOne({
     username: username,
@@ -79,7 +86,13 @@ module.exports.createStudent = async (req, res, next) => {
     req.flash("error", "User already exists");
     return res.redirect("/admin/student");
   }
-  const student = new Student({ username, password, sem, facultyAdvisor });
+  const student = new Student({
+    username,
+    password,
+    sem,
+    facultyAdvisor,
+    department,
+  });
   await student.save();
   const faculty = await Faculty.findById(facultyAdvisor);
   faculty.mentees.push({ mentee: student._id });
@@ -99,7 +112,7 @@ module.exports.showEditStudentForm = async (req, res, next) => {
 // Update student information
 module.exports.updateStudentByAdmin = async (req, res, next) => {
   const { id } = req.params;
-  var { username, sem, facultyAdvisor } = req.body;
+  var { username, sem, facultyAdvisor, department } = req.body;
   username = username.trim();
   const student = await Student.findById(id);
 
@@ -111,6 +124,7 @@ module.exports.updateStudentByAdmin = async (req, res, next) => {
       username,
       sem,
       facultyAdvisor,
+      department,
     });
     const faculty = await Faculty.findById(facultyAdvisor);
     faculty.mentees.push({ mentee: id });
@@ -119,6 +133,7 @@ module.exports.updateStudentByAdmin = async (req, res, next) => {
     await Student.findByIdAndUpdate(id, {
       username,
       sem,
+      department,
     });
   }
 

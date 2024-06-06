@@ -19,6 +19,7 @@ const {
   toggleStudentEditAccess,
 } = require("../controllers/adminCont");
 const catchAsync = require("../utils/catchAsync");
+const { usnValidator } = require("../utils/usnValidator");
 
 //Admin Dashboard
 router.get("/", catchAsync(adminDashboard));
@@ -43,11 +44,11 @@ router.get("/allStudents", catchAsync(allStudentUsers));
 
 router.get("/student", catchAsync(showCreateStudentForm));
 
-router.post("/student", catchAsync(createStudent));
+router.post("/student", usnValidator, catchAsync(createStudent));
 
 router.get("/student/:id/edit", catchAsync(showEditStudentForm));
 
-router.put("/student/:id", catchAsync(updateStudentByAdmin));
+router.put("/student/:id", usnValidator, catchAsync(updateStudentByAdmin));
 
 router.delete("/student/:id", catchAsync(deleteStudent));
 

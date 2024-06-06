@@ -12,18 +12,49 @@
                                         <div class="form-group">
                                             <label for="username">Username:</label>
                                             <input type="text" id="username" name="username"
-                                                value="<%= student.username %>" class="form-control" required />
+                                                value="<%= student.username %>" class="form-control form-control-sm"
+                                                required />
                                         </div>
                                         <div class="form-group">
                                             <label for="password">Password:</label>
                                             <input type="password" id="password" name="password" minlength="8"
-                                                value="<%= student.password %>" class="form-control" required
-                                                disabled />
+                                                value="<%= student.password %>" class="form-control form-control-sm"
+                                                required disabled />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="department">Department:</label>
+                                            <select id="department" name="department"
+                                                class="form-control form-control-sm" required>
+                                                <option value="">Select Department</option>
+                                                <option value="AI" <%=student.department=='AI' ?'selected':"" %>
+                                                    >Artificial Intelligence</option>
+                                                <option value="AU" <%=student.department=='AU' ?'selected':"" %>
+                                                    >Automobile</option>
+                                                <option value="BT" <%=student.department=='BT' ?'selected':"" %>
+                                                    >Bio-Technology</option>
+                                                <option value="CS" <%=student.department=='CS' ?'selected':"" %>
+                                                    >Computer Science</option>
+                                                <option value="CV" <%=student.department=='CV' ?'selected':"" %>>Civil
+                                                </option>
+                                                <option value="EC" <%=student.department=='EC' ?'selected':"" %>
+                                                    >Electronics and Communication</option>
+                                                <option value="EE" <%=student.department=='EE' ?'selected':"" %>
+                                                    >Electrical and Electronics</option>
+                                                <option value="EI" <%=student.department=='EI' ?'selected':"" %>
+                                                    >Electronics and Instrumentation</option>
+                                                <option value="IP" <%=student.department=='IP' ?'selected':"" %>
+                                                    >Industrial Production</option>
+                                                <option value="IS" <%=student.department=='IS' ?'selected':"" %>
+                                                    >Information Science</option>
+                                                <option value="ME" <%=student.department=='ME' ?'selected':"" %>
+                                                    >Mechanical</option>
+                                            </select>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="semester">Semester:</label>
-                                            <select id="semester" name="sem" class="form-control" required>
+                                            <select id="semester" name="sem" class="form-control form-control-sm"
+                                                required>
                                                 <option value="1" <%=student.sem=='1' ?'selected':"" %> >Semester 1
                                                 </option>
                                                 <option value="2" <%=student.sem=='2' ?'selected':"" %> >Semester 2
@@ -45,14 +76,18 @@
 
                                         <div class="form-group">
                                             <label for="facultyAdvisor">Faculty Advisor:</label>
-                                            <select id="facultyAdvisor" name="facultyAdvisor" class="form-control"
-                                                required>
+                                            <select id="facultyAdvisor" name="facultyAdvisor"
+                                                class="form-control form-control-sm" required>
                                                 <% facultyMembers.forEach(faculty=> { %>
-                                                    <option value="<%= faculty._id %>"
-                                                        <%=(student.facultyAdvisor.toString()===faculty._id.toString())?"selected":""
-                                                        %>><%= faculty.name %>
-                                                    </option>
-                                                    <% }) %>
+                                                    <% if (faculty._id.toString()===student.facultyAdvisor.toString()) {
+                                                        %>
+                                                        <option value="<%= faculty._id %>"
+                                                            <%=faculty._id.toString()===student.facultyAdvisor.toString()? 'selected'
+                                                            : '' %> >
+                                                            <%= faculty.name %>
+                                                        </option>
+                                                        <% } %>
+                                                            <% }); %>
                                             </select>
                                         </div>
                                         <div class="text-center">
@@ -65,4 +100,27 @@
                         </div>
                     </div>
                 </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const select = document.getElementById('facultyAdvisor');
+                        const dept = document.getElementById('department');
+
+                        dept.addEventListener('change', () => {
+                            const departmentValue = dept.value;
+
+                            // Clear previous options
+                            select.innerHTML = '';
+
+                        // Dynamically populate options based on the selected department
+                        <% facultyMembers.forEach(faculty => { %>
+                          if ('<%= faculty.department %>' === departmentValue) {
+                                    const option = document.createElement('option');
+                                    option.value = '<%= faculty._id %>';
+                                    option.textContent = '<%= faculty.name %>';
+                                    select.appendChild(option);
+                                }
+                        <% }); %>
+                      });
+                    });
+                </script>
                 <%- include('../partials/footer'); -%>

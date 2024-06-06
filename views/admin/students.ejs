@@ -16,7 +16,7 @@
                 type="text"
                 id="username"
                 name="username"
-                class="form-control"
+                class="form-control form-control-sm"
                 required
               />
             </div>
@@ -27,14 +27,42 @@
                 id="password"
                 name="password"
                 minlength="8"
-                class="form-control"
+                class="form-control form-control-sm"
                 required
               />
             </div>
 
             <div class="form-group">
+              <label for="department">Department:</label>
+              <select
+                id="department"
+                name="department"
+                class="form-control form-control-sm"
+                required
+              >
+                <option value="">Select Department</option>
+                <option value="AI">Artificial Intelligence</option>
+                <option value="AU">Automobile</option>
+                <option value="BT">Bio-Technology</option>
+                <option value="CS">Computer Science</option>
+                <option value="CV">Civil</option>
+                <option value="EC">Electronics and Communication</option>
+                <option value="EE">Electrical and Electronics</option>
+                <option value="EI">Electronics and Instrumentation</option>
+                <option value="IP">Industrial Production</option>
+                <option value="IS">Information Science</option>
+                <option value="ME">Mechanical</option>
+              </select>
+            </div>
+
+            <div class="form-group">
               <label for="semester">Semester:</label>
-              <select id="semester" name="sem" class="form-control" required>
+              <select
+                id="semester"
+                name="sem"
+                class="form-control form-control-sm"
+                required
+              >
                 <option value="1">Semester 1</option>
                 <option value="2">Semester 2</option>
                 <option value="3">Semester 3</option>
@@ -51,12 +79,9 @@
               <select
                 id="facultyAdvisor"
                 name="facultyAdvisor"
-                class="form-control"
+                class="form-control form-control-sm"
                 required
               >
-                <% facultyMembers.forEach(faculty=> { %>
-                <option value="<%= faculty._id %>"><%= faculty.name %></option>
-                <% }) %>
               </select>
             </div>
             <div class="text-center">
@@ -92,4 +117,27 @@
     </div>
   </div>
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const select = document.getElementById('facultyAdvisor');
+    const dept = document.getElementById('department');
+
+    dept.addEventListener('change', () => {
+      const departmentValue = dept.value;
+
+      // Clear previous options
+      select.innerHTML = '';
+
+      // Dynamically populate options based on the selected department
+      <% facultyMembers.forEach(faculty => { %>
+        if ('<%= faculty.department %>' === departmentValue) {
+          const option = document.createElement('option');
+          option.value = '<%= faculty._id %>';
+          option.textContent = '<%= faculty.name %>';
+          select.appendChild(option);
+        }
+      <% }); %>
+    });
+  });
+</script>
 <%- include('../partials/footer'); -%>

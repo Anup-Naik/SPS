@@ -4,6 +4,7 @@ const facultySchema = new mongoose.Schema({
   username: { type: String, unique: [true, "User already exists"] },
   password: String,
   role: { type: String, enum: ["faculty"], default: "faculty" },
+  department: String,
   name: String,
   contact: Number,
   email: String,

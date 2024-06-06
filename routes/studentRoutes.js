@@ -2,10 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { myMulter } = require("../utils/multerUtil");
 const {
-  councelForm,
-  saveCouncelForm,
   showStudent,
-  renderEditStudent,
   updateStudent,
   getFacultyAdvisor,
   getChangePasswordForm,
@@ -22,11 +19,17 @@ const catchAsync = require("../utils/catchAsync");
 const { isLoggedIn, isLoggedInStudent } = require("../utils/authCheck");
 const { studentRateLimiter } = require("../utils/rateLimiter");
 const { allowStudentEditAccess } = require("../utils/accessControl");
+const { usnValidator } = require("../utils/usnValidator");
 // Student Module Routes
 
 router.get("/register", studentRateLimiter, catchAsync(registerForm));
 
-router.post("/register", studentRateLimiter, catchAsync(registerStudent));
+router.post(
+  "/register",
+  usnValidator,
+  studentRateLimiter,
+  catchAsync(registerStudent)
+);
 
 router.get(
   "/",
