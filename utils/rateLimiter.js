@@ -11,10 +11,10 @@ module.exports.adminRateLimiter = rateLimit({
 
 module.exports.facultyRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 300, // limit faculty to 300 requests per windowMs
+  max: 500, // limit faculty to 300 requests per windowMs
 });
 
 module.exports.studentRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 60, // limit students to 100 requests per windowMs
+  max: 100, // limit students to 100 requests per windowMs
 });
