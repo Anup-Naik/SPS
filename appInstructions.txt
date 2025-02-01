@@ -1,9 +1,3 @@
-install node.js, 
-Open terminal, 
-Move to project directory, 
-run 'npm install' command, 
-Create uploads folder in project's main directory, 
-Run node app.js in terminal, 
-Use https to access the app from browser, 
-Make sure to configure environment variables,
+Create uploads folder in project's main directory,  
+configure environment variables,
 Create Admin in database.
