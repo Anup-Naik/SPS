@@ -1,13 +1,9 @@
 const express = require("express");
-const https = require("https");
-const fs = require("fs");
 const helmet = require("helmet");
 const session = require("express-session");
 const mongoSanitize = require("express-mongo-sanitize");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
-const mongoose = require("mongoose");
-const ejs = require("ejs");
 const path = require("path");
 const sessionRoutes = require("./routes/sessionRoutes");
 const adminRoutes = require("./routes/adminRoutes");
@@ -34,32 +30,16 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-main()
-  .then(() => console.log("Connected to database"))
-  .catch((err) => console.log(err));
-
-async function main() {
-  await mongoose.connect(process.env.MONGO_URL);
-}
-
-const privateKey = fs.readFileSync(process.env.PRIVATE_KEY_PATH, "utf8");
-const certificate = fs.readFileSync(process.env.CERTIFICATE_PATH, "utf8");
-const httpsServer = https.createServer(
-  { key: privateKey, cert: certificate },
-  app
-);
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"; //Remove after getting a cert from a valid CA
-
 app.use(
   session({
     name: "spsession",
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/SPS" }),
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
     cookie: {
       maxAge: 3600000,
-      secure: true,
+      //secure: true,
       httpOnly: true,
       sameSite: "Strict",
     },
@@ -142,14 +122,11 @@ app.all("*", (req, res, next) => {
 //Error Handling Middleware
 app.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
-  if (!err.message) err.message = "Oh No, Something Went Wrong!";
+  if (!err.message) err.message = "Something Went Wrong!";
 
   if (!res.headersSent) {
     res.status(statusCode).render("error", { err });
   }
 });
 
-const port = process.env.PORT || 3000;
-httpsServer.listen(port, "0.0.0.0", () => {
-  console.log(`HTTPS Server running on port ${port}`);
-});
+module.exports = app;

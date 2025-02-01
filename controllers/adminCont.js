@@ -209,3 +209,12 @@ module.exports.toggleStudentEditAccess = async (req, res, next) => {
   req.flash("success", "Student Edit access toggled successfully");
   res.redirect("/admin");
 };
+
+// (async() => {
+//   await Admin.create({
+//     username: "admin",
+//     password: "admin",
+//     name: "Admin",
+
+//   })
+// })();
