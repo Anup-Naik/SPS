@@ -2,8 +2,8 @@
 
 The Student Proctoring System is a web application that facilitates efficient tracking and 
 monitoring of student performance. It enables students to submit personal, academic, and 
-relevant details, which faculty advisors can access and analyze. Built with <span style="color:magenta;"> HTML, CSS, 
-JavaScript, Node.js, Express.js, EJS, MongoDB, and Mongoose</span> the system offers a user-friendly interface and robust security features. Key functionalities include user authentication, 
+relevant details, which faculty advisors can access and analyze. Built with <p style="display:inline;color:magenta;"> HTML, CSS, 
+JavaScript, Node.js, Express.js, EJS, MongoDB, and Mongoose</p> the system offers a user-friendly interface and robust security features. Key functionalities include user authentication, 
 student registration, data entry for various details, counseling form submission, faculty advisor 
 dashboard, and counseling management.
 
