@@ -1,10 +1,14 @@
+### Student Proctoring System 
+
 The Student Proctoring System is a web application that facilitates efficient tracking and 
 monitoring of student performance. It enables students to submit personal, academic, and 
-relevant details, which faculty advisors can access and analyze. Built with HTML, CSS, 
-JavaScript, Node.js, Express.js, EJS, MongoDB, and Mongoose, the system offers a user-friendly interface and robust security features. Key functionalities include user authentication, 
+relevant details, which faculty advisors can access and analyze. Built with <span style="color:magenta;"> HTML, CSS, 
+JavaScript, Node.js, Express.js, EJS, MongoDB, and Mongoose</span> the system offers a user-friendly interface and robust security features. Key functionalities include user authentication, 
 student registration, data entry for various details, counseling form submission, faculty advisor 
-dashboard, and counseling management. 
-READ appINSTRUCTIONS.txt on how to start app.
+dashboard, and counseling management.
+
+---
+
 ![sps1](https://github.com/Anup-Naik/SPS/assets/117713985/5dc0ff46-bb04-4880-adca-a63953f12ce7)
 ![sps2](https://github.com/Anup-Naik/SPS/assets/117713985/4b8df1a3-5410-4d32-b2ee-60854195c3f7)
 ![sps3](https://github.com/Anup-Naik/SPS/assets/117713985/4a697bc3-a3ba-4815-b778-1bf57592e938)
